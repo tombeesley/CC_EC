@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1576598549684.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2670100542",
+    "id" : "5B52A192",
+    "lastKnownWriteTime" : 1581580918,
+    "last_content_update" : 1581580918,
+    "path" : "C:/Users/beesleyt/OneDrive - Lancaster University/Desktop PC/Projects/CC control_auto/CCC02/Data analysis/analyseData.R",
+    "project_path" : "analyseData.R",
+    "properties" : {
+        "cursorPosition" : "22,53",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

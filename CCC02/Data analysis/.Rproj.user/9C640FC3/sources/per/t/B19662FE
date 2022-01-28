@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1582294278185.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "929706048",
+    "id" : "B19662FE",
+    "lastKnownWriteTime" : 1582299872,
+    "last_content_update" : 1582299872901,
+    "path" : "C:/Users/beesleyt/OneDrive - Lancaster University/Desktop PC/Projects/CC control_auto/CCC02/Data analysis/analyseAwareness.R",
+    "project_path" : "analyseAwareness.R",
+    "properties" : {
+        "cursorPosition" : "45,0",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
