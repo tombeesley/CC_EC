@@ -130,6 +130,7 @@ for trial = 1:size(TT,1)
     
     restcnt = restcnt + 1;
     if restcnt > restBreak
+        restcnt = 0;
         Screen('DrawTexture', MainWindow, restScreen);
         Screen('Flip', MainWindow);
         WaitSecs(30);
@@ -215,11 +216,11 @@ for trial = 1:size(TT,1)
     
     imgOnTime = Screen('Flip', MainWindow); % display image on screen and record time
     
-    % GetImage call. Alter the rect argument to change the location of the screen shot
-    imageArray = Screen('GetImage', MainWindow);
-
-    % imwrite is a Matlab function, not a PTB-3 function
-    imwrite(imageArray, 'screenshot.jpg')
+%     GetImage call. Alter the rect argument to change the location of the screen shot
+%     imageArray = Screen('GetImage', MainWindow);
+% 
+%     imwrite is a Matlab function, not a PTB-3 function
+%     imwrite(imageArray, 'screenshot.jpg')
     
     % wait for response
     RestrictKeysForKbCheck([67 78 122]); % wait for response (c, n, or F11)
