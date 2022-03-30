@@ -1,0 +1,177 @@
+---
+title: "lab_report_CCC03"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+
+library(tidyverse)
+library(BayesFactor)
+theme_set(theme_classic())
+
+load("CCC03_data.RData")
+
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Standard contextual cuing, then arrow pointing towards the half of the screen containing the target. At the same time, patterns were manipuated such that on some trials the distractors were randomised. Four conditions in phase 2:
+
+1. Repeated training configuration (no randomisation)
+2. Random configuration
+3. Local distractors (target quadrant) are random
+4. Global distractors (non-target quadrants) are random
+
+```{r}
+
+# take a copy as data raw
+data_raw <- data
+
+# remove pilot data
+data <- 
+  data %>% 
+  filter(subj > 100) # remove the pilot data
+
+# processing col data types
+data <- 
+  data %>% 
+  mutate(TT = as.factor(TT)) %>% 
+  mutate(TT = recode(TT, 
+                     "1" = "repeated",
+                     "2" = "random",
+                     "3" = "local random",
+                     "4" = "global random"))
+  
+
+
+# summary stats for Ps
+data_summary <- 
+  data %>% 
+  group_by(subj) %>% 
+  summarise(propTO = mean(acc==9999),
+            propAcc = mean(acc==0),
+            propCor = mean(acc==1),
+            meanRT = mean(RT)) %>% 
+  mutate(across(where(is.numeric), round, 2))
+
+Ps_to_remove <- 
+  data_summary %>% 
+  filter(propCor < .9) %>%  # identify Ps scoring less than 90%
+  pull(subj)
+
+data <- 
+  data %>% 
+  filter(acc==1,
+         !subj %in% Ps_to_remove) # remove Ps scoring less than 90%
+
+```
+
+In total, `r length(data_summary)` participants have been run on the task. It looks like we have `r length(Ps_to_remove)` participants (`r Ps_to_remove`) that need to be removed from the sample for accuracy below 90%.
+
+The data from the remaining `r length(data_summary) - length(Ps_to_remove)` are presented below. 
+
+```{r}
+data %>% 
+  group_by(epoch, TT) %>% 
+  summarise(meanRT = mean(RT)) %>% 
+  ggplot(aes(x = epoch, y = meanRT, group = TT, colour = TT)) +
+  geom_line(size = 1)
+
+
+```
+
+Here are the data from Stage 2 only:
+
+
+```{r}
+
+#summary data across Ps
+data %>% 
+  filter(epoch >= 6) %>% 
+  group_by(TT) %>% 
+  summarise(meanRT = mean(RT)) %>% 
+  ggplot(aes(y = meanRT, fill = TT)) +
+  geom_col(aes(x = TT)) +
+  coord_cartesian(ylim = c(1000,1400)) +
+  scale_y_continuous(breaks = seq(1000,1400,50)) 
+
+# data for each P
+data %>% 
+  filter(epoch >= 6) %>% 
+  group_by(subj, TT) %>% 
+  summarise(meanRT = mean(RT)) %>% 
+  ggplot(aes(y = meanRT, fill = TT)) +
+  geom_col(aes(x = TT)) +
+  facet_wrap(~subj)
+
+```
+
+
+```{r}
+# bayesian analysis of the stage 2 data
+
+p2_d <- 
+  data %>% 
+  filter(epoch >= 6) %>% 
+  group_by(subj,TT) %>% 
+  summarise(meanRT = mean(RT)) %>% 
+  mutate(subj = as.factor(subj))
+  
+
+anovaBF(meanRT ~ TT + subj,
+        whichRandom = "subj",
+        data = p2_d)
+
+# repeated vs local random
+d1v3 <- 
+  p2_d %>% 
+  filter(TT %in% c("repeated","local random"))
+
+anovaBF(meanRT ~ TT + subj,
+        whichRandom = "subj",
+        data = d1v3)
+
+# repeated vs global random
+d1v4 <- 
+  p2_d %>% 
+  filter(TT %in% c("repeated","global random"))
+
+anovaBF(meanRT ~ TT + subj,
+        whichRandom = "subj",
+        data = d1v4)
+
+# local random vs. random
+d2v3 <- 
+  p2_d %>% 
+  filter(TT %in% c("random","local random"))
+
+anovaBF(meanRT ~ TT + subj,
+        whichRandom = "subj",
+        data = d2v3)
+
+# global random vs. random
+d2v4 <- 
+  p2_d %>% 
+  filter(TT %in% c("random","global random"))
+
+anovaBF(meanRT ~ TT + subj,
+        whichRandom = "subj",
+        data = d2v4)
+
+# local random vs. global random 
+d3v4 <- 
+  p2_d %>% 
+  filter(TT %in% c("local random","global random"))
+
+anovaBF(meanRT ~ TT + subj,
+        whichRandom = "subj",
+        data = d3v4)
+
+t.test(meanRT ~ TT,
+        data = d3v4,
+       paired = TRUE)
+
+```
+
+

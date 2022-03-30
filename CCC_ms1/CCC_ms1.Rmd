@@ -1,0 +1,92 @@
+---
+title             : "Contextual cuing in the presence of an overt instruction"
+shorttitle        : "Contextual cuing and instruction"
+author: 
+  - name          : "Tom Beesley"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Department of Psychology, Lancaster University, UK, LA1 4YD"
+    email         : "t.beesley@lancaster.ac.uk"
+  - name          : "David Luque" 
+    affiliation   : "2"
+affiliation:
+  - id            : "1"
+    institution   : "Lancaster University, UK"
+  - id            : "2"
+    institution   : "Universidad Autónoma de Madrid, Spain"
+
+abstract: |
+  abstract here
+  
+  
+  Public significance statement: 
+  
+keywords          : "keywords"
+wordcount         : "X"
+
+bibliography      : ["references.bib"]
+
+floatsintext      : no
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : yes
+mask              : no
+draft             : no
+header-includes:
+  - \raggedbottom
+  - \usepackage[font={small,it}, labelfont={bf}]{caption}
+csl               : "apa7.csl"
+documentclass     : "apa6"
+classoption       : "man"
+output            : papaja::apa6_pdf
+---
+
+```{r knitr-options, echo=FALSE, message = FALSE}
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, echo = FALSE, dev = "cairo_pdf")
+```
+
+```{r rmd-setup, include = FALSE}
+library(tidyverse)
+library(citr)
+library(papaja)
+# library(english)
+# library(extrafont)
+# library(afex) 
+# library(BayesFactor)
+# library(apa)
+# library(pwr) # power calculations
+# library(lsr) # effect size estimate
+# library(skimr)
+# library(rstudioapi)
+# library(kableExtra)
+
+# function used to set rounding and presentation of decimals to specific length
+spec_dec <- function(x, k) trimws(format(round(x, k), nsmall=k)) # useful for controlling decimals
+
+# function to force scientific formatting of numbers (used for large BFs)
+changeSciNot <- function(n) {
+  output <- format(n, scientific = TRUE, digits = 2) #Transforms the number into scientific notation even if small
+  output <- sub("e", "x10^", output) #Replace e with 10^
+  output <- sub("\\+0?", "", output) #Remove + symbol and leading zeros on expoent, if > 1
+  output <- sub("-0?", "-", output) #Leaves - symbol but removes leading zeros on expoent, if < 1
+  output
+}
+
+# setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) # set wd to current file location
+
+theme_set(theme_classic())
+
+#r_refs("references.bib")
+
+```
+
+Main text here [@beesley2015b]
+
+
+
+
+
+\newpage
+
+# References
