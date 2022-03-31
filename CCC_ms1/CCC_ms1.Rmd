@@ -83,7 +83,124 @@ theme_set(theme_classic())
 
 Main text here [@beesley2015b]
 
+```{r}
 
+data_raw <- readRDS("combinedData.rds")
+
+# get summary stats 
+
+# how many participants in each experiment
+data_raw %>%
+  group_by(exp) %>% 
+  summarise(num_Ps = n_distinct(subj))
+
+# mean RT by participant
+summary_rt <- 
+  data_raw %>% 
+  filter(timeout == 0,
+         acc == 1) %>% 
+  group_by(exp, subj) %>% 
+  summarise(meanRT = mean(RT))
+
+# plot as violin
+summary_rt %>% 
+  ggplot(aes(x = exp, y = meanRT)) +
+  geom_violin(aes(fill = exp)) +
+  geom_dotplot(binaxis = "y",
+               stackdir = "center",
+               dotsize = 2,
+               binwidth = 25,
+               alpha = .3)
+
+# mean acc by participant
+summary_acc <- 
+  data_raw %>% 
+  filter(timeout == 0) %>% 
+  group_by(exp, subj) %>% 
+  summarise(meanAcc = mean(acc))
+
+# plot as violin
+summary_acc %>% 
+  ggplot(aes(x = exp, y = meanAcc)) +
+  geom_violin(aes(fill = exp)) +
+  geom_dotplot(binaxis = "y",
+               stackdir = "center",
+               binwidth = .01,
+               dotsize = 1,
+               alpha = .3)
+
+
+```
+
+# Experiment 1
+
+Experiment 1 sought to examine whether the learnt attentional behaviour developed contextual cuing was expressed when participants were directed with a top-down instruction to search in a particular region of the search space. Participants were first trained with a set of four repeating configurations
+
+## Method
+
+### Participants
+
+```{r}
+
+# get basic stats for Ps
+
+data_exp1 <- 
+  data_raw %>% 
+  filter(exp == "CCC01") 
+
+demographics <- 
+  data_exp1 %>% 
+  group_by(subj) %>% 
+  slice(1) %>% 
+  select(subj, age, gender)
+
+```
+
+
+`r words(length(demographics))` undergraduate students from Lancaster University were recruited (mean age = `r mean(demographics$age)`, SD = `r sd(demographics$age)`; `r count(demographics[,2:3], gender)[1,2]` identified as male and `r count(demographics[,2:3], gender)[2,2]` as female) via the Psychology Research Participation System in the Department of Psychology at Lancaster University, in return for the opportunity to use the recruitment system for their own research in future years. 
+
+### Materials
+Participants were tested individually in a quiet room with a Dell laptop with a 15.6” screen, a screen resolution of 1920 x 1080, and a full size external keyboard for participants to use to respond to the task. Participants sat approximately 50 cm from the screen. Stimulus presentation was controlled by MATLAB using the Psychophysics Toolbox extensions (Brainard, 1997; Kleiner, Brainard & Pelli, 2007; Pelli, 1997). Responses to the target stimulus were made by pressing the ‘c’ or ‘n’ key on a standard keyboard. All experimental materials are available at the github repository for this study. 
+
+Distractor stimuli were an ‘L’ shape (rotated 0°, 90°, 180°, or 270°) while the target stimulus was a ‘T’ shape (rotated at either 90° or 270°). Stimuli were arranged in a square grid of 144 evenly spaced cells (12 x 12) which was positioned centrally on the screen and was XXX mm (XX°) square. The grid itself was invisible to participants. The fixation cross (displayed centrally before each trial) was XX mm (X.X°) square. The stimuli were XX mm (X.X°) square. The background of the screen was grey (RGB: .6, .6, .6) and the stimuli were presented in black. There was a small offset in the vertical line of the ‘L’ distractors, which increased the similarity between the ‘L’ distractor and the target ‘T’, making the search task more difficult (Duncan & Humphreys, 1989). 
+
+### Design
+
+
+### Procedure
+
+## Results
+
+
+```{r}
+
+# participant exclusions 
+
+to_summary <- 
+  data_exp1 %>% 
+  group_by(subj) %>% 
+  summarise(meanTO = mean(timeout)) %>% 
+  mutate(z_meanTO = scale(meanTO)[,1])
+
+acc_summary <- 
+  data_exp1 %>% 
+  group_by(subj) %>% 
+  summarise(meanAcc = mean(acc, na.rm = TRUE)) %>% 
+  mutate(z_meanAcc = scale(meanAcc)[,1])
+
+rt_summary <- 
+  data_exp1 %>% 
+  filter(acc == 1) %>% 
+  group_by(subj) %>% 
+  summarise(meanRT = mean(RT, na.rm = TRUE)) %>% 
+  mutate(z_meanRT = scale(meanRT)[,1])
+
+resp_summary_exp1 <- 
+  to_summary %>% 
+  left_join(acc_summary, by = "subj") %>% 
+  left_join(rt_summary, by = "subj")
+
+```
 
 
 

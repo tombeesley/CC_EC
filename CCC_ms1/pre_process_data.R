@@ -1,14 +1,18 @@
 rm(list=ls())
 library(tidyverse)
+library(magrittr)
 library(broom)
 
 # Compile Experiment 1 data -----------------------------------------------
 
 fnams_exp1 <- list.files(path = "../CCC01/Data analysis/CSV Data/",
-                    pattern = "td",
-                    full.names = TRUE) # needed for reading data
+                         pattern = "td",
+                         full.names = TRUE) # needed for reading data
 subjs_exp1 <- list.files(path = "../CCC01/Data analysis/CSV Data/",
-                    pattern = "td") # needed for identifying subject numbers
+                         pattern = "td") # needed for identifying subject numbers
+detnams_exp1 <- list.files(path = "../CCC01/Data analysis/CSV Data/",
+                           pattern = "det",
+                           full.names = TRUE) # needed for reading data
 
 data <- NULL
 for (subj in 1:length(fnams_exp1)) {
@@ -17,6 +21,14 @@ for (subj in 1:length(fnams_exp1)) {
   pData <- pData %>%
     mutate(subj = substr(subjs_exp1[subj],1,str_length(subjs_exp1[subj])-7)) %>%
     select(subj,everything())
+
+  # get subj details data
+  subj_details <- read_csv(detnams_exp1[subj], col_types = cols(), col_names = FALSE) # read the data from csv
+  subj_details <- str_split(subj_details, pattern = " ", simplify = TRUE)
+
+  pData %<>%
+    mutate(age = subj_details[1],
+           gender = subj_details[2])
 
   data <- rbind(data, pData) # combine data array with existing data
 
@@ -31,13 +43,11 @@ data <-
 
 data <-
   data %>%
-  select(-tLoc, -tOrient, -resp) %>% # remove irrelevant variables
-  mutate(epoch = ceiling(block/4)) %>%
-  mutate(phase = ceiling(block/20)) %>%
-  select(subj, phase, epoch, block:patType, everything()) # reorder variables
-
-factorCols <- c("subj","TT","patType", "tQuad")
-data[factorCols] <- lapply(data[factorCols], factor)
+  select(-resp) %>% # remove irrelevant variables
+  mutate(epoch = ceiling(block/4),
+         phase = ceiling(block/20),
+         exp = "CCC01") %>%
+  select(exp, subj, age, gender, phase, epoch, block:patType, everything()) # reorder variables
 
 data <- data %>%
   mutate(TT = case_when(TT == 1 & switched_T == 0 ~ "repeated (C)",
@@ -54,6 +64,10 @@ fnams_exp2 <- list.files(path = "../CCC02/Data analysis/CSV Data/",
 subjs_exp2 <- list.files(path = "../CCC02/Data analysis/CSV Data/",
                          pattern = "td") # needed for identifying subject numbers
 
+detnams_exp2 <- list.files(path = "../CCC02/Data analysis/CSV Data/",
+                           pattern = "det",
+                           full.names = TRUE) # needed for reading data
+
 data <- NULL
 for (subj in 1:length(fnams_exp2)) {
 
@@ -61,6 +75,14 @@ for (subj in 1:length(fnams_exp2)) {
   pData <- pData %>%
     mutate(subj = substr(subjs_exp2[subj],1,2)) %>%
     select(subj,everything())
+
+  # get subj details data
+  subj_details <- read_csv(detnams_exp2[subj], col_types = cols(), col_names = FALSE) # read the data from csv
+  subj_details <- str_split(subj_details, pattern = " ", simplify = TRUE)
+
+  pData %<>%
+    mutate(age = subj_details[1],
+           gender = subj_details[2])
 
   data <- rbind(data, pData) # combine data array with existing data
 
@@ -76,28 +98,27 @@ data <-
 # mutate column based on blocked and control patterns
 data <-
   data %>%
-  mutate(patArrowP1 = as.factor(case_when(
-    oldSNum %% 2 == 1 & TT==1 & tQuad %in% c(1,4) ~ 1,
-    oldSNum %% 2 == 1 & TT==1 & tQuad %in% c(2,3) ~ 2,
-    oldSNum %% 2 == 1 & TT==2 & tQuad %in% c(1,4) ~ 2,
-    oldSNum %% 2 == 1 & TT==2 & tQuad %in% c(2,3) ~ 1,
-    oldSNum %% 2 == 0 & TT==1 & tQuad %in% c(1,4) ~ 2,
-    oldSNum %% 2 == 0 & TT==1 & tQuad %in% c(2,3) ~ 1,
-    oldSNum %% 2 == 0 & TT==2 & tQuad %in% c(1,4) ~ 1,
-    oldSNum %% 2 == 0 & TT==2 & tQuad %in% c(2,3) ~ 2,
+  mutate(patArrowP1 = as.factor(
+    case_when(
+      oldSNum %% 2 == 1 & TT==1 & tQuad %in% c(1,4) ~ 1,
+      oldSNum %% 2 == 1 & TT==1 & tQuad %in% c(2,3) ~ 2,
+      oldSNum %% 2 == 1 & TT==2 & tQuad %in% c(1,4) ~ 2,
+      oldSNum %% 2 == 1 & TT==2 & tQuad %in% c(2,3) ~ 1,
+      oldSNum %% 2 == 0 & TT==1 & tQuad %in% c(1,4) ~ 2,
+      oldSNum %% 2 == 0 & TT==1 & tQuad %in% c(2,3) ~ 1,
+      oldSNum %% 2 == 0 & TT==2 & tQuad %in% c(1,4) ~ 1,
+      oldSNum %% 2 == 0 & TT==2 & tQuad %in% c(2,3) ~ 2,
   )))
 
 data <-
   data %>%
-  select(-oldSNum, -phase, -tLoc, -tOrient, -resp) %>% # remove irrelevant variables
-  mutate(epoch = ceiling(block/4)) %>%
-  mutate(phase = ceiling(block/20)) %>%
-  select(subj, phase, epoch, block:patType, patArrowP1, everything()) # reorder variables
-
-factorCols <- c("subj","TT","patType", "patArrowP1", "tQuad")
-data[factorCols] <- lapply(data[factorCols], factor)
-data$TT <- recode_factor(data$TT, "1" = "repeated", "2" = "random")
-data$patArrowP1 <- recode_factor(data$patArrowP1, "1" = "arrow", "2" = "no arrow")
+  select(-oldSNum, -phase, -resp) %>% # remove irrelevant variables
+  mutate(epoch = ceiling(block/4),
+         phase = ceiling(block/20),
+         exp = "CCC02",
+         TT = recode(TT, "1" = "repeated", "2" = "random"),
+         patArrowP1 = recode(patArrowP1, "1" = "arrow", "2" = "no arrow")) %>%
+  select(exp, subj, age, gender, phase, epoch, block:patType, patArrowP1, everything()) # reorder variables
 
 data_exp2 <- data
 
@@ -109,14 +130,25 @@ fnams_exp3 <- list.files(path = "../CCC03/Data analysis/CSV Data/",
                          full.names = TRUE) # needed for reading data
 subjs_exp3 <- list.files(path = "../CCC03/Data analysis/CSV Data/",
                          pattern = "td") # needed for identifying subject numbers
+detnams_exp3 <- list.files(path = "../CCC03/Data analysis/CSV Data/",
+                           pattern = "det",
+                           full.names = TRUE) # needed for reading data
 
 data <- NULL
 for (subj in 1:length(fnams_exp3)) {
 
   pData <- read_csv(fnams_exp3[subj], col_types = cols(), col_names = FALSE) # read the data from csv
   pData <- pData %>%
-    mutate(subj = substr(subjs_exp3[subj],1,2)) %>%
+    mutate(subj = substr(subjs_exp3[subj],1,3)) %>%
     select(subj,everything())
+
+  # get subj details data
+  subj_details <- read_csv(detnams_exp2[subj], col_types = cols(), col_names = FALSE) # read the data from csv
+  subj_details <- str_split(subj_details, pattern = " ", simplify = TRUE)
+
+  pData %<>%
+    mutate(age = subj_details[1],
+           gender = subj_details[2])
 
   data <- rbind(data, pData) # combine data array with existing data
 
@@ -133,10 +165,41 @@ data <-
          resp = X10, acc = X11, RT = X12)
 
 # some more data cleaning to get the final dataframe we will use for analysis
-data <- data %>%
-  select(-tLoc, -tOrient, -resp, -switched_T) %>% # remove some irrelevant variables
-  mutate(epoch = ceiling(block/4)) %>% # this is a recoding of block (epoch 1 = blocks 1-4, epoch 2 = blocks 5-8) - useful for figures.
-  mutate(phase = if_else(block <= 20, 1, 2)) %>% # new phase variable - standard = 1, with arrow = 2.
-  select(subj, phase, epoch, block:patType, everything()) # reorder variables
+data <-
+  data %>%
+  select(-resp, -switched_T) %>% # remove some irrelevant variables
+  mutate(epoch = ceiling(block/4), # this is a recoding of block (epoch 1 = blocks 1-4, epoch 2 = blocks 5-8) - useful for figures.
+         phase = if_else(block <= 20, 1, 2), # new phase variable - standard = 1, with arrow = 2.
+         exp = "CCC03",
+         TT = recode(TT, "1" = "repeated", "2" = "random",
+                     "3" = "global (local random)", "4" = "local (global random)")) %>%
+  select(exp, subj, age, gender, phase, epoch, block:patType, everything()) # reorder variables
 
 data_exp3 <- data
+
+
+# Join experiments together and tidy -----------------------------------------------
+
+all_data <-
+  bind_rows(data_exp1, data_exp2, data_exp3)
+
+# arrange columns
+all_data %<>%
+  select(exp:patType, patArrowP1, arrow, everything())
+
+all_data %<>%
+  mutate(timeout = case_when(acc == 9999 ~ 1, # set new timeout column based on accuracy of 9999
+                             acc < 9999 ~ 0), .before = acc,
+         acc = ifelse(timeout == 1, NA, acc), # use timeout column to set acc and RT to NA
+         RT = ifelse(timeout == 1, NA, RT),
+         subj = paste0(exp, "_", subj))
+
+# clean up column values
+all_data %<>%
+  mutate(gender = recode(gender, "F" = "f", "female" = "f"))
+
+# make relevant columns factors
+factorCols <- colnames(all_data[1:14]) # first 14 columns should be treated as factors
+all_data[factorCols] <- lapply(all_data[factorCols], factor)
+
+saveRDS(all_data, "combinedData.rds")

@@ -48,7 +48,6 @@ output            : papaja::apa6_pdf
 urlcolor: blue
 editor_options: 
   chunk_output_type: console
-
 ---
 
 ```{r knitr-options, echo=FALSE, message = FALSE}
