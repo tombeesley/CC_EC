@@ -196,10 +196,11 @@ all_data %<>%
 
 # clean up column values
 all_data %<>%
-  mutate(gender = recode(gender, "F" = "f", "female" = "f"))
+  mutate(gender = recode(gender, "F" = "f", "female" = "f"),
+         age = as.numeric(age))
 
 # make relevant columns factors
-factorCols <- colnames(all_data[1:14]) # first 14 columns should be treated as factors
+factorCols <- colnames(all_data[c(1,2,4:14)])
 all_data[factorCols] <- lapply(all_data[factorCols], factor)
 
 saveRDS(all_data, "combinedData.rds")

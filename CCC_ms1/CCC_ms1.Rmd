@@ -50,7 +50,7 @@ knitr::opts_chunk$set(warning=FALSE, message=FALSE, echo = FALSE, dev = "cairo_p
 library(tidyverse)
 library(citr)
 library(papaja)
-# library(english)
+library(english)
 # library(extrafont)
 # library(afex) 
 # library(BayesFactor)
@@ -156,8 +156,7 @@ demographics <-
 
 ```
 
-
-`r words(length(demographics))` undergraduate students from Lancaster University were recruited (mean age = `r mean(demographics$age)`, SD = `r sd(demographics$age)`; `r count(demographics[,2:3], gender)[1,2]` identified as male and `r count(demographics[,2:3], gender)[2,2]` as female) via the Psychology Research Participation System in the Department of Psychology at Lancaster University, in return for the opportunity to use the recruitment system for their own research in future years. 
+`r Words(nrow(demographics))` undergraduate students from Lancaster University were recruited (mean age = `r mean(demographics$age)`, SD = `r sd(demographics$age)`; `r count(demographics[,2:3], gender)[1,2]` identified as male and `r count(demographics[,2:3], gender)[2,2]` as female) via the Psychology Research Participation System in the Department of Psychology at Lancaster University, in return for the opportunity to use the recruitment system for their own research in future years. 
 
 ### Materials
 Participants were tested individually in a quiet room with a Dell laptop with a 15.6” screen, a screen resolution of 1920 x 1080, and a full size external keyboard for participants to use to respond to the task. Participants sat approximately 50 cm from the screen. Stimulus presentation was controlled by MATLAB using the Psychophysics Toolbox extensions (Brainard, 1997; Kleiner, Brainard & Pelli, 2007; Pelli, 1997). Responses to the target stimulus were made by pressing the ‘c’ or ‘n’ key on a standard keyboard. All experimental materials are available at the github repository for this study. 
@@ -200,8 +199,99 @@ resp_summary_exp1 <-
   left_join(acc_summary, by = "subj") %>% 
   left_join(rt_summary, by = "subj")
 
+# is anyone an outlier in terms of timeouts?
+outlier_to <- 
+  resp_summary_exp1 %>% 
+  filter(z_meanTO < -2.5 | z_meanTO > 2.5)
+
+# is anyone an outlier in terms of accuracy?
+outlier_acc <- 
+  resp_summary_exp1 %>% 
+  filter(z_meanAcc < -2.5 | z_meanAcc > 2.5)
+
+# is anyone an outlier in terms of rt?
+outlier_rt <- 
+  resp_summary_exp1 %>% 
+  filter(z_meanRT < -2.5 | z_meanRT > 2.5)
+
+participants_removed <- 
+  bind_rows(outlier_to, outlier_acc, outlier_rt) %>% 
+  select(subj) %>% 
+  mutate(subj = as.character(subj)) %>% 
+  unique() %>% 
+  pull()
+
 ```
 
+Our criterion for removing outlier data, at both the participant level and the trial level, was 2.5 standard deviations above or below the mean of the sample. On average, trials ended with a timeout on `r spec_dec(100*mean(resp_summary_exp1$meanTO),2)`% of trials (SD = `r spec_dec(100*sd(resp_summary_exp1$meanTO),2)`). `r Words(nrow(outlier_to))` participants had an usually high proportion of timeouts and were removed from the analysis. The mean accuracy of participants (not including timeout trials) was `r spec_dec(100*mean(resp_summary_exp1$meanAcc),2)`% (SD = `r spec_dec(100*sd(resp_summary_exp1$meanAcc),2)`%). `r Words(nrow(outlier_to))` participants had an usually low proportion of accurate trials and were also removed. The only participant deemed to be an outlier in terms of mean response time (hereafter RT) was also excluded on the basis of the timeout criterion, noted above. 
+
+```{r}
+
+data_exp1_OR <- 
+  data_exp1 %>% 
+  filter(!subj %in% participants_removed)
+
+data_exp1_OR <- 
+  data_exp1_OR %>% 
+  filter(timeout == 0,
+         acc == 1) %>% 
+  group_by(subj) %>% 
+  mutate(zRT = scale(RT)[,1]) # calculate z scores on participant basis
+
+rt_outlier_summary <- 
+  data_exp1_OR %>% 
+  group_by(subj) %>% 
+  summarise(prop_rem = mean(zRT < -2.5 | zRT > 2.5))
+
+# was anyone an outlier in prop removed?
+rt_outlier_summary %>% 
+  mutate(z_prop_rem = scale(prop_rem)[,1]) %>% 
+  filter(z_prop_rem < -2.5 | z_prop_rem > 2.5)
+
+data_e1_f <-
+  data_exp1_OR %>%
+  ungroup() %>%
+  filter(zRT > -2.5 & zRT < 2.5) # keep data in this range
+
+```
+
+
+For the remaining `r words(nrow(rt_outlier_summary))`participants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was `r spec_dec(100*mean(rt_outlier_summary$prop_rem),2)`% (SD = `r spec_dec(100*sd(rt_outlier_summary$prop_rem),2)`%). No participants had an unusual proportion of trials removed as outlier RTs. 
+
+```{r}
+
+# summarise the data across the 10 epochs, by subj
+rt_fig_summary <- 
+  data_e1_f %>% 
+  group_by(subj, epoch, TT) %>% 
+  summarise(meanRT = mean(RT))
+
+# compute normalised RT (norm_RT), for calculating w/s error bars (i.e., Cosin)
+rt_fig_summary <- 
+  rt_fig_summary %>% 
+  group_by(subj) %>% # within each experiment, and each subject
+  summarise(sub_MeanRT = mean(meanRT)) %>% # calculate the mean RT for the subject
+  mutate(sample_MeanRT = mean(sub_MeanRT)) %>% # the overall mean RT for the sample in that experiment
+  ungroup() %>% # ungroup the data, to allow for removal of variable
+  left_join(rt_fig_summary, by = "subj") %>% # join to the original data frame
+  mutate(norm_RT = meanRT - sub_MeanRT + sample_MeanRT) # compute the normalised RT, from the RT, subject mean and sample mean
+
+
+
+# summarise at the group level and plot
+rt_fig_summary %>% 
+  group_by(epoch, TT) %>% 
+  summarise(group_RT = mean(meanRT),
+            group_SE = sd(norm_RT)/sqrt(n())) %>% 
+  ggplot(aes(x = epoch, y = group_RT, group = TT, colour = TT)) +
+  geom_line(size = .5) +
+  geom_point(size = 3) +
+  geom_errorbar(aes(ymin = group_RT - group_SE,
+                    ymax = group_RT + group_SE),
+                width = .05)
+
+
+```
 
 
 \newpage
