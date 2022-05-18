@@ -1,6 +1,6 @@
 function convertCSV
 
-for s = [116:120]
+for s = [122:125 207:221]
     s
     load(['Raw Data\S',int2str(s)]);
     

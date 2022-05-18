@@ -33,3 +33,4 @@ data <- data %>%
   select(subj, phase, epoch, block:patType, everything()) # reorder variables
 
 save(data, file = "CCC03_data.RData")
+
