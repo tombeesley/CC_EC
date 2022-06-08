@@ -1,8 +1,11 @@
 ---
-title: "lab_report_CCC03"
-output: html_document
-editor_options: 
-  chunk_output_type: console
+title: "CCC03_presentation"
+author: "Tom Beesley"
+date: '2022-05-19'
+output: 
+  ioslides_presentation:
+    widescreen: true
+    smaller: true
 ---
 
 ```{r setup, include=FALSE}
@@ -13,8 +16,14 @@ theme_set(theme_classic())
 
 load("CCC03_data.RData")
 
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(
+	echo = FALSE,
+	message = FALSE,
+	warning = FALSE
+)
 ```
+
+## Design
 
 Standard contextual cuing, then arrow pointing towards the half of the screen containing the target. At the same time, patterns were manipuated such that on some trials the distractors were randomised. Four conditions in phase 2:
 
@@ -67,9 +76,11 @@ data <-
 
 ```
 
-In total, `r length(data_summary)` participants have been run on the task. It looks like we have `r length(Ps_to_remove)` participants (`r Ps_to_remove`) that need to be removed from the sample for accuracy below 90%.
+## Data processing
 
-The data from the remaining `r length(data_summary) - length(Ps_to_remove)` are presented below. 
+In total, `r nrow(data_summary)` participants have been run on the task. It looks like we have `r length(Ps_to_remove)` participants (`r Ps_to_remove`) that need to be removed from the sample for accuracy below 90%. The data from the remaining `r nrow(data_summary) - length(Ps_to_remove)` are analysed. 
+
+## RT data across the experiment
 
 ```{r}
 data %>% 
@@ -81,8 +92,7 @@ data %>%
 
 ```
 
-Here are the data from Stage 2 only:
-
+## RT data Stage 2 
 
 ```{r}
 
@@ -90,11 +100,18 @@ Here are the data from Stage 2 only:
 data %>% 
   filter(epoch >= 6) %>% 
   group_by(TT) %>% 
-  summarise(meanRT = mean(RT)) %>% 
+  summarise(meanRT = mean(RT),
+            seRT = sd(RT)/sqrt(n())) %>% 
   ggplot(aes(y = meanRT, fill = TT)) +
   geom_col(aes(x = TT)) +
-  coord_cartesian(ylim = c(1000,1400)) +
-  scale_y_continuous(breaks = seq(1000,1400,50)) 
+  coord_cartesian(ylim = c(1100,1400)) +
+  scale_y_continuous(breaks = seq(1100,1400,50)) 
+
+```
+
+<!-- ## Data by participant -->
+
+```{r eval=FALSE, include=FALSE}
 
 # data for each P
 data %>% 
@@ -108,7 +125,7 @@ data %>%
 ```
 
 
-```{r}
+```{r include=FALSE}
 # bayesian analysis of the stage 2 data
 
 p2_d <- 
