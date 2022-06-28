@@ -131,6 +131,20 @@
 % \setlength{\parindent}{0.5in}
 % \setlength{\parskip}{0pt plus 0pt minus 0pt}
 
+% Overwrite redefinition of paragraph and subparagraph by the default LaTeX template
+% See https://github.com/crsh/papaja/issues/292
+\makeatletter
+\renewcommand{\paragraph}{\@startsection{paragraph}{4}{\parindent}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries\itshape\typesectitle}}
+
+\renewcommand{\subparagraph}[1]{\@startsection{subparagraph}{5}{1em}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-\z@\relax}%
+  {\normalfont\normalsize\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
+\makeatother
+
 % \usepackage{etoolbox}
 \makeatletter
 \patchcmd{\HyOrg@maketitle}
@@ -142,7 +156,15 @@
   {\section*{\protect\normalfont{\@title}}}
   {}{\typeout{Failed to patch title.}}
 \makeatother
-\shorttitle{Contextual cuing and instruction}
+
+\usepackage{xpatch}
+\makeatletter
+\xapptocmd\appendix
+  {\xapptocmd\section
+    {\addcontentsline{toc}{section}{\appendixname\ifoneappendix\else~\theappendix\fi\\: #1}}
+    {}{\InnerPatchFailed}%
+  }
+{}{\PatchFailed}
 \keywords{keywords\newline\indent Word count: X}
 \DeclareDelayedFloatFlavor{ThreePartTable}{table}
 \DeclareDelayedFloatFlavor{lltable}{table}
@@ -165,9 +187,17 @@
 \date{}
 
 
+\shorttitle{Contextual cuing and instruction}
+
+\authornote{
+
+Correspondence concerning this article should be addressed to Tom Beesley, Department of Psychology, Lancaster University, UK, LA1 4YD. E-mail: \href{mailto:t.beesley@lancaster.ac.uk}{\nolinkurl{t.beesley@lancaster.ac.uk}}
+
+}
+
 \affiliation{\vspace{0.5cm}\textsuperscript{1} Lancaster University, UK\\\textsuperscript{2} Universidad Autónoma de Madrid, Spain}
 
-\abstract{
+\abstract{%
 abstract here
 
 Public significance statement:
@@ -179,6 +209,174 @@ Public significance statement:
 \maketitle
 
 Main text here (Beesley et al., 2015)
+
+\begin{verbatim}
+## # A tibble: 3 x 2
+##   exp   num_Ps
+##   <fct>  <int>
+## 1 CCC01     31
+## 2 CCC02     34
+## 3 CCC03     43
+\end{verbatim}
+
+\includegraphics{CCC_ms1_files/figure-latex/unnamed-chunk-1-1.pdf} \includegraphics{CCC_ms1_files/figure-latex/unnamed-chunk-1-2.pdf}
+
+\hypertarget{experiment-1}{%
+\section{Experiment 1}\label{experiment-1}}
+
+Experiment 1 sought to examine whether the learnt attentional behaviour developed contextual cuing was expressed when participants were directed with a top-down instruction to search in a particular region of the search space. Participants were first trained with a set of four repeating configurations
+
+\hypertarget{method}{%
+\subsection{Method}\label{method}}
+
+\hypertarget{participants}{%
+\subsubsection{Participants}\label{participants}}
+
+Thirty-one undergraduate students from Lancaster University were recruited (mean age = 20.13, SD = 1.09; 17 identified as male and 14 as female) via the Psychology Research Participation System in the Department of Psychology at Lancaster University, in return for the opportunity to use the recruitment system for their own research in future years.
+
+\hypertarget{materials}{%
+\subsubsection{Materials}\label{materials}}
+
+Participants were tested individually in a quiet room with a Dell laptop with a 15.6'' screen, a screen resolution of 1920 x 1080, and a full size external keyboard for participants to use to respond to the task. Participants sat approximately 50 cm from the screen. Stimulus presentation was controlled by MATLAB using the Psychophysics Toolbox extensions (Brainard, 1997; Kleiner, Brainard \& Pelli, 2007; Pelli, 1997). Responses to the target stimulus were made by pressing the `c' or `n' key on a standard keyboard. All experimental materials are available at the github repository for this study.
+
+Distractor stimuli were an `L' shape (rotated 0°, 90°, 180°, or 270°) while the target stimulus was a `T' shape (rotated at either 90° or 270°). Stimuli were arranged in a square grid of 144 evenly spaced cells (12 x 12) which was positioned centrally on the screen and was XXX mm (XX°) square. The grid itself was invisible to participants. The fixation cross (displayed centrally before each trial) was XX mm (X.X°) square. The stimuli were XX mm (X.X°) square. The background of the screen was grey (RGB: .6, .6, .6) and the stimuli were presented in black. There was a small offset in the vertical line of the `L' distractors, which increased the similarity between the `L' distractor and the target `T', making the search task more difficult (Duncan \& Humphreys, 1989).
+
+\hypertarget{design}{%
+\subsubsection{Design}\label{design}}
+
+\hypertarget{procedure}{%
+\subsubsection{Procedure}\label{procedure}}
+
+\hypertarget{results}{%
+\subsection{Results}\label{results}}
+
+Our criterion for removing outlier data, at both the participant level and the trial level, was 2.5 standard deviations above or below the mean of the sample. On average, trials ended with a timeout on 1.97\% of trials (SD = 2.53). Two participants had an usually high proportion of timeouts and were removed from the analysis. The mean accuracy of participants (not including timeout trials) was 98.10\% (SD = 1.65\%). One participants that had an unusually low proportion of accurate trials and were also removed. The only participant deemed to be an outlier in terms of mean response time (hereafter RT) was also excluded on the basis of the timeout criterion, noted above.
+
+For the remaining twenty-eightparticipants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was 3.03\% (SD = 0.79\%). zero participants had an unusual proportion of trials removed as outlier RTs.
+
+\includegraphics{CCC_ms1_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+\hypertarget{experiment-2}{%
+\section{Experiment 2}\label{experiment-2}}
+
+Experiment 2 sought to examine \ldots{}
+
+\hypertarget{method-1}{%
+\subsection{Method}\label{method-1}}
+
+\hypertarget{participants-1}{%
+\subsubsection{Participants}\label{participants-1}}
+
+Thirty-one undergraduate students from Lancaster University were recruited (mean age = 20.13, SD = 1.09; 17 identified as male and 14 as female) via the Psychology Research Participation System in the Department of Psychology at Lancaster University, in return for the opportunity to use the recruitment system for their own research in future years.
+
+\hypertarget{materials-1}{%
+\subsubsection{Materials}\label{materials-1}}
+
+The materials and stimuli were identical to Experiment 1.
+
+\hypertarget{design-1}{%
+\subsubsection{Design}\label{design-1}}
+
+\hypertarget{procedure-1}{%
+\subsubsection{Procedure}\label{procedure-1}}
+
+\hypertarget{results-1}{%
+\subsection{Results}\label{results-1}}
+
+Our criteria for removing outlier data were identical to Experiment 1. On average, trials ended with a timeout on 2.13\% of trials (SD = 1.83). Zero participants had an usually high proportion of timeouts. The mean accuracy of participants (not including timeout trials) was 95.85\% (SD = 6.10\%). One participants that had an unusually low proportion of accurate trials and were also removed. Zero participants were deemed to be an outlier in terms of mean RT.
+
+For the remaining thirty-threeparticipants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was 2.81\% (SD = 1.04\%). one participants had an unusual proportion of trials removed as outlier RTs and were not included in the final analysis.
+
+\includegraphics{CCC_ms1_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\begin{verbatim}
+## Anova Table (Type 3 tests)
+## 
+## Response: meanRT
+##                Effect           df       MSE          F   ges p.value
+## 1          patArrowP1        1, 32 442144.07 175.06 ***  .313   <.001
+## 2                  TT        1, 32 151825.16  21.10 ***  .019   <.001
+## 3               epoch 3.13, 100.03 200796.66  24.76 ***  .084   <.001
+## 4       patArrowP1:TT        1, 32 164480.86       0.74 <.001    .395
+## 5    patArrowP1:epoch 3.34, 107.03 147265.04       0.61  .002    .630
+## 6            TT:epoch 3.48, 111.28  89997.46    4.53 **  .008    .003
+## 7 patArrowP1:TT:epoch 3.39, 108.43  62430.81     2.24 +  .003    .080
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
+## 
+## Sphericity correction method: GG
+\end{verbatim}
+
+\begin{verbatim}
+## Bayes factor analysis
+## --------------
+## [1] patArrowP1 + TT + patArrowP1:TT + subj : 0.1773586 ±2.57%
+## 
+## Against denominator:
+##   meanRT ~ patArrowP1 + TT + subj 
+## ---
+## Bayes factor type: BFlinearModel, JZS
+\end{verbatim}
+
+\begin{verbatim}
+## Anova Table (Type 3 tests)
+## 
+## Response: meanRT
+##                Effect           df       MSE         F   ges p.value
+## 1          patArrowP1        1, 32 107851.75      0.48 <.001    .493
+## 2                  TT        1, 32 117763.13 51.20 ***  .035   <.001
+## 3               epoch 3.44, 109.95  79887.36 10.79 ***  .017   <.001
+## 4       patArrowP1:TT        1, 32 284015.04      0.04 <.001    .850
+## 5    patArrowP1:epoch 3.58, 114.51  94104.45      0.47 <.001    .737
+## 6            TT:epoch 3.39, 108.54  89788.68      1.46  .003    .227
+## 7 patArrowP1:TT:epoch 3.70, 118.33  97123.16      0.75  .002    .549
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
+## 
+## Sphericity correction method: GG
+\end{verbatim}
+
+\begin{verbatim}
+## Bayes factor analysis
+## --------------
+## [1] patArrowP1 + TT + patArrowP1:TT + subj : 0.1304829 ±4.41%
+## 
+## Against denominator:
+##   meanRT ~ patArrowP1 + TT + subj 
+## ---
+## Bayes factor type: BFlinearModel, JZS
+\end{verbatim}
+
+\hypertarget{experiment-3}{%
+\section{Experiment 3}\label{experiment-3}}
+
+Experiment 3 sought to examine \ldots{}
+
+\hypertarget{method-2}{%
+\subsection{Method}\label{method-2}}
+
+\hypertarget{participants-2}{%
+\subsubsection{Participants}\label{participants-2}}
+
+Forty-three undergraduate students from Lancaster University were recruited (mean age = 18.65, SD = 2.81; 29 identified as male and 12 as female) via the Psychology Research Participation System in the Department of Psychology at Lancaster University, in return for the opportunity to use the recruitment system for their own research in future years.
+
+\hypertarget{materials-2}{%
+\subsubsection{Materials}\label{materials-2}}
+
+The materials and stimuli were identical to Experiment 1.
+
+\hypertarget{design-2}{%
+\subsubsection{Design}\label{design-2}}
+
+\hypertarget{procedure-2}{%
+\subsubsection{Procedure}\label{procedure-2}}
+
+\hypertarget{results-2}{%
+\subsection{Results}\label{results-2}}
+
+Our criteria for removing outlier data were identical to Experiment 1. On average, trials ended with a timeout on 3.33\% of trials (SD = 4.08). One participants had an usually high proportion of timeouts. The mean accuracy of participants (not including timeout trials) was 96.12\% (SD = 8.47\%). Two participants that had an unusually low proportion of accurate trials and were also removed. Zero participants were deemed to be an outlier in terms of mean RT.
+
+For the remaining fortyparticipants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was 3.13\% (SD = 0.72\%). zero participants had an unusual proportion of trials removed as outlier RTs and were not included in the final analysis.
 
 \newpage
 

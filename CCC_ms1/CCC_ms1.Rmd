@@ -50,12 +50,12 @@ library(tidyverse)
 library(citr)
 library(papaja)
 library(english)
-# library(extrafont)
-# library(afex) 
-# library(BayesFactor)
-# library(apa)
-# library(pwr) # power calculations
-# library(lsr) # effect size estimate
+library(extrafont)
+library(afex) 
+library(BayesFactor)
+library(apa)
+library(pwr) # power calculations
+library(lsr) # effect size estimate
 # library(skimr)
 # library(rstudioapi)
 # library(kableExtra)
@@ -222,7 +222,7 @@ participants_removed <-
 
 ```
 
-Our criterion for removing outlier data, at both the participant level and the trial level, was 2.5 standard deviations above or below the mean of the sample. On average, trials ended with a timeout on `r spec_dec(100*mean(resp_summary_exp1$meanTO),2)`% of trials (SD = `r spec_dec(100*sd(resp_summary_exp1$meanTO),2)`). `r Words(nrow(outlier_to))` participants had an usually high proportion of timeouts and were removed from the analysis. The mean accuracy of participants (not including timeout trials) was `r spec_dec(100*mean(resp_summary_exp1$meanAcc),2)`% (SD = `r spec_dec(100*sd(resp_summary_exp1$meanAcc),2)`%). `r Words(nrow(outlier_to))` participants that had an unusually low proportion of accurate trials and were also removed. The only participant deemed to be an outlier in terms of mean response time (hereafter RT) was also excluded on the basis of the timeout criterion, noted above. 
+Our criterion for removing outlier data, at both the participant level and the trial level, was 2.5 standard deviations above or below the mean of the sample. On average, trials ended with a timeout on `r spec_dec(100*mean(resp_summary_exp1$meanTO),2)`% of trials (SD = `r spec_dec(100*sd(resp_summary_exp1$meanTO),2)`). `r Words(nrow(outlier_to))` participants had an usually high proportion of timeouts and were removed from the analysis. The mean accuracy of participants (not including timeout trials) was `r spec_dec(100*mean(resp_summary_exp1$meanAcc),2)`% (SD = `r spec_dec(100*sd(resp_summary_exp1$meanAcc),2)`%). `r Words(nrow(outlier_acc))` participants that had an unusually low proportion of accurate trials and were also removed. The only participant deemed to be an outlier in terms of mean response time (hereafter RT) was also excluded on the basis of the timeout criterion, noted above. 
 
 ```{r}
 
@@ -243,7 +243,8 @@ rt_outlier_summary <-
   summarise(prop_rem = mean(zRT < -2.5 | zRT > 2.5))
 
 # was anyone an outlier in prop removed?
-rt_outlier_summary %>% 
+outlier_prop_removed <- 
+  rt_outlier_summary %>% 
   mutate(z_prop_rem = scale(prop_rem)[,1]) %>% 
   filter(z_prop_rem < -2.5 | z_prop_rem > 2.5)
 
@@ -255,33 +256,21 @@ data_e1_f <-
 ```
 
 
-For the remaining `r words(nrow(rt_outlier_summary))`participants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was `r spec_dec(100*mean(rt_outlier_summary$prop_rem),2)`% (SD = `r spec_dec(100*sd(rt_outlier_summary$prop_rem),2)`%). No participants had an unusual proportion of trials removed as outlier RTs. 
+For the remaining `r words(nrow(rt_outlier_summary))` participants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was `r spec_dec(100*mean(rt_outlier_summary$prop_rem),2)`% (SD = `r spec_dec(100*sd(rt_outlier_summary$prop_rem),2)`%). `r words(nrow(outlier_prop_removed))` participants had an unusual proportion of trials removed as outlier RTs. 
 
 ```{r}
 
 # summarise the data across the 10 epochs, by subj
-rt_fig_summary <- 
+rt_summary_data_e1 <- 
   data_e1_f %>% 
   group_by(subj, epoch, TT) %>% 
   summarise(meanRT = mean(RT))
 
-# compute normalised RT (norm_RT), for calculating w/s error bars (i.e., Cosin)
-rt_fig_summary <- 
-  rt_fig_summary %>% 
-  group_by(subj) %>% # within each experiment, and each subject
-  summarise(sub_MeanRT = mean(meanRT)) %>% # calculate the mean RT for the subject
-  mutate(sample_MeanRT = mean(sub_MeanRT)) %>% # the overall mean RT for the sample in that experiment
-  ungroup() %>% # ungroup the data, to allow for removal of variable
-  left_join(rt_fig_summary, by = "subj") %>% # join to the original data frame
-  mutate(norm_RT = meanRT - sub_MeanRT + sample_MeanRT) # compute the normalised RT, from the RT, subject mean and sample mean
-
-
-
 # summarise at the group level and plot
-rt_fig_summary %>% 
+rt_summary_data_e1 %>% 
   group_by(epoch, TT) %>% 
   summarise(group_RT = mean(meanRT),
-            group_SE = sd(norm_RT)/sqrt(n())) %>% 
+            group_SE = sd(meanRT)/sqrt(n())) %>% 
   ggplot(aes(x = epoch, y = group_RT, group = TT, colour = TT)) +
   geom_line(size = .5) +
   geom_point(size = 3) +
@@ -291,6 +280,480 @@ rt_fig_summary %>%
 
 
 ```
+
+
+```{r}
+# Experiment 1 stats
+
+# Statistics on Stage 1
+
+phase_1 <- 
+  rt_summary_data_e1 %>% 
+  mutate(epoch = as.numeric(epoch)) %>% 
+  filter(epoch <= 5)
+
+aov_car(meanRT ~ Error(subj/TT*epoch), data = phase_1)
+
+```
+
+```{r}
+# Statistics on Stage 2
+
+phase_2 <- 
+  rt_summary_data_e1 %>% 
+  mutate(epoch = as.numeric(epoch)) %>% 
+  filter(epoch > 5)
+
+aov_car(meanRT ~ Error(subj/TT*epoch), data = phase_2)
+
+# random vs consistent
+RvC <- 
+  phase_2 %>% 
+  filter(TT %in% c("random", "repeated (C)"))
+
+t.test(meanRT ~ TT, data = RvC)
+
+# random vs. inconsistent
+RvI <- 
+  phase_2 %>% 
+  filter(TT %in% c("random", "repeated (I)"))
+
+t.test(meanRT ~ TT, data = RvI)
+
+# consistent vs. inconsistent
+CvI <- 
+  phase_2 %>% 
+  filter(TT %in% c("repeated (C)", "repeated (I)"))
+
+t.test(meanRT ~ TT, data = CvI)
+
+```
+
+
+# Experiment 2
+
+Experiment 2 sought to examine ...
+
+## Method
+
+### Participants
+
+```{r}
+
+# get basic stats for Ps
+
+data_exp2 <- 
+  data_raw %>% 
+  filter(exp == "CCC02") 
+
+demographics <- 
+  data_exp1 %>% 
+  group_by(subj) %>% 
+  slice(1) %>% 
+  select(subj, age, gender)
+
+```
+
+`r Words(nrow(demographics))` undergraduate students from Lancaster University were recruited (mean age = `r mean(demographics$age)`, SD = `r sd(demographics$age)`; `r count(demographics[,2:3], gender)[1,2]` identified as male and `r count(demographics[,2:3], gender)[2,2]` as female) via the Psychology Research Participation System in the Department of Psychology at Lancaster University, in return for the opportunity to use the recruitment system for their own research in future years. 
+
+### Materials
+The materials and stimuli were identical to Experiment 1.
+
+### Design
+
+
+### Procedure
+
+## Results
+
+
+```{r}
+
+# participant exclusions 
+
+to_summary <- 
+  data_exp2 %>% 
+  group_by(subj) %>% 
+  summarise(meanTO = mean(timeout)) %>% 
+  mutate(z_meanTO = scale(meanTO)[,1])
+
+acc_summary <- 
+  data_exp2 %>% 
+  group_by(subj) %>% 
+  summarise(meanAcc = mean(acc, na.rm = TRUE)) %>% 
+  mutate(z_meanAcc = scale(meanAcc)[,1])
+
+rt_summary <- 
+  data_exp2 %>% 
+  filter(acc == 1) %>% 
+  group_by(subj) %>% 
+  summarise(meanRT = mean(RT, na.rm = TRUE)) %>% 
+  mutate(z_meanRT = scale(meanRT)[,1])
+
+resp_summary_exp2 <- 
+  to_summary %>% 
+  left_join(acc_summary, by = "subj") %>% 
+  left_join(rt_summary, by = "subj")
+
+# is anyone an outlier in terms of timeouts?
+outlier_to <- 
+  resp_summary_exp2 %>% 
+  filter(z_meanTO < -2.5 | z_meanTO > 2.5)
+
+# is anyone an outlier in terms of accuracy?
+outlier_acc <- 
+  resp_summary_exp2 %>% 
+  filter(z_meanAcc < -2.5 | z_meanAcc > 2.5)
+
+# is anyone an outlier in terms of rt?
+outlier_rt <- 
+  resp_summary_exp2 %>% 
+  filter(z_meanRT < -2.5 | z_meanRT > 2.5)
+
+participants_removed <- 
+  bind_rows(outlier_to, outlier_acc, outlier_rt) %>% 
+  select(subj) %>% 
+  mutate(subj = as.character(subj)) %>% 
+  unique() %>% 
+  pull()
+
+```
+
+Our criteria for removing outlier data were identical to Experiment 1. On average, trials ended with a timeout on `r spec_dec(100*mean(resp_summary_exp2$meanTO),2)`% of trials (SD = `r spec_dec(100*sd(resp_summary_exp2$meanTO),2)`). `r Words(nrow(outlier_to))` participants had an usually high proportion of timeouts. The mean accuracy of participants (not including timeout trials) was `r spec_dec(100*mean(resp_summary_exp2$meanAcc),2)`% (SD = `r spec_dec(100*sd(resp_summary_exp2$meanAcc),2)`%). `r Words(nrow(outlier_acc))` participants that had an unusually low proportion of accurate trials and were also removed. `r Words(nrow(outlier_rt))` participants were deemed to be an outlier in terms of mean RT. 
+
+```{r}
+
+data_exp2_OR <- 
+  data_exp2 %>% 
+  filter(!subj %in% participants_removed)
+
+data_exp2_OR <- 
+  data_exp2_OR %>% 
+  filter(timeout == 0,
+         acc == 1) %>% 
+  group_by(subj) %>% 
+  mutate(zRT = scale(RT)[,1]) # calculate z scores on participant basis
+
+rt_outlier_summary <- 
+  data_exp2_OR %>% 
+  group_by(subj) %>% 
+  summarise(prop_rem = mean(zRT < -2.5 | zRT > 2.5))
+
+# was anyone an outlier in prop removed?
+outlier_prop_removed <- 
+  rt_outlier_summary %>% 
+  mutate(z_prop_rem = scale(prop_rem)[,1]) %>% 
+  filter(z_prop_rem < -2.5 | z_prop_rem > 2.5)
+
+data_e2_f <-
+  data_exp2_OR %>%
+  ungroup() %>%
+  filter(zRT > -2.5 & zRT < 2.5) # keep data in this range
+
+```
+
+
+For the remaining `r words(nrow(rt_outlier_summary))` participants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was `r spec_dec(100*mean(rt_outlier_summary$prop_rem),2)`% (SD = `r spec_dec(100*sd(rt_outlier_summary$prop_rem),2)`%). `r words(nrow(outlier_prop_removed))` participants had an unusual proportion of trials removed as outlier RTs and were not included in the final analysis. 
+
+```{r}
+
+# summarise the data across the 10 epochs, by subj
+rt_summary_data_e2 <- 
+  data_e2_f %>% 
+  group_by(subj, patArrowP1, epoch, TT) %>% 
+  summarise(meanRT = mean(RT))
+
+# summarise at the group level and plot
+rt_summary_data_e2 %>% 
+  group_by(epoch, patArrowP1, TT) %>% 
+  summarise(group_RT = mean(meanRT),
+            group_SE = sd(meanRT)/sqrt(n())) %>% 
+  ggplot(aes(x = epoch, y = group_RT, group = TT, colour = TT)) +
+  geom_line(aes(group = interaction(TT, patArrowP1)), 
+            size = .5) +
+  geom_point(aes(shape = patArrowP1), 
+             size = 5) +
+  geom_errorbar(aes(ymin = group_RT - group_SE,
+                    ymax = group_RT + group_SE),
+                width = .05)
+
+
+```
+
+```{r}
+# Statistics on Stage 1
+
+phase_1 <- 
+  rt_summary_data_e2 %>% 
+  mutate(epoch = as.numeric(epoch)) %>% 
+  filter(epoch <= 5)
+
+aov_car(meanRT ~ Error(subj/patArrowP1*TT*epoch), data = phase_1)
+
+# no evidence for an interaction of arrow training and TT
+# is there evidence for the null?
+phase_1_BF <- 
+  anovaBF(meanRT ~ patArrowP1*TT + subj,
+          data= data.frame(phase_1),
+          whichRandom = "subj")
+
+phase_1_BF[4]/phase_1_BF[3]
+# the evidence favours an absence of an interaction effect
+
+```
+
+```{r}
+# Statistics on Stage 2
+
+phase_2 <- 
+  rt_summary_data_e2 %>% 
+  mutate(epoch = as.numeric(epoch)) %>% 
+  filter(epoch > 5)
+
+aov_car(meanRT ~ Error(subj/patArrowP1*TT*epoch), data = phase_2)
+
+# no evidence for an interaction of arrow training and TT
+# is there evidence for the null?
+phase_2_BF <- 
+  anovaBF(meanRT ~ patArrowP1*TT + subj,
+          data= data.frame(phase_2),
+          whichRandom = "subj")
+
+phase_2_BF[4]/phase_2_BF[3]
+# the evidence favours an absence of an interaction effect
+
+
+```
+
+# Experiment 3
+
+Experiment 3 sought to examine ...
+
+## Method
+
+### Participants
+
+```{r}
+
+# get basic stats for Ps
+
+data_exp3 <- 
+  data_raw %>% 
+  filter(exp == "CCC03") 
+
+demographics <- 
+  data_exp3 %>% 
+  group_by(subj) %>% 
+  slice(1) %>% 
+  select(subj, age, gender)
+
+```
+
+`r Words(nrow(demographics))` undergraduate students from Lancaster University were recruited (mean age = `r mean(demographics$age)`, SD = `r sd(demographics$age)`; `r count(demographics[,2:3], gender)[1,2]` identified as male and `r count(demographics[,2:3], gender)[2,2]` as female) via the Psychology Research Participation System in the Department of Psychology at Lancaster University, in return for the opportunity to use the recruitment system for their own research in future years. 
+
+### Materials
+The materials and stimuli were identical to Experiment 1.
+
+### Design
+
+
+### Procedure
+
+## Results
+
+
+```{r}
+
+# participant exclusions 
+
+to_summary <- 
+  data_exp3 %>% 
+  group_by(subj) %>% 
+  summarise(meanTO = mean(timeout)) %>% 
+  mutate(z_meanTO = scale(meanTO)[,1])
+
+acc_summary <- 
+  data_exp3 %>% 
+  group_by(subj) %>% 
+  summarise(meanAcc = mean(acc, na.rm = TRUE)) %>% 
+  mutate(z_meanAcc = scale(meanAcc)[,1])
+
+rt_summary <- 
+  data_exp3 %>% 
+  filter(acc == 1) %>% 
+  group_by(subj) %>% 
+  summarise(meanRT = mean(RT, na.rm = TRUE)) %>% 
+  mutate(z_meanRT = scale(meanRT)[,1])
+
+resp_summary_exp3 <- 
+  to_summary %>% 
+  left_join(acc_summary, by = "subj") %>% 
+  left_join(rt_summary, by = "subj")
+
+# is anyone an outlier in terms of timeouts?
+outlier_to <- 
+  resp_summary_exp3 %>% 
+  filter(z_meanTO < -2.5 | z_meanTO > 2.5)
+
+# is anyone an outlier in terms of accuracy?
+outlier_acc <- 
+  resp_summary_exp3 %>% 
+  filter(z_meanAcc < -2.5 | z_meanAcc > 2.5)
+
+# is anyone an outlier in terms of rt?
+outlier_rt <- 
+  resp_summary_exp3 %>% 
+  filter(z_meanRT < -2.5 | z_meanRT > 2.5)
+
+participants_removed <- 
+  bind_rows(outlier_to, outlier_acc, outlier_rt) %>% 
+  select(subj) %>% 
+  mutate(subj = as.character(subj)) %>% 
+  unique() %>% 
+  pull()
+
+```
+
+Our criteria for removing outlier data were identical to Experiment 1. On average, trials ended with a timeout on `r spec_dec(100*mean(resp_summary_exp3$meanTO),2)`% of trials (SD = `r spec_dec(100*sd(resp_summary_exp3$meanTO),2)`). `r Words(nrow(outlier_to))` participants had an usually high proportion of timeouts. The mean accuracy of participants (not including timeout trials) was `r spec_dec(100*mean(resp_summary_exp3$meanAcc),2)`% (SD = `r spec_dec(100*sd(resp_summary_exp3$meanAcc),2)`%). `r Words(nrow(outlier_acc))` participants that had an unusually low proportion of accurate trials and were also removed. `r Words(nrow(outlier_rt))` participants were deemed to be an outlier in terms of mean RT. 
+
+```{r}
+
+data_exp3_OR <- 
+  data_exp3 %>% 
+  filter(!subj %in% participants_removed)
+
+data_exp3_OR <- 
+  data_exp3_OR %>% 
+  filter(timeout == 0,
+         acc == 1) %>% 
+  group_by(subj) %>% 
+  mutate(zRT = scale(RT)[,1]) # calculate z scores on participant basis
+
+rt_outlier_summary <- 
+  data_exp3_OR %>% 
+  group_by(subj) %>% 
+  summarise(prop_rem = mean(zRT < -2.5 | zRT > 2.5))
+
+# was anyone an outlier in prop removed?
+outlier_prop_removed <- 
+  rt_outlier_summary %>% 
+  mutate(z_prop_rem = scale(prop_rem)[,1]) %>% 
+  filter(z_prop_rem < -2.5 | z_prop_rem > 2.5)
+
+data_e3_f <-
+  data_exp3_OR %>%
+  ungroup() %>%
+  filter(zRT > -2.5 & zRT < 2.5) # keep data in this range
+
+```
+
+
+For the remaining `r words(nrow(rt_outlier_summary))` participants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was `r spec_dec(100*mean(rt_outlier_summary$prop_rem),2)`% (SD = `r spec_dec(100*sd(rt_outlier_summary$prop_rem),2)`%). `r words(nrow(outlier_prop_removed))` participants had an unusual proportion of trials removed as outlier RTs and were not included in the final analysis [EAF4S]. 
+
+
+```{r}
+
+# summarise the data across the 10 epochs, by subj
+rt_summary_data_e3 <- 
+  data_e3_f %>% 
+  group_by(subj, epoch, TT) %>% 
+  summarise(meanRT = mean(RT))
+
+# summarise at the group level and plot
+rt_summary_data_e3 %>% 
+  group_by(epoch, TT) %>% 
+  summarise(group_RT = mean(meanRT),
+            group_SE = sd(meanRT)/sqrt(n())) %>% 
+  ggplot(aes(x = epoch, y = group_RT, group = TT, colour = TT)) +
+  geom_line(size = .5) +
+  geom_point(size = 5) +
+  geom_errorbar(aes(ymin = group_RT - group_SE,
+                    ymax = group_RT + group_SE),
+                width = .05)
+
+
+```
+
+```{r}
+# Statistics on Stage 1
+
+phase_1 <- 
+  rt_summary_data_e3 %>% 
+  mutate(epoch = as.numeric(epoch)) %>% 
+  filter(epoch <= 5)
+
+aov_car(meanRT ~ Error(subj/TT*epoch), data = phase_1)
+
+```
+
+```{r}
+# Statistics on Stage 2
+
+phase_2 <- 
+  rt_summary_data_e3 %>% 
+  mutate(epoch = as.numeric(epoch)) %>% 
+  filter(epoch > 5)
+
+aov_car(meanRT ~ Error(subj/TT*epoch), data = phase_2)
+
+# Bayesian analysis of phase 2
+
+anovaBF(meanRT ~ TT + subj,
+        whichRandom = "subj",
+        data = phase_2)
+
+# repeated vs local random
+d1v3 <- 
+  phase_2 %>% 
+  filter(TT %in% c("repeated","local (global random)"))
+
+anovaBF(meanRT ~ TT + subj,
+        whichRandom = "subj",
+        data = d1v3)
+
+# repeated vs global random
+d1v4 <- 
+  phase_2 %>% 
+  filter(TT %in% c("repeated","global (local random)"))
+
+anovaBF(meanRT ~ TT + subj,
+        whichRandom = "subj",
+        data = d1v4)
+
+# local vs. random
+d2v3 <- 
+  phase_2 %>% 
+  filter(TT %in% c("random","local (global random)"))
+
+anovaBF(meanRT ~ TT + subj,
+        whichRandom = "subj",
+        data = d2v3)
+
+# global vs. random
+d2v4 <- 
+  phase_2 %>% 
+  filter(TT %in% c("random","global (local random)"))
+
+anovaBF(meanRT ~ TT + subj,
+        whichRandom = "subj",
+        data = d2v4)
+
+# local  vs. global  
+d3v4 <- 
+  phase_2 %>% 
+  filter(TT %in% c("local (global random)","global (local random)"))
+
+anovaBF(meanRT ~ TT + subj,
+        whichRandom = "subj",
+        data = d3v4)
+
+t.test(meanRT ~ TT,
+        data = d3v4,
+       paired = TRUE)
+
+```
+
+
 
 
 \newpage

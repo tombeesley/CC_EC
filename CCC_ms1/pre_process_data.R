@@ -142,8 +142,10 @@ for (subj in 1:length(fnams_exp3)) {
     mutate(subj = substr(subjs_exp3[subj],1,3)) %>%
     select(subj,everything())
 
+  print(subj)
+
   # get subj details data
-  subj_details <- read_csv(detnams_exp2[subj], col_types = cols(), col_names = FALSE) # read the data from csv
+  subj_details <- read_csv(detnams_exp3[subj], col_types = cols(), col_names = FALSE) # read the data from csv
   subj_details <- str_split(subj_details, pattern = " ", simplify = TRUE)
 
   pData %<>%
