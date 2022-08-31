@@ -252,9 +252,79 @@ Distractor stimuli were an `L' shape (rotated 0°, 90°, 180°, or 270°) while 
 
 Our criterion for removing outlier data, at both the participant level and the trial level, was 2.5 standard deviations above or below the mean of the sample. On average, trials ended with a timeout on 1.97\% of trials (SD = 2.53). Two participants had an usually high proportion of timeouts and were removed from the analysis. The mean accuracy of participants (not including timeout trials) was 98.10\% (SD = 1.65\%). One participants that had an unusually low proportion of accurate trials and were also removed. The only participant deemed to be an outlier in terms of mean response time (hereafter RT) was also excluded on the basis of the timeout criterion, noted above.
 
-For the remaining twenty-eightparticipants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was 3.03\% (SD = 0.79\%). zero participants had an unusual proportion of trials removed as outlier RTs.
+For the remaining twenty-eight participants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was 3.03\% (SD = 0.79\%). zero participants had an unusual proportion of trials removed as outlier RTs.
 
 \includegraphics{CCC_ms1_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+\begin{verbatim}
+## Anova Table (Type 3 tests)
+## 
+## Response: meanRT
+##     Effect          df      MSE         F  ges p.value
+## 1       TT       1, 27 83590.71    7.48 * .013    .011
+## 2    epoch 3.66, 98.95 65143.51 17.25 *** .078   <.001
+## 3 TT:epoch 3.30, 89.04 41403.04    3.05 * .008    .029
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
+## 
+## Sphericity correction method: GG
+\end{verbatim}
+
+\begin{verbatim}
+## Anova Table (Type 3 tests)
+## 
+## Response: meanRT
+##     Effect           df       MSE       F  ges p.value
+## 1       TT  1.95, 52.75  70324.29 7.17 ** .021    .002
+## 2    epoch  2.18, 58.91 125085.52    0.88 .005    .430
+## 3 TT:epoch 5.14, 138.75  48674.61    1.22 .007    .304
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
+## 
+## Sphericity correction method: GG
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##  Welch Two Sample t-test
+## 
+## data:  meanRT by TT
+## t = 2.6582, df = 277.56, p-value = 0.008311
+## alternative hypothesis: true difference in means between group random and group repeated (C) is not equal to 0
+## 95 percent confidence interval:
+##   26.83853 180.04444
+## sample estimates:
+##       mean in group random mean in group repeated (C) 
+##                   1376.039                   1272.598
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##  Welch Two Sample t-test
+## 
+## data:  meanRT by TT
+## t = 0.037309, df = 276.73, p-value = 0.9703
+## alternative hypothesis: true difference in means between group random and group repeated (I) is not equal to 0
+## 95 percent confidence interval:
+##  -76.27970  79.22693
+## sample estimates:
+##       mean in group random mean in group repeated (I) 
+##                   1376.039                   1374.566
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##  Welch Two Sample t-test
+## 
+## data:  meanRT by TT
+## t = -2.5333, df = 277.78, p-value = 0.01185
+## alternative hypothesis: true difference in means between group repeated (C) and group repeated (I) is not equal to 0
+## 95 percent confidence interval:
+##  -181.20322  -22.73253
+## sample estimates:
+## mean in group repeated (C) mean in group repeated (I) 
+##                   1272.598                   1374.566
+\end{verbatim}
 
 \hypertarget{experiment-2}{%
 \section{Experiment 2}\label{experiment-2}}
@@ -285,9 +355,9 @@ The materials and stimuli were identical to Experiment 1.
 
 Our criteria for removing outlier data were identical to Experiment 1. On average, trials ended with a timeout on 2.13\% of trials (SD = 1.83). Zero participants had an usually high proportion of timeouts. The mean accuracy of participants (not including timeout trials) was 95.85\% (SD = 6.10\%). One participants that had an unusually low proportion of accurate trials and were also removed. Zero participants were deemed to be an outlier in terms of mean RT.
 
-For the remaining thirty-threeparticipants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was 2.81\% (SD = 1.04\%). one participants had an unusual proportion of trials removed as outlier RTs and were not included in the final analysis.
+For the remaining thirty-three participants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was 2.81\% (SD = 1.04\%). one participants had an unusual proportion of trials removed as outlier RTs and were not included in the final analysis.
 
-\includegraphics{CCC_ms1_files/figure-latex/unnamed-chunk-9-1.pdf}
+\includegraphics{CCC_ms1_files/figure-latex/unnamed-chunk-11-1.pdf}
 
 \begin{verbatim}
 ## Anova Table (Type 3 tests)
@@ -310,7 +380,7 @@ For the remaining thirty-threeparticipants we removed trials with a timeout and 
 \begin{verbatim}
 ## Bayes factor analysis
 ## --------------
-## [1] patArrowP1 + TT + patArrowP1:TT + subj : 0.1773586 ±2.57%
+## [1] patArrowP1 + TT + patArrowP1:TT + subj : 0.187335 ±4.4%
 ## 
 ## Against denominator:
 ##   meanRT ~ patArrowP1 + TT + subj 
@@ -339,7 +409,7 @@ For the remaining thirty-threeparticipants we removed trials with a timeout and 
 \begin{verbatim}
 ## Bayes factor analysis
 ## --------------
-## [1] patArrowP1 + TT + patArrowP1:TT + subj : 0.1304829 ±4.41%
+## [1] patArrowP1 + TT + patArrowP1:TT + subj : 0.1195972 ±10.37%
 ## 
 ## Against denominator:
 ##   meanRT ~ patArrowP1 + TT + subj 
@@ -376,7 +446,117 @@ The materials and stimuli were identical to Experiment 1.
 
 Our criteria for removing outlier data were identical to Experiment 1. On average, trials ended with a timeout on 3.33\% of trials (SD = 4.08). One participants had an usually high proportion of timeouts. The mean accuracy of participants (not including timeout trials) was 96.12\% (SD = 8.47\%). Two participants that had an unusually low proportion of accurate trials and were also removed. Zero participants were deemed to be an outlier in terms of mean RT.
 
-For the remaining fortyparticipants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was 3.13\% (SD = 0.72\%). zero participants had an unusual proportion of trials removed as outlier RTs and were not included in the final analysis.
+For the remaining forty participants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was 3.13\% (SD = 0.72\%). zero participants had an unusual proportion of trials removed as outlier RTs and were not included in the final analysis {[}EAF4S{]}.
+
+\includegraphics{CCC_ms1_files/figure-latex/unnamed-chunk-17-1.pdf}
+
+\begin{verbatim}
+## Anova Table (Type 3 tests)
+## 
+## Response: meanRT
+##     Effect           df       MSE         F  ges p.value
+## 1       TT        1, 39  84371.29 20.35 *** .021   <.001
+## 2    epoch 3.41, 132.99 110399.09 29.89 *** .121   <.001
+## 3 TT:epoch 3.69, 144.06  67824.76    2.57 * .008    .045
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
+## 
+## Sphericity correction method: GG
+\end{verbatim}
+
+\begin{verbatim}
+## Anova Table (Type 3 tests)
+## 
+## Response: meanRT
+##     Effect           df      MSE         F  ges p.value
+## 1       TT 2.71, 105.61 31057.96 26.59 *** .043   <.001
+## 2    epoch  1.78, 69.46 51362.09  8.72 *** .016   <.001
+## 3 TT:epoch 4.44, 173.24 38443.76      0.77 .003    .558
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
+## 
+## Sphericity correction method: GG
+\end{verbatim}
+
+\begin{verbatim}
+## Bayes factor analysis
+## --------------
+## [1] TT + subj : 51187426917 ±0.57%
+## 
+## Against denominator:
+##   meanRT ~ subj 
+## ---
+## Bayes factor type: BFlinearModel, JZS
+\end{verbatim}
+
+\begin{verbatim}
+## Bayes factor analysis
+## --------------
+## [1] TT + subj : 0.8007408 ±0.79%
+## 
+## Against denominator:
+##   meanRT ~ subj 
+## ---
+## Bayes factor type: BFlinearModel, JZS
+\end{verbatim}
+
+\begin{verbatim}
+## Bayes factor analysis
+## --------------
+## [1] TT + subj : 1060730 ±1.33%
+## 
+## Against denominator:
+##   meanRT ~ subj 
+## ---
+## Bayes factor type: BFlinearModel, JZS
+\end{verbatim}
+
+\begin{verbatim}
+## Bayes factor analysis
+## --------------
+## [1] TT + subj : 10503.92 ±0.87%
+## 
+## Against denominator:
+##   meanRT ~ subj 
+## ---
+## Bayes factor type: BFlinearModel, JZS
+\end{verbatim}
+
+\begin{verbatim}
+## Bayes factor analysis
+## --------------
+## [1] TT + subj : 0.7662298 ±1.79%
+## 
+## Against denominator:
+##   meanRT ~ subj 
+## ---
+## Bayes factor type: BFlinearModel, JZS
+\end{verbatim}
+
+\begin{verbatim}
+## Bayes factor analysis
+## --------------
+## [1] TT + subj : 38.82576 ±1.68%
+## 
+## Against denominator:
+##   meanRT ~ subj 
+## ---
+## Bayes factor type: BFlinearModel, JZS
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##  Paired t-test
+## 
+## data:  meanRT by TT
+## t = 4.0807, df = 119, p-value = 8.159e-05
+## alternative hypothesis: true mean difference is not equal to 0
+## 95 percent confidence interval:
+##   43.40317 125.22884
+## sample estimates:
+## mean difference 
+##        84.31601
+\end{verbatim}
 
 \newpage
 
