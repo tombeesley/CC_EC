@@ -145,7 +145,17 @@ Experiment 1 sought to examine whether the learnt attentional behaviour develope
 
 data_exp1 <- 
   data_raw %>% 
-  filter(exp == "CCC01") 
+  filter(exp == "CCC01")
+
+# rename TT variable
+data_exp1 <- 
+  data_exp1 %>% 
+  mutate(TT = fct_recode(TT, 
+                         "Repeated: consistent" = "repeated (C)",
+                         "Repeated: inconsistent" = "repeated (I)",
+                         "Random" = "random")) %>% 
+  mutate(TT = fct_relevel(TT, 
+                          "Repeated: consistent", "Repeated: inconsistent", "Random"))
 
 demographics <- 
   data_exp1 %>% 
@@ -258,19 +268,35 @@ data_e1_f <-
 
 For the remaining `r words(nrow(rt_outlier_summary))` participants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was `r spec_dec(100*mean(rt_outlier_summary$prop_rem),2)`% (SD = `r spec_dec(100*sd(rt_outlier_summary$prop_rem),2)`%). `r words(nrow(outlier_prop_removed))` participants had an unusual proportion of trials removed as outlier RTs. 
 
-```{r}
+Within-subject error bars were computed by a process of normalising the RT data for the sample [@cousineau2005]. Figure \@ref(fig:Exp1-RT-figure) shows the RT data across the 10 epochs of the experiment. In phase 1 (epochs 1-5) a contextual cuing effect rapidly emerged. In phase 2, the presence of the guiding arrow had a dramatic effect on the reduction of response times. Despite this, the underlying search configuration continued to play a role in the guidance of attention, with faster response times for (consistent) repeated configurations compared to random configurations.  
+
+(ref:Exp1-RT-figure) RT data for Experiment 1.
+
+```{r Exp1-RT-figure, fig.align="center", fig.cap="(ref:Exp1-RT-figure)", out.width="100%"}
+
+# compute grand mean RT 
+grand_mean_e1 <- mean(data_e1_f$RT)
+
+# create subj level mean and normalised RT variable
+data_e1_f <- 
+  data_e1_f %>%
+  group_by(subj) %>% 
+  mutate(subj_mean_rt = mean(RT),
+         normRT = RT - subj_mean_rt + grand_mean_e1) %>% 
+  select(-subj_mean_rt)
 
 # summarise the data across the 10 epochs, by subj
 rt_summary_data_e1 <- 
   data_e1_f %>% 
   group_by(subj, epoch, TT) %>% 
-  summarise(meanRT = mean(RT))
+  summarise(meanRT = mean(RT),
+            mean_norm_RT = mean(normRT)) # used for normalised SE bars
 
 # summarise at the group level and plot
 rt_summary_data_e1 %>% 
   group_by(epoch, TT) %>% 
   summarise(group_RT = mean(meanRT),
-            group_SE = sd(meanRT)/sqrt(n())) %>% 
+            group_SE = sd(mean_norm_RT)/sqrt(n())) %>% 
   ggplot(aes(x = epoch, y = group_RT, group = TT, colour = TT)) +
   geom_line(size = .5) +
   geom_point(size = 3) +
@@ -281,7 +307,6 @@ rt_summary_data_e1 %>%
 
 ```
 
-
 ```{r}
 # Experiment 1 stats
 
@@ -289,12 +314,76 @@ rt_summary_data_e1 %>%
 
 phase_1 <- 
   rt_summary_data_e1 %>% 
-  mutate(epoch = as.numeric(epoch)) %>% 
-  filter(epoch <= 5)
+  mutate(epoch = as.factor(epoch)) %>% 
+  filter(epoch %in% c(1:5))
 
-aov_car(meanRT ~ Error(subj/TT*epoch), data = phase_1)
+#exp1_phase1_anova <- aov_car(meanRT ~ Error(subj/TT*epoch), data = phase_1)
+
+e1_phase1_BF <- 
+  anovaBF(meanRT ~ TT * epoch + subj, 
+          data = phase_1,
+          whichRandom = "subj")
 
 ```
+
+These data were explored with a Bayesian ANOVA, using the *BayesFactor::anovaBF()* function (for all analyses in this study the priors were set at the default "medium" width). First taking the data from phase 1 (epochs 1-5), the model with the largest Bayes Factor (BF) contained the factors of epoch and configuration (repeated vs. random), BF~10~ = `r changeSciNot(extractBF(e1_phase1_BF[3])$bf)`. The addition of the interaction term did not substantially improve the model predictions, BF~10~ `r spec_dec(extractBF(e1_phase1_BF[4])$bf/extractBF(e1_phase1_BF[3])$bf,1)`.
+
+```{r}
+# Experiment 1 stats
+
+# Statistics on Stage 2
+
+phase_2 <- 
+  rt_summary_data_e1 %>% 
+  mutate(epoch = as.factor(epoch)) %>% 
+  filter(epoch %in% c(6:10))
+
+#exp1_phase1_anova <- aov_car(meanRT ~ Error(subj/TT*epoch), data = phase_1)
+
+e1_phase2_BF <- 
+  anovaBF(meanRT ~ TT * epoch + subj, 
+          data = phase_2,
+          whichRandom = "subj")
+
+# explore the main effect of configuration
+phase_2_pairwise <- 
+  data_e1_f %>% 
+  mutate(epoch = as.factor(epoch)) %>% 
+  filter(epoch %in% c(6:10)) %>%  
+  group_by(subj, TT) %>% 
+  summarise(meanRT = mean(RT))
+
+# consistent vs. random
+CvR <- 
+  phase_2_pairwise %>% 
+  filter(TT %in% c("Repeated: consistent", "Random")) 
+
+anovaBF(meanRT ~ TT + subj, 
+        data = CvR,
+        whichRandom = "subj")
+
+# inconsistent vs. random
+IvR <- 
+  phase_2_pairwise %>% 
+  filter(TT %in% c("Repeated: inconsistent", "Random")) 
+
+anovaBF(meanRT ~ TT + subj, 
+        data = IvR,
+        whichRandom = "subj")
+
+# consistent vs. inconsistent 
+CvI <- 
+  phase_2_pairwise %>% 
+  filter(TT %in% c("Repeated: consistent", "Repeated: inconsistent")) 
+
+anovaBF(meanRT ~ TT + subj, 
+        data = CvI,
+        whichRandom = "subj")
+
+```
+
+A Bayesian ANOVA on the data from phase 2 (epochs 6-10) found significant support for the model containing the factor of configuration, BF~10~ = `r changeSciNot(extractBF(e1_phase2_BF[2])$bf)`. There was evidence to suggest that the addition of the factor of epoch did not substantially improve the model predictions, BF~10~ `r spec_dec(extractBF(e1_phase2_BF[3])$bf/extractBF(e1_phase2_BF[2])$bf,1)`.
+
 
 ```{r}
 # Statistics on Stage 2
