@@ -126,7 +126,7 @@ targetLoc = 0;
 restcnt = 0;
 orientCnt = 0;
 
-for trial = 1:size(TT,1)
+for trial = 1:2 %size(TT,1)
     
     restcnt = restcnt + 1;
     if restcnt > restBreak
@@ -158,6 +158,13 @@ for trial = 1:size(TT,1)
     WaitSecs(iti_time); %blank screen for 1 sec
     Screen('DrawTexture', MainWindow, Fixation); % Fixation stimulus
     Screen('Flip', MainWindow);
+    
+    %GetImage call. Alter the rect argument to change the location of the screen shot
+     imageArray = Screen('GetImage', MainWindow);
+ 
+%    imwrite is a Matlab function, not a PTB-3 function
+     imwrite(imageArray, 'fixation.jpg')
+    
     WaitSecs(fix_time); % fixation on for 0.5 sec
 
     %get pattern from Pat array
@@ -217,10 +224,11 @@ for trial = 1:size(TT,1)
     imgOnTime = Screen('Flip', MainWindow); % display image on screen and record time
     
 %     GetImage call. Alter the rect argument to change the location of the screen shot
-%     imageArray = Screen('GetImage', MainWindow);
+     imageArray = Screen('GetImage', MainWindow);
 % 
 %     imwrite is a Matlab function, not a PTB-3 function
-%     imwrite(imageArray, 'screenshot.jpg')
+     filename = ['screenshot_', int2str(trial), '.jpg'];
+     imwrite(imageArray, filename)
     
     % wait for response
     RestrictKeysForKbCheck([67 78 122]); % wait for response (c, n, or F11)

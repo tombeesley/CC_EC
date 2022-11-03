@@ -74,6 +74,12 @@ data <-
   filter(acc==1,
          !subj %in% Ps_to_remove) # remove Ps scoring less than 90%
 
+data <- 
+  data %>% 
+  group_by(subj) %>% 
+  mutate(zRT = scale(RT)) %>% 
+  filter(zRT < 2.5)
+
 ```
 
 ## Data processing
@@ -88,6 +94,14 @@ data %>%
   summarise(meanRT = mean(RT)) %>% 
   ggplot(aes(x = epoch, y = meanRT, group = TT, colour = TT)) +
   geom_line(size = 1)
+
+data %>% 
+  filter(block <= 12) %>% 
+  group_by(block, TT) %>% 
+  summarise(meanRT = mean(RT)) %>% 
+  ggplot(aes(x = block, y = meanRT, group = TT, colour = TT)) +
+  geom_line(size = 1)
+  
 
 
 ```
