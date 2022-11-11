@@ -129,6 +129,21 @@ summary_acc %>%
                alpha = .3)
 
 
+# looking at emergence of CC in first few blocks across all experiments
+
+data_raw %>% 
+  filter(acc == 1,
+         block %in% 1:6, 
+         TT %in% c("random", "repeated")) %>%
+  group_by(block, TT) %>% 
+  summarise(meanRT = mean(RT, na.rm = TRUE)) %>% 
+  ggplot(aes(x = block, colour = TT, y = meanRT, group = TT)) +
+  geom_line(size = 1) +
+  geom_point(size = 5) +
+  theme_classic(base_size = 16)
+  
+
+
 ```
 
 # Experiment 1
@@ -229,6 +244,8 @@ participants_removed <-
   mutate(subj = as.character(subj)) %>% 
   unique() %>% 
   pull()
+
+
 
 ```
 
