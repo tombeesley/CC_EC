@@ -1,0 +1,10 @@
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+
+{\centering \includegraphics[width=1\linewidth]{CCC_ms1_files/figure-latex/Exp1-RT-figure-1}
+
+}
+
+\caption{RT data for Experiment 1.}\label{fig:Exp1-RT-figure}
+\end{figure*}

@@ -41,8 +41,12 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r knitr-options, echo=FALSE, message = FALSE}
-knitr::opts_chunk$set(warning=FALSE, message=FALSE, echo = FALSE, dev = "cairo_pdf")
+```{r knitr-options}
+knitr::opts_chunk$set(warning=FALSE, 
+                      message=FALSE, 
+                      echo = FALSE, 
+                      include = FALSE, 
+                      dev = "cairo_pdf")
 ```
 
 ```{r rmd-setup, include = FALSE}
@@ -83,7 +87,7 @@ cbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2",
 
 Main text here [@beesley2015b]
 
-```{r}
+```{r include=FALSE}
 
 data_raw <- readRDS("combinedData.rds")
 
@@ -128,21 +132,6 @@ summary_acc %>%
                binwidth = .01,
                dotsize = 1,
                alpha = .3)
-
-
-# looking at emergence of CC in first few blocks across all experiments
-
-data_raw %>% 
-  filter(acc == 1,
-         block %in% 1:6, 
-         TT %in% c("random", "repeated")) %>%
-  group_by(block, TT) %>% 
-  summarise(meanRT = mean(RT, na.rm = TRUE)) %>% 
-  ggplot(aes(x = block, colour = TT, y = meanRT, group = TT)) +
-  geom_line(size = 1) +
-  geom_point(size = 5) +
-  theme_classic(base_size = 16)
-  
 
 
 ```
@@ -288,10 +277,7 @@ For the remaining `r words(nrow(rt_outlier_summary))` participants we removed tr
 
 Within-subject error bars were computed by a process of normalising the RT data for the sample [@cousineau2005]. Figure \@ref(fig:Exp1-RT-figure) shows the RT data across the 10 epochs of the experiment. In phase 1 (epochs 1-5) a contextual cuing effect rapidly emerged. In phase 2, the presence of the guiding arrow had a dramatic effect on the reduction of response times. Despite this, the underlying search configuration continued to play a role in the guidance of attention, with faster response times for (consistent) repeated configurations compared to random configurations.  
 
-(ref:Exp1-RT-figure) RT data for Experiment 1.
-
-```{r Exp1-RT-figure, fig.align="center", fig.cap="(ref:Exp1-RT-figure)", out.width="100%"}
-
+```{r}
 # compute grand mean RT 
 grand_mean_e1 <- mean(data_e1_f$RT)
 
@@ -309,7 +295,12 @@ rt_summary_data_e1 <-
   group_by(subj, epoch, TT) %>% 
   summarise(meanRT = mean(RT),
             mean_norm_RT = mean(normRT)) # used for normalised SE bars
+```
 
+test
+
+(ref:Exp1-RT-figure) RT data for Experiment 1.
+```{r Exp1-RT-figure, fig.align="center", fig.cap="(ref:Exp1-RT-figure)", out.width="100%", include=TRUE}
 # summarise at the group level and plot
 rt_summary_data_e1 %>% 
   group_by(epoch, TT) %>% 
