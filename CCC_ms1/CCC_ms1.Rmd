@@ -834,7 +834,7 @@ rt_summary_data_e3 %>%
         legend.spacing.x = unit(0.5, "cm"),
         legend.position = "top") +
   guides(fill = guide_legend(byrow = TRUE)) +
-  scale_y_continuous(limits = c(1000, 2400), breaks = seq(1000, 2400, 200))
+  scale_y_continuous(limits = c(1000, 2600), breaks = seq(1000, 2600, 200))
 
 
 ```
