@@ -34,7 +34,7 @@ header-includes:
   - \raggedbottom
   - \usepackage[font={small,it}, labelfont={bf}]{caption}
 csl               : "apa7.csl"
-documentclass     : "apa6"
+documentclass     : "apa7"
 classoption       : "man"
 output            : papaja::apa6_pdf
 editor_options: 
@@ -45,7 +45,6 @@ editor_options:
 knitr::opts_chunk$set(warning=FALSE, 
                       message=FALSE, 
                       echo = FALSE, 
-                      include = FALSE, 
                       dev = "cairo_pdf")
 ```
 
@@ -144,7 +143,7 @@ Experiment 1 sought to examine whether the learnt attentional behaviour develope
 
 ### Participants
 
-```{r}
+```{r demographics}
 
 # get basic stats for Ps
 
@@ -185,7 +184,7 @@ Distractor stimuli were an ‘L’ shape (rotated 0°, 90°, 180°, or 270°) wh
 ## Results
 
 
-```{r}
+```{r participant exclusions}
 
 # participant exclusions 
 
@@ -208,6 +207,7 @@ rt_summary <-
   summarise(meanRT = mean(RT, na.rm = TRUE)) %>% 
   mutate(z_meanRT = scale(meanRT)[,1])
 
+# combine these into one dataframe
 resp_summary_exp1 <- 
   to_summary %>% 
   left_join(acc_summary, by = "subj") %>% 
@@ -241,12 +241,14 @@ participants_removed <-
 
 Our criterion for removing outlier data, at both the participant level and the trial level, was 2.5 standard deviations above or below the mean of the sample. On average, trials ended with a timeout on `r spec_dec(100*mean(resp_summary_exp1$meanTO),2)`% of trials (SD = `r spec_dec(100*sd(resp_summary_exp1$meanTO),2)`). `r Words(nrow(outlier_to))` participants had an usually high proportion of timeouts and were removed from the analysis. The mean accuracy of participants (not including timeout trials) was `r spec_dec(100*mean(resp_summary_exp1$meanAcc),2)`% (SD = `r spec_dec(100*sd(resp_summary_exp1$meanAcc),2)`%). `r Words(nrow(outlier_acc))` participants that had an unusually low proportion of accurate trials and were also removed. The only participant deemed to be an outlier in terms of mean response time (hereafter RT) was also excluded on the basis of the timeout criterion, noted above. 
 
-```{r}
+```{r remove outliers}
 
+# remove the participant outliers from the data
 data_exp1_OR <- 
   data_exp1 %>% 
   filter(!subj %in% participants_removed)
 
+# remove the timeouts and inaccurate trials
 data_exp1_OR <- 
   data_exp1_OR %>% 
   filter(timeout == 0,
@@ -254,6 +256,7 @@ data_exp1_OR <-
   group_by(subj) %>% 
   mutate(zRT = scale(RT)[,1]) # calculate z scores on participant basis
 
+# get a summary of the RT outlier removal
 rt_outlier_summary <- 
   data_exp1_OR %>% 
   group_by(subj) %>% 
@@ -265,6 +268,7 @@ outlier_prop_removed <-
   mutate(z_prop_rem = scale(prop_rem)[,1]) %>% 
   filter(z_prop_rem < -2.5 | z_prop_rem > 2.5)
 
+# remove the outlier RTs from the data 
 data_e1_f <-
   data_exp1_OR %>%
   ungroup() %>%
@@ -275,9 +279,7 @@ data_e1_f <-
 
 For the remaining `r words(nrow(rt_outlier_summary))` participants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was `r spec_dec(100*mean(rt_outlier_summary$prop_rem),2)`% (SD = `r spec_dec(100*sd(rt_outlier_summary$prop_rem),2)`%). `r words(nrow(outlier_prop_removed))` participants had an unusual proportion of trials removed as outlier RTs. 
 
-Within-subject error bars were computed by a process of normalising the RT data for the sample [@cousineau2005]. Figure \@ref(fig:Exp1-RT-figure) shows the RT data across the 10 epochs of the experiment. In phase 1 (epochs 1-5) a contextual cuing effect rapidly emerged. In phase 2, the presence of the guiding arrow had a dramatic effect on the reduction of response times. Despite this, the underlying search configuration continued to play a role in the guidance of attention, with faster response times for (consistent) repeated configurations compared to random configurations.  
-
-```{r}
+```{r rt summary}
 # compute grand mean RT 
 grand_mean_e1 <- mean(data_e1_f$RT)
 
@@ -297,10 +299,8 @@ rt_summary_data_e1 <-
             mean_norm_RT = mean(normRT)) # used for normalised SE bars
 ```
 
-test
 
-(ref:Exp1-RT-figure) RT data for Experiment 1.
-```{r Exp1-RT-figure, fig.align="center", fig.cap="(ref:Exp1-RT-figure)", out.width="100%", include=TRUE}
+```{r Exp1-RT-figure, fig.align="center", fig.cap="(ref:Exp1-RT-figure)", out.width="60%"}
 # summarise at the group level and plot
 rt_summary_data_e1 %>% 
   group_by(epoch, TT) %>% 
@@ -330,10 +330,15 @@ rt_summary_data_e1 %>%
 
 ```
 
-```{r}
+Within-subject error bars were computed by a process of normalising the RT data for the sample [@cousineau2005]. Figure \@ref(fig:Exp1-RT-figure) shows the RT data across the 10 epochs of the experiment. In phase 1 (epochs 1-5) a contextual cuing effect rapidly emerged. In phase 2, the presence of the guiding arrow had a dramatic effect on the reduction of response times. Despite this, the underlying search configuration continued to play a role in the guidance of attention, with faster response times for (consistent) repeated configurations compared to random configurations.  
+
+
+(ref:Exp1-RT-figure) RT data for Experiment 1.
+
+```{r Phase 1 BFs}
 # Experiment 1 stats
 
-# Statistics on Stage 1
+# Statistics on Phase 1
 
 phase_1 <- 
   rt_summary_data_e1 %>% 
@@ -349,12 +354,12 @@ e1_phase1_BF <-
 
 ```
 
-These data were explored with a Bayesian ANOVA, using the *BayesFactor::anovaBF()* function (for all analyses in this study the priors were set at the default "medium" width). First taking the data from phase 1 (epochs 1-5), the model with the largest Bayes Factor (BF) contained the factors of epoch and configuration (repeated vs. random), BF~10~ = `r changeSciNot(extractBF(e1_phase1_BF[3])$bf)`. The addition of the interaction term did not substantially improve the model predictions, BF~10~ `r spec_dec(extractBF(e1_phase1_BF[4])$bf/extractBF(e1_phase1_BF[3])$bf,1)`.
+These data were explored with a Bayesian ANOVA, using the *BayesFactor::anovaBF()* function (for all analyses in this study the priors were set at the default "medium" width). First taking the data from phase 1 (epochs 1-5), the model with the largest Bayes Factor (BF) contained the factors of epoch and configuration (repeated vs. random), BF~10~ = `r changeSciNot(extractBF(e1_phase1_BF[3])$bf)`. The addition of the interaction term did not substantially improve the model fit, BF~10~ `r spec_dec(extractBF(e1_phase1_BF[4])$bf/extractBF(e1_phase1_BF[3])$bf,1)`.
 
-```{r}
+```{r Phase 2 BFs}
 # Experiment 1 stats
 
-# Statistics on Stage 2
+# Statistics on Phase 2
 
 phase_2 <- 
   rt_summary_data_e1 %>% 
@@ -408,7 +413,7 @@ anovaBF(meanRT ~ TT + subj,
 A Bayesian ANOVA on the data from phase 2 (epochs 6-10) found significant support for the model containing the factor of configuration, BF~10~ = `r changeSciNot(extractBF(e1_phase2_BF[2])$bf)`. There was evidence to suggest that the addition of the factor of epoch did not substantially improve the model predictions, BF~10~ `r spec_dec(extractBF(e1_phase2_BF[3])$bf/extractBF(e1_phase2_BF[2])$bf,1)`.
 
 
-```{r}
+```{r trad ANOVA phase 2}
 # Statistics on Stage 2
 
 phase_2 <- 
