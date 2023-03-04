@@ -50,9 +50,10 @@ data <-
   select(exp, subj, age, gender, phase, epoch, block:patType, everything()) # reorder variables
 
 data <- data %>%
-  mutate(TT = case_when(TT == 1 & switched_T == 0 ~ "repeated (C)",
-                        TT == 1 & switched_T == 1 ~ "repeated (I)",
-                        TT == 2 ~ "random"))
+  mutate(TT = case_when(TT == 1 & switched_T == 0 ~ "repeated_con",
+                        TT == 1 & switched_T == 1 ~ "repeated_incon",
+                        TT == 2 & switched_T == 0 ~ "random_con",
+                        TT == 2 & switched_T == 1 ~ "random_incon"))
 
 data_exp1 <- data
 

@@ -1,10 +1,7 @@
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
 
-
-{\centering \includegraphics[width=0.6\linewidth]{CCC_ms1_files/figure-latex/Exp1-RT-figure-1}
-
-}
-
-\caption{RT data for Experiment 1.}\label{fig:Exp1-RT-figure}
+\centering
+\includegraphics{CCC_ms1_files/figure-latex/Exp1-RT-figure-1.pdf}
+\caption{\label{fig:Exp1-RT-figure}(ref:Exp1-RT-figure)}
 \end{figure*}

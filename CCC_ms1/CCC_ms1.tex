@@ -3,7 +3,7 @@
 \PassOptionsToPackage{hyphens}{url}
 %
 \documentclass[
-  man]{apa7}
+  man,floatsintext]{apa7}
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
 \usepackage{iftex}
@@ -243,111 +243,22 @@ Our criterion for removing outlier data, at both the participant level and the t
 
 For the remaining twenty-eight participants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was 3.03\% (SD = 0.79\%). zero participants had an unusual proportion of trials removed as outlier RTs.
 
+
+
+Within-subject error bars were computed by a process of normalising the RT data for the sample (Cousineau, 2005). Figure \ref{fig:Exp1-RT-figure} shows the RT data across the 10 epochs of the experiment. In phase 1 (epochs 1-5) a contextual cuing effect rapidly emerged. In phase 2, the presence of the guiding arrow had a dramatic effect on the reduction of response times. Despite this, the underlying search configuration continued to play a role in the guidance of attention, with faster response times for (consistent) repeated configurations compared to random configurations.
+
 \begin{figure}
 
-{\centering \includegraphics[width=0.6\linewidth]{CCC_ms1_files/figure-latex/Exp1-RT-figure-1} 
+{\centering \includegraphics{CCC_ms1_files/figure-latex/Exp1-RT-figure-1} 
 
 }
 
-\caption{RT data for Experiment 1.}\label{fig:Exp1-RT-figure}
+\caption{RT data for Experiment 1}\label{fig:Exp1-RT-figure}
 \end{figure}
 
-Within-subject error bars were computed by a process of normalising the RT data for the sample (\textbf{cousineau2005?}). Figure \ref{fig:Exp1-RT-figure} shows the RT data across the 10 epochs of the experiment. In phase 1 (epochs 1-5) a contextual cuing effect rapidly emerged. In phase 2, the presence of the guiding arrow had a dramatic effect on the reduction of response times. Despite this, the underlying search configuration continued to play a role in the guidance of attention, with faster response times for (consistent) repeated configurations compared to random configurations.
+These data were explored with a Bayesian ANOVA, using the \emph{BayesFactor::anovaBF()} function (for all analyses in this study the priors were set at the default ``medium'' width). First taking the data from phase 1 (epochs 1-5), the model with the largest Bayes Factor (BF) contained the factors of epoch and configuration (repeated vs.~random), BF\textsubscript{10} = 2.4x10\^{}12. The addition of the interaction term did not substantially improve the model fit, BF\textsubscript{10} 0.4.
 
-
-
-These data were explored with a Bayesian ANOVA, using the \emph{BayesFactor::anovaBF()} function (for all analyses in this study the priors were set at the default ``medium'' width). First taking the data from phase 1 (epochs 1-5), the model with the largest Bayes Factor (BF) contained the factors of epoch and configuration (repeated vs.~random), BF\textsubscript{10} = 2.3x10\^{}12. The addition of the interaction term did not substantially improve the model fit, BF\textsubscript{10} 0.4.
-
-\begin{verbatim}
-## Bayes factor analysis
-## --------------
-## [1] TT + subj : 18.20867 ±0.73%
-## 
-## Against denominator:
-##   meanRT ~ subj 
-## ---
-## Bayes factor type: BFlinearModel, JZS
-\end{verbatim}
-
-\begin{verbatim}
-## Bayes factor analysis
-## --------------
-## [1] TT + subj : 0.2778776 ±1.72%
-## 
-## Against denominator:
-##   meanRT ~ subj 
-## ---
-## Bayes factor type: BFlinearModel, JZS
-\end{verbatim}
-
-\begin{verbatim}
-## Bayes factor analysis
-## --------------
-## [1] TT + subj : 10.34537 ±1.39%
-## 
-## Against denominator:
-##   meanRT ~ subj 
-## ---
-## Bayes factor type: BFlinearModel, JZS
-\end{verbatim}
-
-A Bayesian ANOVA on the data from phase 2 (epochs 6-10) found significant support for the model containing the factor of configuration, BF\textsubscript{10} = 3.8x10\^{}2. There was evidence to suggest that the addition of the factor of epoch did not substantially improve the model predictions, BF\textsubscript{10} 0.0.
-
-\begin{verbatim}
-## Anova Table (Type 3 tests)
-## 
-## Response: meanRT
-##     Effect           df       MSE       F  ges p.value
-## 1       TT  1.95, 52.75  70324.29 7.17 ** .021    .002
-## 2    epoch  2.18, 58.91 125085.52    0.88 .005    .430
-## 3 TT:epoch 5.14, 138.75  48674.61    1.22 .007    .304
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
-## 
-## Sphericity correction method: GG
-\end{verbatim}
-
-\begin{verbatim}
-## 
-##  Welch Two Sample t-test
-## 
-## data:  meanRT by TT
-## t = -2.6582, df = 277.56, p-value = 0.008311
-## alternative hypothesis: true difference in means between group Repeated: consistent and group Random is not equal to 0
-## 95 percent confidence interval:
-##  -180.04444  -26.83853
-## sample estimates:
-## mean in group Repeated: consistent               mean in group Random 
-##                           1272.598                           1376.039
-\end{verbatim}
-
-\begin{verbatim}
-## 
-##  Welch Two Sample t-test
-## 
-## data:  meanRT by TT
-## t = -0.037309, df = 276.73, p-value = 0.9703
-## alternative hypothesis: true difference in means between group Repeated: inconsistent and group Random is not equal to 0
-## 95 percent confidence interval:
-##  -79.22693  76.27970
-## sample estimates:
-## mean in group Repeated: inconsistent                 mean in group Random 
-##                             1374.566                             1376.039
-\end{verbatim}
-
-\begin{verbatim}
-## 
-##  Welch Two Sample t-test
-## 
-## data:  meanRT by TT
-## t = -2.5333, df = 277.78, p-value = 0.01185
-## alternative hypothesis: true difference in means between group Repeated: consistent and group Repeated: inconsistent is not equal to 0
-## 95 percent confidence interval:
-##  -181.20322  -22.73253
-## sample estimates:
-##   mean in group Repeated: consistent mean in group Repeated: inconsistent 
-##                             1272.598                             1374.566
-\end{verbatim}
+A Bayesian ANOVA on the data from phase 2 (epochs 6-10) found significant support for the model containing the factor of configuration, BF\textsubscript{10} = 3.9x10\^{}2. There was evidence to suggest that the addition of the factor of epoch did not substantially improve the model predictions, BF\textsubscript{10} 0.0.
 
 \hypertarget{experiment-2}{%
 \section{Experiment 2}\label{experiment-2}}
@@ -380,65 +291,14 @@ Our criteria for removing outlier data were identical to Experiment 1. On averag
 
 For the remaining thirty-three participants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was 2.81\% (SD = 1.04\%). one participants had an unusual proportion of trials removed as outlier RTs and were not included in the final analysis.
 
-\includegraphics{CCC_ms1_files/figure-latex/Exp2-RT-figure-1.pdf}
+\begin{figure}
 
-\begin{verbatim}
-## Anova Table (Type 3 tests)
-## 
-## Response: meanRT
-##                Effect           df       MSE          F   ges p.value
-## 1          patArrowP1        1, 32 442144.07 175.06 ***  .313   <.001
-## 2                  TT        1, 32 151825.16  21.10 ***  .019   <.001
-## 3               epoch 3.13, 100.03 200796.66  24.76 ***  .084   <.001
-## 4       patArrowP1:TT        1, 32 164480.86       0.74 <.001    .395
-## 5    patArrowP1:epoch 3.34, 107.03 147265.04       0.61  .002    .630
-## 6            TT:epoch 3.48, 111.28  89997.46    4.53 **  .008    .003
-## 7 patArrowP1:TT:epoch 3.39, 108.43  62430.81     2.24 +  .003    .080
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
-## 
-## Sphericity correction method: GG
-\end{verbatim}
+{\centering \includegraphics{CCC_ms1_files/figure-latex/Exp2-RT-figure-1} 
 
-\begin{verbatim}
-## Bayes factor analysis
-## --------------
-## [1] patArrowP1 + TT + patArrowP1:TT + subj : 0.1670034 ±4.86%
-## 
-## Against denominator:
-##   meanRT ~ patArrowP1 + TT + subj 
-## ---
-## Bayes factor type: BFlinearModel, JZS
-\end{verbatim}
+}
 
-\begin{verbatim}
-## Anova Table (Type 3 tests)
-## 
-## Response: meanRT
-##                Effect           df       MSE         F   ges p.value
-## 1          patArrowP1        1, 32 107851.75      0.48 <.001    .493
-## 2                  TT        1, 32 117763.13 51.20 ***  .035   <.001
-## 3               epoch 3.44, 109.95  79887.36 10.79 ***  .017   <.001
-## 4       patArrowP1:TT        1, 32 284015.04      0.04 <.001    .850
-## 5    patArrowP1:epoch 3.58, 114.51  94104.45      0.47 <.001    .737
-## 6            TT:epoch 3.39, 108.54  89788.68      1.46  .003    .227
-## 7 patArrowP1:TT:epoch 3.70, 118.33  97123.16      0.75  .002    .549
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
-## 
-## Sphericity correction method: GG
-\end{verbatim}
-
-\begin{verbatim}
-## Bayes factor analysis
-## --------------
-## [1] patArrowP1 + TT + patArrowP1:TT + subj : 0.13439 ±7.56%
-## 
-## Against denominator:
-##   meanRT ~ patArrowP1 + TT + subj 
-## ---
-## Bayes factor type: BFlinearModel, JZS
-\end{verbatim}
+\caption{(ref:Exp2-RT-figure)}\label{fig:Exp2-RT-figure}
+\end{figure}
 
 \hypertarget{experiment-3}{%
 \section{Experiment 3}\label{experiment-3}}
@@ -471,126 +331,14 @@ Our criteria for removing outlier data were identical to Experiment 1. On averag
 
 For the remaining forty participants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was 3.13\% (SD = 0.72\%). zero participants had an unusual proportion of trials removed as outlier RTs and were not included in the final analysis {[}EAF4S{]}.
 
-\includegraphics{CCC_ms1_files/figure-latex/Exp3-RT-figure-1.pdf}
+\begin{figure}
 
-\begin{verbatim}
-## Anova Table (Type 3 tests)
-## 
-## Response: meanRT
-##     Effect           df       MSE         F  ges p.value
-## 1       TT        1, 39  84371.29 20.35 *** .021   <.001
-## 2    epoch 3.41, 132.99 110399.09 29.89 *** .121   <.001
-## 3 TT:epoch 3.69, 144.06  67824.76    2.57 * .008    .045
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
-## 
-## Sphericity correction method: GG
-\end{verbatim}
+{\centering \includegraphics{CCC_ms1_files/figure-latex/Exp3-RT-figure-1} 
 
-\begin{verbatim}
-## Bayes factor analysis
-## --------------
-## [1] TT + subj : 173.5747 ±1.06%
-## 
-## Against denominator:
-##   meanRT ~ subj 
-## ---
-## Bayes factor type: BFlinearModel, JZS
-\end{verbatim}
+}
 
-\begin{verbatim}
-## Anova Table (Type 3 tests)
-## 
-## Response: meanRT
-##     Effect           df      MSE         F  ges p.value
-## 1       TT 2.71, 105.61 31057.96 26.59 *** .043   <.001
-## 2    epoch  1.78, 69.46 51362.09  8.72 *** .016   <.001
-## 3 TT:epoch 4.44, 173.24 38443.76      0.77 .003    .558
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
-## 
-## Sphericity correction method: GG
-\end{verbatim}
-
-\begin{verbatim}
-## Bayes factor analysis
-## --------------
-## [1] TT + subj : 50854626647 ±0.58%
-## 
-## Against denominator:
-##   meanRT ~ subj 
-## ---
-## Bayes factor type: BFlinearModel, JZS
-\end{verbatim}
-
-\begin{verbatim}
-## Bayes factor analysis
-## --------------
-## [1] TT + subj : 0.8317226 ±1.52%
-## 
-## Against denominator:
-##   meanRT ~ subj 
-## ---
-## Bayes factor type: BFlinearModel, JZS
-\end{verbatim}
-
-\begin{verbatim}
-## Bayes factor analysis
-## --------------
-## [1] TT + subj : 1029916 ±0.93%
-## 
-## Against denominator:
-##   meanRT ~ subj 
-## ---
-## Bayes factor type: BFlinearModel, JZS
-\end{verbatim}
-
-\begin{verbatim}
-## Bayes factor analysis
-## --------------
-## [1] TT + subj : 10499.63 ±0.99%
-## 
-## Against denominator:
-##   meanRT ~ subj 
-## ---
-## Bayes factor type: BFlinearModel, JZS
-\end{verbatim}
-
-\begin{verbatim}
-## Bayes factor analysis
-## --------------
-## [1] TT + subj : 0.7493755 ±1.46%
-## 
-## Against denominator:
-##   meanRT ~ subj 
-## ---
-## Bayes factor type: BFlinearModel, JZS
-\end{verbatim}
-
-\begin{verbatim}
-## Bayes factor analysis
-## --------------
-## [1] TT + subj : 38.51458 ±1.1%
-## 
-## Against denominator:
-##   meanRT ~ subj 
-## ---
-## Bayes factor type: BFlinearModel, JZS
-\end{verbatim}
-
-\begin{verbatim}
-## 
-##  Paired t-test
-## 
-## data:  meanRT by TT
-## t = 4.0807, df = 119, p-value = 8.159e-05
-## alternative hypothesis: true mean difference is not equal to 0
-## 95 percent confidence interval:
-##   43.40317 125.22884
-## sample estimates:
-## mean difference 
-##        84.31601
-\end{verbatim}
+\caption{(ref:Exp3-RT-figure)}\label{fig:Exp3-RT-figure}
+\end{figure}
 
 \newpage
 
@@ -602,6 +350,9 @@ For the remaining forty participants we removed trials with a timeout and inaccu
 \begin{CSLReferences}{1}{0}
 \leavevmode\vadjust pre{\hypertarget{ref-beesley2015b}{}}%
 Beesley, T., Vadillo, M. A., Pearson, D., \& Shanks, D. R. (2015). Pre-exposure of repeated search configurations facilitates subsequent contextual cuing of visual search. \emph{Journal of Experimental Psychology: Learning, Memory, and Cognition}, \emph{41}(2), 348--362. \url{https://doi.org/10.1037/xlm0000033}
+
+\leavevmode\vadjust pre{\hypertarget{ref-cousineau2005}{}}%
+Cousineau, D. (2005). Confidence intervals in within-subject designs: {A} simpler solution to {Loftus} and {Masson}'s method. \emph{Tutorials in Quantitative Methods for Psychology}, \emph{1}(1), 42--45. \url{https://doi.org/10.20982/tqmp.01.1.p042}
 
 \end{CSLReferences}
 
