@@ -87,7 +87,7 @@ cbPalette <- c("#C1272D", "#E69F00", "#56B4E9", "#008176", "#F0E442", "#0072B2",
 
 Main text here [@beesley2015b]
 
-```{r basic exploratory anaysis}
+```{r exploratory_anaysis}
 
 data_raw <- readRDS("combinedData.rds")
 
@@ -144,7 +144,7 @@ Experiment 1 sought to examine whether the learnt attentional behaviour that dev
 
 ### Participants
 
-```{r demographics}
+```{r demographics_exp1}
 
 # get basic stats for Ps
 
@@ -205,7 +205,7 @@ After 160 trials, prior to phase 2, particpiants were given an instruction scree
 ## Results
 
 
-```{r participant exclusions}
+```{r exclusions_exp1}
 
 # participant exclusions 
 
@@ -262,7 +262,7 @@ participants_removed <-
 
 Our criterion for removing outlier data, at both the participant level and the trial level, was 2.5 standard deviations above or below the mean of the sample. On average, trials ended with a timeout on `r spec_dec(100*mean(resp_summary_exp1$meanTO),2)`% of trials (SD = `r spec_dec(100*sd(resp_summary_exp1$meanTO),2)`). `r Words(nrow(outlier_to))` participants had an usually high proportion of timeouts and were removed from the analysis. The mean accuracy of participants (not including timeout trials) was `r spec_dec(100*mean(resp_summary_exp1$meanAcc),2)`% (SD = `r spec_dec(100*sd(resp_summary_exp1$meanAcc),2)`%). `r Words(nrow(outlier_acc))` participants that had an unusually low proportion of accurate trials and were also removed. The only participant deemed to be an outlier in terms of mean response time (hereafter RT) was also excluded on the basis of the timeout criterion, noted above. 
 
-```{r remove outliers}
+```{r rm_outliers_exp1}
 
 # remove the participant outliers from the data
 data_exp1_OR <- 
@@ -300,7 +300,7 @@ data_e1_f <-
 
 For the remaining `r words(nrow(rt_outlier_summary))` participants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was `r spec_dec(100*mean(rt_outlier_summary$prop_rem),2)`% (SD = `r spec_dec(100*sd(rt_outlier_summary$prop_rem),2)`%). `r words(nrow(outlier_prop_removed))` participants had an unusual proportion of trials removed as outlier RTs. 
 
-```{r rt summary}
+```{r rt_summary_exp1}
 # compute grand mean RT 
 grand_mean_e1 <- mean(data_e1_f$RT)
 
@@ -318,6 +318,18 @@ rt_summary_data_e1 <-
   group_by(subj, epoch, TT) %>% 
   summarise(meanRT = mean(RT),
             mean_norm_RT = mean(normRT)) # used for normalised SE bars
+
+# explore whether all Ps showed reduction in RTs phase 1 to phase 2
+
+data_e1_f %>% 
+  filter(epoch %in% c(4:7),
+         acc == 1) %>% 
+  group_by(subj, epoch) %>%
+  summarise(meanRT = mean(RT)) %>% 
+  pivot_wider(names_from = epoch, names_prefix = "epoch_", values_from = meanRT) %>% 
+  mutate(drop_in_RT = mean(c(epoch_5,epoch4)) - c(epoch_6,epoch7)) %>% 
+  view()
+
 ```
 
 
@@ -359,7 +371,7 @@ rt_summary_data_e1 %>%
 
 
 
-```{r Phase 1 BFs}
+```{r phase_1_BFs_exp1}
 # Experiment 1 stats
 
 # Statistics on Phase 1
@@ -380,7 +392,7 @@ e1_phase1_BF <-
 
 These data were explored with a Bayesian ANOVA, using the *BayesFactor::anovaBF()* function (for all analyses in this study the priors were set at the default "medium" width). First taking the data from phase 1 (epochs 1-5), the model with the largest Bayes Factor (BF) contained the factors of epoch and configuration (repeated vs. random), BF~10~ = `r changeSciNot(extractBF(e1_phase1_BF[3])$bf)`. The addition of the interaction term did not substantially improve the model fit, BF~10~ `r spec_dec(extractBF(e1_phase1_BF[4])$bf/extractBF(e1_phase1_BF[3])$bf,1)`.
 
-```{r Phase 2 BFs}
+```{r phase_2_BFs_exp1}
 # Experiment 1 stats
 
 # Statistics on Phase 2
@@ -408,36 +420,39 @@ phase_2_pairwise <-
 # consistent vs. random
 CvR <- 
   phase_2_pairwise %>% 
-  filter(TT %in% c("Repeated: consistent", "Random")) 
+  filter(TT %in% c("Repeated: consistent", "Random: consistent")) 
 
-anovaBF(meanRT ~ TT + subj, 
-        data = CvR,
-        whichRandom = "subj")
+CvR_BF <- 
+  anovaBF(meanRT ~ TT + subj, 
+          data = CvR,
+          whichRandom = "subj")
 
 # inconsistent vs. random
 IvR <- 
   phase_2_pairwise %>% 
-  filter(TT %in% c("Repeated: inconsistent", "Random")) 
+  filter(TT %in% c("Repeated: inconsistent", "Random: inconsistent")) 
 
-anovaBF(meanRT ~ TT + subj, 
-        data = IvR,
-        whichRandom = "subj")
+IvR_BF <-
+  anovaBF(meanRT ~ TT + subj, 
+          data = IvR,
+          whichRandom = "subj")
 
 # consistent vs. inconsistent 
 CvI <- 
   phase_2_pairwise %>% 
   filter(TT %in% c("Repeated: consistent", "Repeated: inconsistent")) 
 
-anovaBF(meanRT ~ TT + subj, 
-        data = CvI,
-        whichRandom = "subj")
+CvI_BF <-
+  anovaBF(meanRT ~ TT + subj, 
+          data = CvI,
+          whichRandom = "subj")
 
 ```
 
-A Bayesian ANOVA on the data from phase 2 (epochs 6-10) found significant support for the model containing the factor of configuration, BF~10~ = `r changeSciNot(extractBF(e1_phase2_BF[2])$bf)`. There was evidence to suggest that the addition of the factor of epoch did not substantially improve the model predictions, BF~10~ `r spec_dec(extractBF(e1_phase2_BF[3])$bf/extractBF(e1_phase2_BF[2])$bf,1)`.
+A Bayesian ANOVA on the data from phase 2 (epochs 6-10) found significant support for the model containing the factor of configuration, BF~10~ = `r changeSciNot(extractBF(e1_phase2_BF[2])$bf)`. There was evidence to suggest that the addition of the factor of epoch did not substantially improve the model predictions, BF~10~ `r spec_dec(extractBF(e1_phase2_BF[3])$bf/extractBF(e1_phase2_BF[2])$bf,1)`. Comparing the response times from just "repeated: consistent" trials with their respective random trials (random: consistent), revealed support for a difference between these trial types, BF~10~ =  `r as.data.frame(CvR_BF)[1,1]`. There was no evidence to support a difference between the "repeated: inconsistent" trials and the respective random trials, BF~10~ =  `r as.data.frame(IvR_BF)[1,1]`. There was substantial support for a difference between the repeated consistent and the repeated inconsistent trials, BF~10~ =  `r as.data.frame(CvI_BF)[1,1]`.
 
 
-```{r trad ANOVA phase 2}
+```{r trad_ANOVA_phase_2_exp1}
 # Statistics on Stage 2
 
 phase_2 <- 
@@ -450,14 +465,14 @@ aov_car(meanRT ~ Error(subj/TT*epoch), data = phase_2)
 # random vs consistent
 RvC <- 
   phase_2 %>% 
-  filter(TT %in% c("Random", "Repeated: consistent"))
+  filter(TT %in% c("Random: consistent", "Repeated: consistent"))
 
 t.test(meanRT ~ TT, data = RvC)
 
 # random vs. inconsistent
 RvI <- 
   phase_2 %>% 
-  filter(TT %in% c("Random", "Repeated: inconsistent"))
+  filter(TT %in% c("Random: inconsistent", "Repeated: inconsistent"))
 
 t.test(meanRT ~ TT, data = RvI)
 
@@ -470,6 +485,9 @@ t.test(meanRT ~ TT, data = CvI)
 
 ```
 
+## Discussion
+
+Experiment 1 sought to examine the consequence of an endogenous cue that prompts top-down control of the search process on contextual cuing. In phase 1 we established a robust contextual cuing effect. Following this, participants recieved instruction that each trial would be preceded by an arrow stimulus that would signal the side of the screen on which the target would appear. This cue was valid on all trials in phase 2. Consistent with these instructions and the processing of this cue, we observed substantially reduced search times in phase 2 compared to phase 1. The same set of repeated configurations were presented in this phase, but for half of the trials, the target was relocated to the diagonally opposed quadrant of the screen. Therefore, on these "repeated: inconsistent" trials, the underlying configuration of distractors predicted the target in a location that opposed that of the (valid) endogneous cue. Across this phase we observed signficant contextual cuing for the repeated consistent trials, demonstrating that the underlying configuration of distractors continues to guide attention in the presence of the endogenous cue. However, the repeated inconsistent trials did not lead to an impairment in response times relative to random trials, suggesting that the underlying configuration did not influence search on these trials. 
 
 # Experiment 2
 
@@ -479,7 +497,7 @@ Experiment 2 sought to examine ...
 
 ### Participants
 
-```{r demographics}
+```{r demographics_exp2}
 
 # get basic stats for Ps
 
@@ -509,7 +527,7 @@ The materials and stimuli were identical to Experiment 1.
 ## Results
 
 
-```{r exclusions}
+```{r exclusions_exp2}
 
 # participant exclusions 
 
@@ -563,7 +581,7 @@ participants_removed <-
 
 Our criteria for removing outlier data were identical to Experiment 1. On average, trials ended with a timeout on `r spec_dec(100*mean(resp_summary_exp2$meanTO),2)`% of trials (SD = `r spec_dec(100*sd(resp_summary_exp2$meanTO),2)`). `r Words(nrow(outlier_to))` participants had an usually high proportion of timeouts. The mean accuracy of participants (not including timeout trials) was `r spec_dec(100*mean(resp_summary_exp2$meanAcc),2)`% (SD = `r spec_dec(100*sd(resp_summary_exp2$meanAcc),2)`%). `r Words(nrow(outlier_acc))` participants that had an unusually low proportion of accurate trials and were also removed. `r Words(nrow(outlier_rt))` participants were deemed to be an outlier in terms of mean RT. 
 
-```{r remove outliers}
+```{r rm_outliers_exp2}
 
 data_exp2_OR <- 
   data_exp2 %>% 
@@ -654,7 +672,7 @@ rt_summary_data_e2 %>%
 
 ```
 
-```{r phase 1 BFs}
+```{r phase_1_BFs_exp2}
 # Statistics on Stage 1
 
 phase_1 <- 
@@ -676,7 +694,7 @@ phase_1_BF[4]/phase_1_BF[3]
 
 ```
 
-```{r phase 2 BFs}
+```{r phase_2_BFs_exp2}
 # Statistics on Stage 2
 
 phase_2 <- 

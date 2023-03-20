@@ -213,7 +213,7 @@ Main text here (Beesley et al., 2015)
 \hypertarget{experiment-1}{%
 \section{Experiment 1}\label{experiment-1}}
 
-Experiment 1 sought to examine whether the learnt attentional behaviour developed contextual cuing was expressed when participants were directed with a top-down instruction to search in a particular region of the search space. Participants were first trained with a set of four repeating configurations
+Experiment 1 sought to examine whether the learnt attentional behaviour that develops during contextual cuing is expressed when participants are directed with an endogenous instructional cue to search in a particular region of the search space. Participants were first trained with a set of four repeating configurations in phase 1 across 5 epochs of 32 trials each. Then prior to phase 2, participants were told that an arrow would appear before every trial indicating the side of the screen on which the target would be located. This arrow was valid on every trial. In phase 2, the repeating configurations were presented in two forms: ``consistent'', where the target appeared in the same position as it has appeared for that configuration in phase 1; and ``inconsistent'', where the target appeared in a position in the opposite quadrant of the screen from where it had appeared in phase 1. Random configurations were also presented in this phase. If the contextual cues within the repeated configurations continue to guide attention in the presence of the instructional cue, then we would expect that response times would be faster on consistent trials compared to random trials. In addition, we would also expect that the contextual cues would guide attention \emph{away} from the (new) target quadrant on inconsistent trials, and so response times should be slower on these trials compared to those on random trials.
 
 \hypertarget{method}{%
 \subsection{Method}\label{method}}
@@ -228,13 +228,29 @@ Thirty-one undergraduate students from Lancaster University were recruited (mean
 
 Participants were tested individually in a quiet room with a Dell laptop with a 15.6'' screen, a screen resolution of 1920 x 1080, and a full size external keyboard for participants to use to respond to the task. Participants sat approximately 50 cm from the screen. Stimulus presentation was controlled by MATLAB using the Psychophysics Toolbox extensions (Brainard, 1997; Kleiner, Brainard \& Pelli, 2007; Pelli, 1997). Responses to the target stimulus were made by pressing the `c' or `n' key on a standard keyboard. All experimental materials are available at the github repository for this study.
 
-Distractor stimuli were an `L' shape (rotated 0°, 90°, 180°, or 270°) while the target stimulus was a `T' shape (rotated at either 90° or 270°). Stimuli were arranged in a square grid of 144 evenly spaced cells (12 x 12) which was positioned centrally on the screen and was XXX mm (XX°) square. The grid itself was invisible to participants. The fixation cross (displayed centrally before each trial) was XX mm (X.X°) square. The stimuli were XX mm (X.X°) square. The background of the screen was grey (RGB: .6, .6, .6) and the stimuli were presented in black. There was a small offset in the vertical line of the `L' distractors, which increased the similarity between the `L' distractor and the target `T', making the search task more difficult (Duncan \& Humphreys, 1989).
+Distractor stimuli were an `L' shape (rotated 0°, 90°, 180°, or 270°) while the target stimulus was a `T' shape (rotated at either 90° or 270°). Stimuli were XX mm (X.X°) square and arranged in a square grid of 144 evenly spaced cells (12 x 12) which was positioned centrally on the screen and was XXX mm (XX°) square. The grid itself was invisible to participants. The fixation cross (displayed centrally before each trial) was XX mm (X.X°) square. The background of the screen was grey (RGB: .6, .6, .6) and the stimuli were presented in black (RGB: 1, 1, 1). There was a small offset in the vertical line of the `L' distractors, which increased the similarity between the `L' distractors and the target `T', making the search task more difficult (Duncan \& Humphreys, 1989).
 
 \hypertarget{design}{%
 \subsubsection{Design}\label{design}}
 
+Phase 1 employed a within-subjects design with factors of epoch (1-5) and configuration (repeated and random). All configurations contained 16 distractors, equally divided between the four quadrants of the display, and one target. Four repeated configurations were trained. Four target locations were used, with one from each quadrant assigned to each of the repeated configurations. These same four target positions were used for the the random configurations throughout the task. Each of these four target positions was chosen at random from one of five locations within each quadrant, that were approximately equidistant from the center of the screen. Distractors could not appear in these target locations.
+
+Phase 2 employed a within-subjects design with factors of epoch (6-10) and configuration (repeated: consistent; repeated: inconsistent; random: consistent; random:inconsistent). On each trial, there was a .5 probability that an ``inconsistent'' version of the configuration would be presented. This meant that the target was relocated to a diametrically opposed target position such as to maximise the displacement from the trained target position. This could occur for both the repeated and random configurations, hence creating four unqiue trial types for this phase. While random configurations did not have a ``trained'', associated, target position, it is necessary to divide the random trials into consistent and inconsistent trial types in this way in order to assess any target frequency effects that may occur, since the inconsistent target locations used in this phase were novel.
+
 \hypertarget{procedure}{%
 \subsubsection{Procedure}\label{procedure}}
+
+Participants were tested individually in a quiet testing room. They were given instructions on how to complete the task, including the presentation of an example of a search trial. Participants were shown the two correct responses for the two possible orientations of targets.
+
+Each trial commenced with a fixation cross presented in the center of the screen for 500 ms, which was then replaced immediately by the search configuration. Participants searched for the target stimulus and responded with a left or right response depending on its orientation. Reaction times (RTs) were recorded from the onset of the search configuration. Following a valid response (c or n), the configuration was removed from the screen. The response--
+stimulus interval (hereafter RSI) was 1,000 ms. If participants made an incorrect response to the target orientation, ``ERROR!'' appeared in the center of the screen for 3000 ms, prior to the RSI.
+
+Each block of eight trials contained each of the four different repeated configurations and four random configurations. These eight configurations could appear in any order with the constraint that the position of the target did not repeat across trials or across consecutive blocks.
+
+A rest break of 30 seconds was given every 80 trials. Trials started automatically after
+these breaks.
+
+After 160 trials, prior to phase 2, particpiants were given an instruction screen which detailed the arrow that would appear on the screen prior to the configuration. They were able to ask any questions they had at this stage and then proceeded to phase 2. The arrow appeared for 1000ms between the removal of the fixation cross and the presentation of the search configuration. The task was otherwise identical to that used in phase 1.
 
 \hypertarget{results}{%
 \subsection{Results}\label{results}}
@@ -256,9 +272,9 @@ Within-subject error bars were computed by a process of normalising the RT data 
 \caption{RT data for Experiment 1}\label{fig:Exp1-RT-figure}
 \end{figure}
 
-These data were explored with a Bayesian ANOVA, using the \emph{BayesFactor::anovaBF()} function (for all analyses in this study the priors were set at the default ``medium'' width). First taking the data from phase 1 (epochs 1-5), the model with the largest Bayes Factor (BF) contained the factors of epoch and configuration (repeated vs.~random), BF\textsubscript{10} = 2.4x10\^{}12. The addition of the interaction term did not substantially improve the model fit, BF\textsubscript{10} 0.4.
+These data were explored with a Bayesian ANOVA, using the \emph{BayesFactor::anovaBF()} function (for all analyses in this study the priors were set at the default ``medium'' width). First taking the data from phase 1 (epochs 1-5), the model with the largest Bayes Factor (BF) contained the factors of epoch and configuration (repeated vs.~random), BF\textsubscript{10} = 2.2x10\^{}12. The addition of the interaction term did not substantially improve the model fit, BF\textsubscript{10} 0.5.
 
-A Bayesian ANOVA on the data from phase 2 (epochs 6-10) found significant support for the model containing the factor of configuration, BF\textsubscript{10} = 3.9x10\^{}2. There was evidence to suggest that the addition of the factor of epoch did not substantially improve the model predictions, BF\textsubscript{10} 0.0.
+A Bayesian ANOVA on the data from phase 2 (epochs 6-10) found significant support for the model containing the factor of configuration, BF\textsubscript{10} = 8.9x10\^{}1. There was evidence to suggest that the addition of the factor of epoch did not substantially improve the model predictions, BF\textsubscript{10} 0.0. Comparing the response times from just ``repeated: consistent'' trials with their respective random trials (random: consistent), revealed support for a difference between these trial types, BF\textsubscript{10} = 4.70. There was no evidence to support a difference between the ``repeated: inconsistent'' trials and the respective random trials, BF\textsubscript{10} = 0.38. There was substantial support for a difference between the repeated consistent and the repeated inconsistent trials, BF\textsubscript{10} = 10.35.
 
 \hypertarget{experiment-2}{%
 \section{Experiment 2}\label{experiment-2}}
