@@ -319,15 +319,15 @@ rt_summary_data_e1 <-
   summarise(meanRT = mean(RT),
             mean_norm_RT = mean(normRT)) # used for normalised SE bars
 
-# explore whether all Ps showed reduction in RTs phase 1 to phase 2
-
+# explore whether all Ps showed reduction in RTs phase 1 to phase 2 - yes they did
 data_e1_f %>% 
   filter(epoch %in% c(4:7),
          acc == 1) %>% 
   group_by(subj, epoch) %>%
   summarise(meanRT = mean(RT)) %>% 
   pivot_wider(names_from = epoch, names_prefix = "epoch_", values_from = meanRT) %>% 
-  mutate(drop_in_RT = mean(c(epoch_5,epoch4)) - c(epoch_6,epoch7)) %>% 
+  rowwise() %>% 
+  mutate(drop_in_RT = mean(c(epoch_4,epoch_5)) - mean(c(epoch_6,epoch_7))) %>% 
   view()
 
 ```
@@ -335,7 +335,7 @@ data_e1_f %>%
 
 (ref:Exp1-RT-figure) RT data for Experiment 1
 
-Within-subject error bars were computed by a process of normalising the RT data for the sample [@cousineau2005]. Figure \@ref(fig:Exp1-RT-figure) shows the RT data across the 10 epochs of the experiment. In phase 1 (epochs 1-5) a contextual cuing effect rapidly emerged. In phase 2, the presence of the guiding arrow had a dramatic effect on the reduction of response times. Despite this, the underlying search configuration continued to play a role in the guidance of attention, with faster response times for (consistent) repeated configurations compared to random configurations.  
+Within-subject error bars were computed by a process of normalising the RT data for the sample [@cousineau2005]. Figure \@ref(fig:Exp1-RT-figure) shows the RT data across the 10 epochs of the experiment. In phase 1 (epochs 1-5) a contextual cuing effect rapidly emerged. In phase 2, the presence of the guiding arrow had a dramatic effect on the reduction of response times. For all participants, the mean RT across epochs 4 and 5 was higher than the mean RTs across epochs 6 and 7.  Despite the clear evidence for the processing of the endogenous cue, the underlying search configuration continued to play a role in the guidance of attention, with faster response times for (consistent) repeated configurations compared to random configurations.  
 
 ```{r Exp1-RT-figure, fig.align="center", fig.cap="(ref:Exp1-RT-figure)", fig.dim=c(7,5), include = TRUE}
 
@@ -487,11 +487,13 @@ t.test(meanRT ~ TT, data = CvI)
 
 ## Discussion
 
-Experiment 1 sought to examine the consequence of an endogenous cue that prompts top-down control of the search process on contextual cuing. In phase 1 we established a robust contextual cuing effect. Following this, participants recieved instruction that each trial would be preceded by an arrow stimulus that would signal the side of the screen on which the target would appear. This cue was valid on all trials in phase 2. Consistent with these instructions and the processing of this cue, we observed substantially reduced search times in phase 2 compared to phase 1. The same set of repeated configurations were presented in this phase, but for half of the trials, the target was relocated to the diagonally opposed quadrant of the screen. Therefore, on these "repeated: inconsistent" trials, the underlying configuration of distractors predicted the target in a location that opposed that of the (valid) endogneous cue. Across this phase we observed signficant contextual cuing for the repeated consistent trials, demonstrating that the underlying configuration of distractors continues to guide attention in the presence of the endogenous cue. However, the repeated inconsistent trials did not lead to an impairment in response times relative to random trials, suggesting that the underlying configuration did not influence search on these trials. 
+Experiment 1 sought to examine the consequence of an endogenous cue that prompts top-down control of the search process on contextual cuing. In phase 1 we established a robust contextual cuing effect. Following this, participants received instruction that each trial would be preceded by an arrow stimulus that would signal the side of the screen on which the target would appear. This cue was valid on all trials in phase 2. Consistent with these instructions and the processing of this cue, we observed substantially reduced search times in phase 2 compared to phase 1. The same set of repeated configurations were presented in Phase 2, but for half of the trials, the target was relocated to the diagonally opposed quadrant of the screen. Therefore, on these "repeated inconsistent" trials, the underlying configuration of distractors predicted the target in a location that opposed that of the (valid) endogenous cue. Across this phase we observed significant contextual cuing for the repeated consistent trials, demonstrating that the underlying configuration of distractors continues to guide attention in the presence of the endogenous cue. However, the repeated inconsistent trials did not lead to an impairment in response times relative to random trials, suggesting that the underlying configuration did not influence search on these trials. 
 
 # Experiment 2
 
-Experiment 2 sought to examine ...
+In Experiment 1 we demonstrated that an established effect of contextual cuing is maintained even when attention is being guided by the presence of a valid endogenous cue. That is, we examined whether the *performance* component of contextual cuing is disrupted by a concurrent controlled attentional behaviour. In Experiment 2 we wanted to explore the *learning* of the contextual cue itself, examining whether the presence of a valid endogenous cue may limit the development of a contextual cuing effect. To do this, we trained each participant on two sets of repeating configurations. One of these sets was always presented in the presence of a valid endognenous cue, while the other set was always presented in the absence of the endogenous cue. The extent to which there is a "cue-competition" effect between the endogneous and the contextual cue can be examined by comparing the contextual cuing effect we observe for the two sets of configurations. Given the (expected) difference in RTs we observed in Experiment 1, between the trials with the endogenous cue present and the cue being absent, in a second phase we removed the endogenous cue entirely from the task. This second phase therefore allows us to directly compare the conextual cuing for the two sets of participants when RTs are of the same magnitude overall.
+
+"Cue-competition" effects have been examined previously in contextual cuing.  @endo2004 trained participants with a contextual cuing task composed of distractor location configurations and repeating distractor identities. Their experiments suggested that the stronger configural (spatial) cue out-competed the cue provided by the distractor identities. Similarly, @kunar2014 found that when colour cues and configural cues both predicted the target location, configural cues were dominant and tended to overshadow the weaker colour cue. @beesley2012 looked at the cue-interaction effects *within* a configuration of distractors. Participants were first trained with half a configuration of repeating distractors that predicted the target (8 out of 16 distractors). In a later stage these distractors were paired with a new half-configuration, such that the whole configuration now predicted the same target location. In contrast to the predictions of the vast majority of models of contingency learning, learning about these new predictive distractors was facilitated, rather than impaired in this second phase (relative to a control condition). Thus, @beesley2012 found that cue-competition was not observed within a configuration of equally predictive distractors. Together these studies suggest that the repeated configuration will out-compete non-configural cues for access to the learning mechanism. The dominance of the configuration in these situations may therefore lead to the prediction that the endogenous cue would not "block" the learning of the configuration in this task. 
 
 ## Method
 
