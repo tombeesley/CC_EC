@@ -185,7 +185,7 @@ Distractor stimuli were an ‘L’ shape (rotated 0°, 90°, 180°, or 270°) wh
 
 Phase 1 employed a within-subjects design with factors of epoch (1-5) and configuration (repeated and random). All configurations contained 16 distractors, equally divided between the four quadrants of the display, and one target. Four repeated configurations were trained. Four target locations were used, with one from each quadrant assigned to each of the repeated configurations. These same four target positions were used for the the random configurations throughout the task. Each of these four target positions was chosen at random from one of five locations within each quadrant, that were approximately equidistant from the center of the screen. Distractors could not appear in these target locations. 
 
-Phase 2 employed a within-subjects design with factors of epoch (6-10) and configuration (repeated: consistent; repeated: inconsistent; random: consistent; random:inconsistent). On each trial, there was a .5 probability that an "inconsistent" version of the configuration would be presented. This meant that the target was relocated to a diametrically opposed target position such as to maximise the displacement from the trained target position. This could occur for both the repeated and random configurations, hence creating four unqiue trial types for this phase. While random configurations did not have a "trained", associated, target position, it is necessary to divide the random trials into consistent and inconsistent trial types in this way in order to assess any target frequency effects that may occur, since the inconsistent target locations used in this phase were novel. 
+Phase 2 employed a within-subjects design with factors of epoch (6-10) and configuration (repeated: consistent; repeated: inconsistent; random: consistent; random:inconsistent). On each trial, there was a .5 probability that an "inconsistent" version of the configuration would be presented. This meant that the target was relocated to a diametrically opposed target position such as to maximise the displacement from the trained target position. This could occur for both the repeated and random configurations, hence creating four unique trial types for this phase. While random configurations did not have a "trained", associated, target position, it is necessary to divide the random trials into consistent and inconsistent trial types in this way in order to assess any target frequency effects that may occur, since the inconsistent target locations used in this phase were novel. 
 
 
 ### Procedure
@@ -200,7 +200,7 @@ Each block of eight trials contained each of the four different repeated configu
 A rest break of 30 seconds was given every 80 trials. Trials started automatically after
 these breaks.
 
-After 160 trials, prior to phase 2, particpiants were given an instruction screen which detailed the arrow that would appear on the screen prior to the configuration. They were able to ask any questions they had at this stage and then proceeded to phase 2. The arrow appeared for 1000ms between the removal of the fixation cross and the presentation of the search configuration. The task was otherwise identical to that used in phase 1. 
+After 160 trials, prior to phase 2, participants were given an instruction screen which detailed the arrow that would appear on the screen prior to the configuration. They were able to ask any questions they had at this stage and then proceeded to phase 2. The arrow appeared for 1000ms between the removal of the fixation cross and the presentation of the search configuration. The task was otherwise identical to that used in phase 1. 
 
 ## Results
 
@@ -491,7 +491,7 @@ Experiment 1 sought to examine the consequence of an endogenous cue that prompts
 
 # Experiment 2
 
-In Experiment 1 we demonstrated that an established effect of contextual cuing is maintained even when attention is being guided by the presence of a valid endogenous cue. That is, we examined whether the *performance* component of contextual cuing is disrupted by a concurrent controlled attentional behaviour. In Experiment 2 we wanted to explore the *learning* of the contextual cue itself, examining whether the presence of a valid endogenous cue may limit the development of a contextual cuing effect. To do this, we trained each participant on two sets of repeating configurations. One of these sets was always presented in the presence of a valid endognenous cue, while the other set was always presented in the absence of the endogenous cue. The extent to which there is a "cue-competition" effect between the endogneous and the contextual cue can be examined by comparing the contextual cuing effect we observe for the two sets of configurations. Given the (expected) difference in RTs we observed in Experiment 1, between the trials with the endogenous cue present and the cue being absent, in a second phase we removed the endogenous cue entirely from the task. This second phase therefore allows us to directly compare the conextual cuing for the two sets of participants when RTs are of the same magnitude overall.
+In Experiment 1 we demonstrated that an established effect of contextual cuing is maintained even when attention is being guided by the presence of a valid endogenous cue. That is, we examined whether the *performance* component of contextual cuing is disrupted by a concurrent controlled attentional behaviour. In Experiment 2 we wanted to explore the *learning* of the contextual cue itself, examining whether the presence of a valid endogenous cue may limit the development of a contextual cuing effect. To do this, we trained each participant on two sets of repeating configurations. One of these sets was always presented in the presence of a valid endognenous cue, while the other set was always presented in the absence of the endogenous cue. The extent to which there is a "cue-competition" effect between the endogneous cue and the contextual cues can be examined by comparing the contextual cuing effect we observe for the two sets of configurations. Given the (expected) difference in RTs we observed in Experiment 1, between the trials with the endogenous cue present and the cue being absent, in a second phase we removed the endogenous cue entirely from the task. This second phase therefore allows us to directly compare the contextual cuing for the two sets of participants when RTs are of the same magnitude overall.
 
 "Cue-competition" effects have been examined previously in contextual cuing.  @endo2004 trained participants with a contextual cuing task composed of distractor location configurations and repeating distractor identities. Their experiments suggested that the stronger configural (spatial) cue out-competed the cue provided by the distractor identities. Similarly, @kunar2014 found that when colour cues and configural cues both predicted the target location, configural cues were dominant and tended to overshadow the weaker colour cue. @beesley2012 looked at the cue-interaction effects *within* a configuration of distractors. Participants were first trained with half a configuration of repeating distractors that predicted the target (8 out of 16 distractors). In a later stage these distractors were paired with a new half-configuration, such that the whole configuration now predicted the same target location. In contrast to the predictions of the vast majority of models of contingency learning, learning about these new predictive distractors was facilitated, rather than impaired in this second phase (relative to a control condition). Thus, @beesley2012 found that cue-competition was not observed within a configuration of equally predictive distractors. Together these studies suggest that the repeated configuration will out-compete non-configural cues for access to the learning mechanism. The dominance of the configuration in these situations may therefore lead to the prediction that the endogenous cue would not "block" the learning of the configuration in this task. 
 
@@ -522,9 +522,12 @@ The materials and stimuli were identical to Experiment 1.
 
 ### Design
 
+Four repeated configurations were created in an identical manner to those used in Experiment 1. For each participant, two of these configurations were used for the "cue-competition" condition, in which the arrow cue was presented before the configuration, while two were used for the "control" condition (no arrow presented). As in Experiment 1, the four repeated configurations were paired with unique target positions from each of the four quadrants. We counterbalanced the use of the target quadrants across the factors of configuration type (repeated and random) and cue condition (cue-competition and control). For half of the participants, targets in the top left and bottom right were used for the repeated configurations presented with the arrow (cue-competition) condition, with targets in the top right and bottom left used for repeated configurations in the no-arrow (control) condition. For these participants, random configurations presented with the arrow had targets in the top right and bottom left, and random configurations without the arrow had targets in the top left and bottom right. For the other half of the participants these assignments were revered (repeated-arrow: top-right and bottom-left; repeated-no arrow: top-left and bottom-right; random-arrow: top-left and bottom-right; random-no arrow: top-right and bottom-left)
 
 
 ### Procedure
+
+The procedure was the same as Experiment 1 with the following differences. Participants received 320 trials in total. For the first 160 trials, the arrow was presented for the relevant conditions. For the final 160 trials, the arrow was never presented. Rest breaks were given every 60 trials. 
 
 ## Results
 
@@ -679,22 +682,40 @@ rt_summary_data_e2 %>%
 
 phase_1 <- 
   rt_summary_data_e2 %>% 
-  mutate(epoch = as.numeric(epoch)) %>% 
-  filter(epoch <= 5)
+  mutate(epoch = as.factor(epoch)) %>% 
+  filter(epoch %in% c(1,5))
+  
 
 aov_car(meanRT ~ Error(subj/patArrowP1*TT*epoch), data = phase_1)
 
-# no evidence for an interaction of arrow training and TT
-# is there evidence for the null?
+
 phase_1_BF <- 
-  anovaBF(meanRT ~ patArrowP1*TT + subj,
+  anovaBF(meanRT ~ patArrowP1*TT*epoch + subj,
           data= data.frame(phase_1),
           whichRandom = "subj")
 
-phase_1_BF[4]/phase_1_BF[3]
+phase_1_BF_sorted <- sort(phase_1_BF, decreasing = TRUE)
+
+# no evidence for an interaction of arrow training and TT
+# is there evidence for the null?
+phase_1_BF_simple <- 
+  anovaBF(meanRT ~ patArrowP1*TT + subj,
+          data= data.frame(phase_1),
+          whichRandom = "subj", iterations = 1000000)
+
+
+phase_1_BF_simple[4]/phase_1_BF_simple[3]
 # the evidence favours an absence of an interaction effect
 
 ```
+
+(ref:Exp2-RT-figure) RT data for Experiment 2
+
+Figure \@ref(fig:Exp2-RT-figure) shows the RT data across the 10 epochs of the experiment. Contextual cuing emerged rapidly in both the arrow and no-arrow conditions. The Phase 1 data were explored with a Bayesian ANOVA with factors of  which revealed that the the model with the largest Bayes Factor (BF) contained the factors of epoch, configuration (repeated vs. random), endogenous cue (arrow present vs. arrow absent), and the interaction of epoch and configuration, BF~10~ = `r changeSciNot(extractBF(phase_1_BF_sorted[1])$bf)`. Notably, there was no interaction effect of 
+
+
+, BF~10~ = `r changeSciNot(extractBF(e1_phase1_BF[3])$bf)`. The addition of the interaction term did not substantially improve the model fit, BF~10~ `r spec_dec(extractBF(e1_phase1_BF[4])$bf/extractBF(e1_phase1_BF[3])$bf,1)`.
+
 
 ```{r phase_2_BFs_exp2}
 # Statistics on Stage 2

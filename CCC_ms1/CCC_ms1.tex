@@ -208,7 +208,7 @@ Public significance statement:
 \begin{document}
 \maketitle
 
-Main text here (Beesley et al., 2015)
+Main text here (Tom Beesley et al., 2015)
 
 \hypertarget{experiment-1}{%
 \section{Experiment 1}\label{experiment-1}}
@@ -235,7 +235,7 @@ Distractor stimuli were an `L' shape (rotated 0°, 90°, 180°, or 270°) while 
 
 Phase 1 employed a within-subjects design with factors of epoch (1-5) and configuration (repeated and random). All configurations contained 16 distractors, equally divided between the four quadrants of the display, and one target. Four repeated configurations were trained. Four target locations were used, with one from each quadrant assigned to each of the repeated configurations. These same four target positions were used for the the random configurations throughout the task. Each of these four target positions was chosen at random from one of five locations within each quadrant, that were approximately equidistant from the center of the screen. Distractors could not appear in these target locations.
 
-Phase 2 employed a within-subjects design with factors of epoch (6-10) and configuration (repeated: consistent; repeated: inconsistent; random: consistent; random:inconsistent). On each trial, there was a .5 probability that an ``inconsistent'' version of the configuration would be presented. This meant that the target was relocated to a diametrically opposed target position such as to maximise the displacement from the trained target position. This could occur for both the repeated and random configurations, hence creating four unqiue trial types for this phase. While random configurations did not have a ``trained'', associated, target position, it is necessary to divide the random trials into consistent and inconsistent trial types in this way in order to assess any target frequency effects that may occur, since the inconsistent target locations used in this phase were novel.
+Phase 2 employed a within-subjects design with factors of epoch (6-10) and configuration (repeated: consistent; repeated: inconsistent; random: consistent; random:inconsistent). On each trial, there was a .5 probability that an ``inconsistent'' version of the configuration would be presented. This meant that the target was relocated to a diametrically opposed target position such as to maximise the displacement from the trained target position. This could occur for both the repeated and random configurations, hence creating four unique trial types for this phase. While random configurations did not have a ``trained'', associated, target position, it is necessary to divide the random trials into consistent and inconsistent trial types in this way in order to assess any target frequency effects that may occur, since the inconsistent target locations used in this phase were novel.
 
 \hypertarget{procedure}{%
 \subsubsection{Procedure}\label{procedure}}
@@ -250,7 +250,7 @@ Each block of eight trials contained each of the four different repeated configu
 A rest break of 30 seconds was given every 80 trials. Trials started automatically after
 these breaks.
 
-After 160 trials, prior to phase 2, particpiants were given an instruction screen which detailed the arrow that would appear on the screen prior to the configuration. They were able to ask any questions they had at this stage and then proceeded to phase 2. The arrow appeared for 1000ms between the removal of the fixation cross and the presentation of the search configuration. The task was otherwise identical to that used in phase 1.
+After 160 trials, prior to phase 2, participants were given an instruction screen which detailed the arrow that would appear on the screen prior to the configuration. They were able to ask any questions they had at this stage and then proceeded to phase 2. The arrow appeared for 1000ms between the removal of the fixation cross and the presentation of the search configuration. The task was otherwise identical to that used in phase 1.
 
 \hypertarget{results}{%
 \subsection{Results}\label{results}}
@@ -261,7 +261,7 @@ For the remaining twenty-eight participants we removed trials with a timeout and
 
 
 
-Within-subject error bars were computed by a process of normalising the RT data for the sample (Cousineau, 2005). Figure \ref{fig:Exp1-RT-figure} shows the RT data across the 10 epochs of the experiment. In phase 1 (epochs 1-5) a contextual cuing effect rapidly emerged. In phase 2, the presence of the guiding arrow had a dramatic effect on the reduction of response times. Despite this, the underlying search configuration continued to play a role in the guidance of attention, with faster response times for (consistent) repeated configurations compared to random configurations.
+Within-subject error bars were computed by a process of normalising the RT data for the sample (Cousineau, 2005). Figure \ref{fig:Exp1-RT-figure} shows the RT data across the 10 epochs of the experiment. In phase 1 (epochs 1-5) a contextual cuing effect rapidly emerged. In phase 2, the presence of the guiding arrow had a dramatic effect on the reduction of response times. For all participants, the mean RT across epochs 4 and 5 was higher than the mean RTs across epochs 6 and 7. Despite the clear evidence for the processing of the endogenous cue, the underlying search configuration continued to play a role in the guidance of attention, with faster response times for (consistent) repeated configurations compared to random configurations.
 
 \begin{figure}
 
@@ -272,14 +272,21 @@ Within-subject error bars were computed by a process of normalising the RT data 
 \caption{RT data for Experiment 1}\label{fig:Exp1-RT-figure}
 \end{figure}
 
-These data were explored with a Bayesian ANOVA, using the \emph{BayesFactor::anovaBF()} function (for all analyses in this study the priors were set at the default ``medium'' width). First taking the data from phase 1 (epochs 1-5), the model with the largest Bayes Factor (BF) contained the factors of epoch and configuration (repeated vs.~random), BF\textsubscript{10} = 2.2x10\^{}12. The addition of the interaction term did not substantially improve the model fit, BF\textsubscript{10} 0.5.
+These data were explored with a Bayesian ANOVA, using the \emph{BayesFactor::anovaBF()} function (for all analyses in this study the priors were set at the default ``medium'' width). First taking the data from phase 1 (epochs 1-5), the model with the largest Bayes Factor (BF) contained the factors of epoch and configuration (repeated vs.~random), BF\textsubscript{10} = 2.1x10\^{}12. The addition of the interaction term did not substantially improve the model fit, BF\textsubscript{10} 0.5.
 
-A Bayesian ANOVA on the data from phase 2 (epochs 6-10) found significant support for the model containing the factor of configuration, BF\textsubscript{10} = 8.9x10\^{}1. There was evidence to suggest that the addition of the factor of epoch did not substantially improve the model predictions, BF\textsubscript{10} 0.0. Comparing the response times from just ``repeated: consistent'' trials with their respective random trials (random: consistent), revealed support for a difference between these trial types, BF\textsubscript{10} = 4.70. There was no evidence to support a difference between the ``repeated: inconsistent'' trials and the respective random trials, BF\textsubscript{10} = 0.38. There was substantial support for a difference between the repeated consistent and the repeated inconsistent trials, BF\textsubscript{10} = 10.35.
+A Bayesian ANOVA on the data from phase 2 (epochs 6-10) found significant support for the model containing the factor of configuration, BF\textsubscript{10} = 9x10\^{}1. There was evidence to suggest that the addition of the factor of epoch did not substantially improve the model predictions, BF\textsubscript{10} 0.0. Comparing the response times from just ``repeated: consistent'' trials with their respective random trials (random: consistent), revealed support for a difference between these trial types, BF\textsubscript{10} = 4.76. There was no evidence to support a difference between the ``repeated: inconsistent'' trials and the respective random trials, BF\textsubscript{10} = 0.38. There was substantial support for a difference between the repeated consistent and the repeated inconsistent trials, BF\textsubscript{10} = 10.98.
+
+\hypertarget{discussion}{%
+\subsection{Discussion}\label{discussion}}
+
+Experiment 1 sought to examine the consequence of an endogenous cue that prompts top-down control of the search process on contextual cuing. In phase 1 we established a robust contextual cuing effect. Following this, participants received instruction that each trial would be preceded by an arrow stimulus that would signal the side of the screen on which the target would appear. This cue was valid on all trials in phase 2. Consistent with these instructions and the processing of this cue, we observed substantially reduced search times in phase 2 compared to phase 1. The same set of repeated configurations were presented in Phase 2, but for half of the trials, the target was relocated to the diagonally opposed quadrant of the screen. Therefore, on these ``repeated inconsistent'' trials, the underlying configuration of distractors predicted the target in a location that opposed that of the (valid) endogenous cue. Across this phase we observed significant contextual cuing for the repeated consistent trials, demonstrating that the underlying configuration of distractors continues to guide attention in the presence of the endogenous cue. However, the repeated inconsistent trials did not lead to an impairment in response times relative to random trials, suggesting that the underlying configuration did not influence search on these trials.
 
 \hypertarget{experiment-2}{%
 \section{Experiment 2}\label{experiment-2}}
 
-Experiment 2 sought to examine \ldots{}
+In Experiment 1 we demonstrated that an established effect of contextual cuing is maintained even when attention is being guided by the presence of a valid endogenous cue. That is, we examined whether the \emph{performance} component of contextual cuing is disrupted by a concurrent controlled attentional behaviour. In Experiment 2 we wanted to explore the \emph{learning} of the contextual cue itself, examining whether the presence of a valid endogenous cue may limit the development of a contextual cuing effect. To do this, we trained each participant on two sets of repeating configurations. One of these sets was always presented in the presence of a valid endognenous cue, while the other set was always presented in the absence of the endogenous cue. The extent to which there is a ``cue-competition'' effect between the endogneous cue and the contextual cues can be examined by comparing the contextual cuing effect we observe for the two sets of configurations. Given the (expected) difference in RTs we observed in Experiment 1, between the trials with the endogenous cue present and the cue being absent, in a second phase we removed the endogenous cue entirely from the task. This second phase therefore allows us to directly compare the contextual cuing for the two sets of participants when RTs are of the same magnitude overall.
+
+``Cue-competition'' effects have been examined previously in contextual cuing. Endo and Takeda (2004) trained participants with a contextual cuing task composed of distractor location configurations and repeating distractor identities. Their experiments suggested that the stronger configural (spatial) cue out-competed the cue provided by the distractor identities. Similarly, (\textbf{kunar2014?}) found that when colour cues and configural cues both predicted the target location, configural cues were dominant and tended to overshadow the weaker colour cue. T. Beesley and Shanks (2012) looked at the cue-interaction effects \emph{within} a configuration of distractors. Participants were first trained with half a configuration of repeating distractors that predicted the target (8 out of 16 distractors). In a later stage these distractors were paired with a new half-configuration, such that the whole configuration now predicted the same target location. In contrast to the predictions of the vast majority of models of contingency learning, learning about these new predictive distractors was facilitated, rather than impaired in this second phase (relative to a control condition). Thus, T. Beesley and Shanks (2012) found that cue-competition was not observed within a configuration of equally predictive distractors. Together these studies suggest that the repeated configuration will out-compete non-configural cues for access to the learning mechanism. The dominance of the configuration in these situations may therefore lead to the prediction that the endogenous cue would not ``block'' the learning of the configuration in this task.
 
 \hypertarget{method-1}{%
 \subsection{Method}\label{method-1}}
@@ -297,8 +304,12 @@ The materials and stimuli were identical to Experiment 1.
 \hypertarget{design-1}{%
 \subsubsection{Design}\label{design-1}}
 
+Four repeated configurations were created in an identical manner to those used in Experiment 1. For each participant, two of these configurations were used for the ``cue-competition'' condition, in which the arrow cue was presented before the configuration, while two were used for the ``control'' condition (no arrow presented). As in Experiment 1, the four repeated configurations were paired with unique target positions from each of the four quadrants. We counterbalanced the use of the target quadrants across the factors of configuration type (repeated and random) and cue condition (cue-competition and control). For half of the participants, targets in the top left and bottom right were used for the repeated configurations presented with the arrow (cue-competition) condition, with targets in the top right and bottom left used for repeated configurations in the no-arrow (control) condition. For these participants, random configurations presented with the arrow had targets in the top right and bottom left, and random configurations without the arrow had targets in the top left and bottom right. For the other half of the participants these assignments were revered (repeated-arrow: top-right and bottom-left; repeated-no arrow: top-left and bottom-right; random-arrow: top-left and bottom-right; random-no arrow: top-right and bottom-left)
+
 \hypertarget{procedure-1}{%
 \subsubsection{Procedure}\label{procedure-1}}
+
+The procedure was identical to Experiment 1 unless otherwise stated. Participants received 320 trials in total. For the first 160 trials, the arrow was presented for the relevant conditions. For the final 160 trials, the arrow was never presented. Rest breaks were given every 60 trials.
 
 \hypertarget{results-1}{%
 \subsection{Results}\label{results-1}}
@@ -364,11 +375,17 @@ For the remaining forty participants we removed trials with a timeout and inaccu
 
 \hypertarget{refs}{}
 \begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-beesley2012}{}}%
+Beesley, T., \& Shanks, D. R. (2012). Investigating cue competition in contextual cuing of visual search. \emph{Journal of Experimental Psychology: Learning, Memory, and Cognition}, \emph{38}(3), 709--725. \url{https://doi.org/10.1037/a0024885}
+
 \leavevmode\vadjust pre{\hypertarget{ref-beesley2015b}{}}%
-Beesley, T., Vadillo, M. A., Pearson, D., \& Shanks, D. R. (2015). Pre-exposure of repeated search configurations facilitates subsequent contextual cuing of visual search. \emph{Journal of Experimental Psychology: Learning, Memory, and Cognition}, \emph{41}(2), 348--362. \url{https://doi.org/10.1037/xlm0000033}
+Beesley, Tom, Vadillo, M. A., Pearson, D., \& Shanks, D. R. (2015). Pre-exposure of repeated search configurations facilitates subsequent contextual cuing of visual search. \emph{Journal of Experimental Psychology: Learning, Memory, and Cognition}, \emph{41}(2), 348--362. \url{https://doi.org/10.1037/xlm0000033}
 
 \leavevmode\vadjust pre{\hypertarget{ref-cousineau2005}{}}%
 Cousineau, D. (2005). Confidence intervals in within-subject designs: {A} simpler solution to {Loftus} and {Masson}'s method. \emph{Tutorials in Quantitative Methods for Psychology}, \emph{1}(1), 42--45. \url{https://doi.org/10.20982/tqmp.01.1.p042}
+
+\leavevmode\vadjust pre{\hypertarget{ref-endo2004}{}}%
+Endo, N., \& Takeda, Y. (2004). Selective learning of spatial configuration and object identity in visual search. \emph{Perception \& Psychophysics}, \emph{66}(2), 293--302. \url{https://doi.org/10.3758/BF03194880}
 
 \end{CSLReferences}
 
