@@ -390,7 +390,7 @@ e1_phase1_BF <-
 
 ```
 
-These data were explored with a Bayesian ANOVA, using the *BayesFactor::anovaBF()* function (for all analyses in this study the priors were set at the default "medium" width). First taking the data from phase 1 (epochs 1-5), the model with the largest Bayes Factor (BF) contained the factors of epoch and configuration (repeated vs. random), BF~10~ = `r changeSciNot(extractBF(e1_phase1_BF[3])$bf)`. The addition of the interaction term did not substantially improve the model fit, BF~10~ `r spec_dec(extractBF(e1_phase1_BF[4])$bf/extractBF(e1_phase1_BF[3])$bf,1)`.
+These data were explored with a Bayesian ANOVA, using the *BayesFactor::anovaBF()* function (for all analyses in this study the priors were set at the default "medium" width). First taking the data from phase 1 (epochs 1-5), the model with the largest Bayes Factor (BF) contained the factors of epoch and configuration (repeated vs. random), BF~10~ = `r changeSciNot(extractBF(e1_phase1_BF[3])$bf)`. The addition of the interaction term did not substantially improve the model fit, BF~10~ = `r spec_dec(extractBF(e1_phase1_BF[4])$bf/extractBF(e1_phase1_BF[3])$bf,1)`.
 
 ```{r phase_2_BFs_exp1}
 # Experiment 1 stats
@@ -449,7 +449,7 @@ CvI_BF <-
 
 ```
 
-A Bayesian ANOVA on the data from phase 2 (epochs 6-10) found significant support for the model containing the factor of configuration, BF~10~ = `r changeSciNot(extractBF(e1_phase2_BF[2])$bf)`. There was evidence to suggest that the addition of the factor of epoch did not substantially improve the model predictions, BF~10~ `r spec_dec(extractBF(e1_phase2_BF[3])$bf/extractBF(e1_phase2_BF[2])$bf,1)`. Comparing the response times from just "repeated: consistent" trials with their respective random trials (random: consistent), revealed support for a difference between these trial types, BF~10~ =  `r as.data.frame(CvR_BF)[1,1]`. There was no evidence to support a difference between the "repeated: inconsistent" trials and the respective random trials, BF~10~ =  `r as.data.frame(IvR_BF)[1,1]`. There was substantial support for a difference between the repeated consistent and the repeated inconsistent trials, BF~10~ =  `r as.data.frame(CvI_BF)[1,1]`.
+A Bayesian ANOVA on the data from phase 2 (epochs 6-10) found significant support for the model containing the factor of configuration, BF~10~ = `r extractBF(e1_phase2_BF[2])$bf`. There was evidence to suggest that the addition of the factor of epoch did not substantially improve the model predictions, BF~10~ `r spec_dec(extractBF(e1_phase2_BF[3])$bf/extractBF(e1_phase2_BF[2])$bf,1)`. Comparing the response times from just "repeated: consistent" trials with their respective random trials (random: consistent), revealed support for a difference between these trial types, BF~10~ =  `r as.data.frame(CvR_BF)[1,1]`. There was no evidence to support a difference between the "repeated: inconsistent" trials and the respective random trials, BF~10~ =  `r as.data.frame(IvR_BF)[1,1]`. There was substantial support for a difference between the repeated consistent and the repeated inconsistent trials, BF~10~ =  `r as.data.frame(CvI_BF)[1,1]`.
 
 
 ```{r trad_ANOVA_phase_2_exp1}
@@ -491,7 +491,7 @@ Experiment 1 sought to examine the consequence of an endogenous cue that prompts
 
 # Experiment 2
 
-In Experiment 1 we demonstrated that an established effect of contextual cuing is maintained even when attention is being guided by the presence of a valid endogenous cue. That is, we examined whether the *performance* component of contextual cuing is disrupted by a concurrent controlled attentional behaviour. In Experiment 2 we wanted to explore the *learning* of the contextual cue itself, examining whether the presence of a valid endogenous cue may limit the development of a contextual cuing effect. To do this, we trained each participant on two sets of repeating configurations. One of these sets was always presented in the presence of a valid endognenous cue, while the other set was always presented in the absence of the endogenous cue. The extent to which there is a "cue-competition" effect between the endogneous cue and the contextual cues can be examined by comparing the contextual cuing effect we observe for the two sets of configurations. Given the (expected) difference in RTs we observed in Experiment 1, between the trials with the endogenous cue present and the cue being absent, in a second phase we removed the endogenous cue entirely from the task. This second phase therefore allows us to directly compare the contextual cuing for the two sets of participants when RTs are of the same magnitude overall.
+In Experiment 1 we demonstrated that an established effect of contextual cuing is maintained even when attention is being guided by the presence of a valid endogenous cue. That is, we examined whether the *performance* component of contextual cuing is disrupted by a concurrent controlled attentional behaviour. In Experiment 2 we wanted to explore the *learning* of the contextual cue itself, examining whether the presence of a valid endogenous cue may limit the development of a contextual cuing effect. To do this, we trained each participant on two sets of repeating configurations. One of these sets was always presented in the presence of a valid endognenous cue, while the other set was always presented in the absence of the endogenous cue. The extent to which there is a "cue-competition" effect between the endogneous cue and the contextual cues can be examined by comparing the contextual cuing effect we observe for the two sets of configurations. Given the (expected) difference in RTs we observed in Experiment 1, between the trials with the endogenous cue present and the cue being absent, in a second phase of Experiment 2 we removed the endogenous cue entirely from the task. This second phase therefore allowed us to directly compare the contextual cuing for the two sets of participants when RTs are of the same magnitude. 
 
 "Cue-competition" effects have been examined previously in contextual cuing.  @endo2004 trained participants with a contextual cuing task composed of distractor location configurations and repeating distractor identities. Their experiments suggested that the stronger configural (spatial) cue out-competed the cue provided by the distractor identities. Similarly, @kunar2014 found that when colour cues and configural cues both predicted the target location, configural cues were dominant and tended to overshadow the weaker colour cue. @beesley2012 looked at the cue-interaction effects *within* a configuration of distractors. Participants were first trained with half a configuration of repeating distractors that predicted the target (8 out of 16 distractors). In a later stage these distractors were paired with a new half-configuration, such that the whole configuration now predicted the same target location. In contrast to the predictions of the vast majority of models of contingency learning, learning about these new predictive distractors was facilitated, rather than impaired in this second phase (relative to a control condition). Thus, @beesley2012 found that cue-competition was not observed within a configuration of equally predictive distractors. Together these studies suggest that the repeated configuration will out-compete non-configural cues for access to the learning mechanism. The dominance of the configuration in these situations may therefore lead to the prediction that the endogenous cue would not "block" the learning of the configuration in this task. 
 
@@ -522,7 +522,7 @@ The materials and stimuli were identical to Experiment 1.
 
 ### Design
 
-Four repeated configurations were created in an identical manner to those used in Experiment 1. For each participant, two of these configurations were used for the "cue-competition" condition, in which the arrow cue was presented before the configuration, while two were used for the "control" condition (no arrow presented). As in Experiment 1, the four repeated configurations were paired with unique target positions from each of the four quadrants. We counterbalanced the use of the target quadrants across the factors of configuration type (repeated and random) and cue condition (cue-competition and control). For half of the participants, targets in the top left and bottom right were used for the repeated configurations presented with the arrow (cue-competition) condition, with targets in the top right and bottom left used for repeated configurations in the no-arrow (control) condition. For these participants, random configurations presented with the arrow had targets in the top right and bottom left, and random configurations without the arrow had targets in the top left and bottom right. For the other half of the participants these assignments were revered (repeated-arrow: top-right and bottom-left; repeated-no arrow: top-left and bottom-right; random-arrow: top-left and bottom-right; random-no arrow: top-right and bottom-left)
+Four repeated configurations were created in an identical manner to those used in Experiment 1. For each participant, two of these configurations were used for the "cue-competition" condition, in which the arrow cue was presented before the configuration, while two were used for the "control" condition (no arrow presented). As in Experiment 1, the four repeated configurations were paired with unique target positions from each of the four quadrants. We counterbalanced the use of the target quadrants across the factors of configuration type (repeated and random) and cue condition (cue-competition and control). For half of the participants, targets in the top left and bottom right were used for the repeated configurations presented with the arrow (cue-competition) condition, with targets in the top right and bottom left used for repeated configurations in the no-arrow (control) condition. For these participants, random configurations presented with the arrow had targets in the top right and bottom left, and random configurations without the arrow had targets in the top left and bottom right. For the other half of the participants these assignments were revered (repeated-arrow: top-right and bottom-left; repeated-no arrow: top-left and bottom-right; random-arrow: top-left and bottom-right; random-no arrow: top-right and bottom-left). 
 
 
 ### Procedure
@@ -584,7 +584,7 @@ participants_removed <-
 
 ```
 
-Our criteria for removing outlier data were identical to Experiment 1. On average, trials ended with a timeout on `r spec_dec(100*mean(resp_summary_exp2$meanTO),2)`% of trials (SD = `r spec_dec(100*sd(resp_summary_exp2$meanTO),2)`). `r Words(nrow(outlier_to))` participants had an usually high proportion of timeouts. The mean accuracy of participants (not including timeout trials) was `r spec_dec(100*mean(resp_summary_exp2$meanAcc),2)`% (SD = `r spec_dec(100*sd(resp_summary_exp2$meanAcc),2)`%). `r Words(nrow(outlier_acc))` participants that had an unusually low proportion of accurate trials and were also removed. `r Words(nrow(outlier_rt))` participants were deemed to be an outlier in terms of mean RT. 
+Our criteria for removing outlier data were identical to Experiment 1. On average, trials ended with a timeout on `r spec_dec(100*mean(resp_summary_exp2$meanTO),2)`% of trials (SD = `r spec_dec(100*sd(resp_summary_exp2$meanTO),2)`). `r Words(nrow(outlier_to))` participants had an usually high proportion of timeouts. The mean accuracy of participants (not including timeout trials) was `r spec_dec(100*mean(resp_summary_exp2$meanAcc),2)`% (SD = `r spec_dec(100*sd(resp_summary_exp2$meanAcc),2)`%). `r Words(nrow(outlier_acc))` participant had an unusually low proportion of accurate trials and were also removed. `r Words(nrow(outlier_rt))` participants were deemed to be an outlier in terms of mean RT. 
 
 ```{r rm_outliers_exp2}
 
@@ -618,7 +618,7 @@ data_e2_f <-
 ```
 
 
-For the remaining `r words(nrow(rt_outlier_summary))` participants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was `r spec_dec(100*mean(rt_outlier_summary$prop_rem),2)`% (SD = `r spec_dec(100*sd(rt_outlier_summary$prop_rem),2)`%). `r words(nrow(outlier_prop_removed))` participants had an unusual proportion of trials removed as outlier RTs and were not included in the final analysis. 
+For the remaining `r words(nrow(rt_outlier_summary))` participants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was `r spec_dec(100*mean(rt_outlier_summary$prop_rem),2)`% (SD = `r spec_dec(100*sd(rt_outlier_summary$prop_rem),2)`%). `r Words(nrow(outlier_prop_removed))` participant had an unusual proportion of trials removed as outlier RTs and were not included in the final analysis. 
 
 ```{r Exp2-RT-figure, fig.align="center", fig.cap="(ref:Exp2-RT-figure)", fig.dim=c(6,6), include = TRUE}
 
@@ -701,17 +701,17 @@ phase_1_BF_sorted <- sort(phase_1_BF, decreasing = TRUE)
 phase_1_BF_simple <- 
   anovaBF(meanRT ~ patArrowP1*TT + subj,
           data= data.frame(phase_1),
-          whichRandom = "subj", iterations = 1000000)
+          whichRandom = "subj", iterations = 100000)
 
 
-phase_1_BF_simple[4]/phase_1_BF_simple[3]
+int_effect <- phase_1_BF_simple[4]/phase_1_BF_simple[3]
 # the evidence favours an absence of an interaction effect
 
 ```
 
 (ref:Exp2-RT-figure) RT data for Experiment 2
 
-Figure \@ref(fig:Exp2-RT-figure) shows the RT data across the 10 epochs of the experiment. Contextual cuing emerged rapidly in both the arrow and no-arrow conditions. The Phase 1 data were explored with a Bayesian ANOVA with factors of  which revealed that the the model with the largest Bayes Factor (BF) contained the factors of epoch, configuration (repeated vs. random), endogenous cue (arrow present vs. arrow absent), and the interaction of epoch and configuration, BF~10~ = `r changeSciNot(extractBF(phase_1_BF_sorted[1])$bf)`. Notably, there was no interaction effect of 
+Figure \@ref(fig:Exp2-RT-figure) shows the RT data across the 10 epochs of the experiment. Contextual cuing emerged rapidly in both the arrow and no-arrow conditions. The Phase 1 data were explored with a Bayesian ANOVA, which revealed that the the model with the largest Bayes Factor (BF) contained the factors of epoch, configuration (repeated vs. random), endogenous cue (arrow present vs. arrow absent), and the interaction of epoch and configuration, BF~10~ = `r changeSciNot(extractBF(phase_1_BF_sorted[1])$bf)`. Notably, there was no interaction effect of configuration and endongenous cue
 
 
 , BF~10~ = `r changeSciNot(extractBF(e1_phase1_BF[3])$bf)`. The addition of the interaction term did not substantially improve the model fit, BF~10~ `r spec_dec(extractBF(e1_phase1_BF[4])$bf/extractBF(e1_phase1_BF[3])$bf,1)`.

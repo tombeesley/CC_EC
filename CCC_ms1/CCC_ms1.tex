@@ -272,9 +272,9 @@ Within-subject error bars were computed by a process of normalising the RT data 
 \caption{RT data for Experiment 1}\label{fig:Exp1-RT-figure}
 \end{figure}
 
-These data were explored with a Bayesian ANOVA, using the \emph{BayesFactor::anovaBF()} function (for all analyses in this study the priors were set at the default ``medium'' width). First taking the data from phase 1 (epochs 1-5), the model with the largest Bayes Factor (BF) contained the factors of epoch and configuration (repeated vs.~random), BF\textsubscript{10} = 2.1x10\^{}12. The addition of the interaction term did not substantially improve the model fit, BF\textsubscript{10} 0.5.
+These data were explored with a Bayesian ANOVA, using the \emph{BayesFactor::anovaBF()} function (for all analyses in this study the priors were set at the default ``medium'' width). First taking the data from phase 1 (epochs 1-5), the model with the largest Bayes Factor (BF) contained the factors of epoch and configuration (repeated vs.~random), BF\textsubscript{10} = 2.2x10\^{}12. The addition of the interaction term did not substantially improve the model fit, BF\textsubscript{10} 0.5.
 
-A Bayesian ANOVA on the data from phase 2 (epochs 6-10) found significant support for the model containing the factor of configuration, BF\textsubscript{10} = 9x10\^{}1. There was evidence to suggest that the addition of the factor of epoch did not substantially improve the model predictions, BF\textsubscript{10} 0.0. Comparing the response times from just ``repeated: consistent'' trials with their respective random trials (random: consistent), revealed support for a difference between these trial types, BF\textsubscript{10} = 4.76. There was no evidence to support a difference between the ``repeated: inconsistent'' trials and the respective random trials, BF\textsubscript{10} = 0.38. There was substantial support for a difference between the repeated consistent and the repeated inconsistent trials, BF\textsubscript{10} = 10.98.
+A Bayesian ANOVA on the data from phase 2 (epochs 6-10) found significant support for the model containing the factor of configuration, BF\textsubscript{10} = 8.9x10\^{}1. There was evidence to suggest that the addition of the factor of epoch did not substantially improve the model predictions, BF\textsubscript{10} 0.0. Comparing the response times from just ``repeated: consistent'' trials with their respective random trials (random: consistent), revealed support for a difference between these trial types, BF\textsubscript{10} = 4.89. There was no evidence to support a difference between the ``repeated: inconsistent'' trials and the respective random trials, BF\textsubscript{10} = 0.38. There was substantial support for a difference between the repeated consistent and the repeated inconsistent trials, BF\textsubscript{10} = 10.18.
 
 \hypertarget{discussion}{%
 \subsection{Discussion}\label{discussion}}
@@ -286,7 +286,7 @@ Experiment 1 sought to examine the consequence of an endogenous cue that prompts
 
 In Experiment 1 we demonstrated that an established effect of contextual cuing is maintained even when attention is being guided by the presence of a valid endogenous cue. That is, we examined whether the \emph{performance} component of contextual cuing is disrupted by a concurrent controlled attentional behaviour. In Experiment 2 we wanted to explore the \emph{learning} of the contextual cue itself, examining whether the presence of a valid endogenous cue may limit the development of a contextual cuing effect. To do this, we trained each participant on two sets of repeating configurations. One of these sets was always presented in the presence of a valid endognenous cue, while the other set was always presented in the absence of the endogenous cue. The extent to which there is a ``cue-competition'' effect between the endogneous cue and the contextual cues can be examined by comparing the contextual cuing effect we observe for the two sets of configurations. Given the (expected) difference in RTs we observed in Experiment 1, between the trials with the endogenous cue present and the cue being absent, in a second phase we removed the endogenous cue entirely from the task. This second phase therefore allows us to directly compare the contextual cuing for the two sets of participants when RTs are of the same magnitude overall.
 
-``Cue-competition'' effects have been examined previously in contextual cuing. Endo and Takeda (2004) trained participants with a contextual cuing task composed of distractor location configurations and repeating distractor identities. Their experiments suggested that the stronger configural (spatial) cue out-competed the cue provided by the distractor identities. Similarly, (\textbf{kunar2014?}) found that when colour cues and configural cues both predicted the target location, configural cues were dominant and tended to overshadow the weaker colour cue. T. Beesley and Shanks (2012) looked at the cue-interaction effects \emph{within} a configuration of distractors. Participants were first trained with half a configuration of repeating distractors that predicted the target (8 out of 16 distractors). In a later stage these distractors were paired with a new half-configuration, such that the whole configuration now predicted the same target location. In contrast to the predictions of the vast majority of models of contingency learning, learning about these new predictive distractors was facilitated, rather than impaired in this second phase (relative to a control condition). Thus, T. Beesley and Shanks (2012) found that cue-competition was not observed within a configuration of equally predictive distractors. Together these studies suggest that the repeated configuration will out-compete non-configural cues for access to the learning mechanism. The dominance of the configuration in these situations may therefore lead to the prediction that the endogenous cue would not ``block'' the learning of the configuration in this task.
+``Cue-competition'' effects have been examined previously in contextual cuing. Endo and Takeda (2004) trained participants with a contextual cuing task composed of distractor location configurations and repeating distractor identities. Their experiments suggested that the stronger configural (spatial) cue out-competed the cue provided by the distractor identities. Similarly, Kunar et al. (2014) found that when colour cues and configural cues both predicted the target location, configural cues were dominant and tended to overshadow the weaker colour cue. T. Beesley and Shanks (2012) looked at the cue-interaction effects \emph{within} a configuration of distractors. Participants were first trained with half a configuration of repeating distractors that predicted the target (8 out of 16 distractors). In a later stage these distractors were paired with a new half-configuration, such that the whole configuration now predicted the same target location. In contrast to the predictions of the vast majority of models of contingency learning, learning about these new predictive distractors was facilitated, rather than impaired in this second phase (relative to a control condition). Thus, T. Beesley and Shanks (2012) found that cue-competition was not observed within a configuration of equally predictive distractors. Together these studies suggest that the repeated configuration will out-compete non-configural cues for access to the learning mechanism. The dominance of the configuration in these situations may therefore lead to the prediction that the endogenous cue would not ``block'' the learning of the configuration in this task.
 
 \hypertarget{method-1}{%
 \subsection{Method}\label{method-1}}
@@ -309,7 +309,7 @@ Four repeated configurations were created in an identical manner to those used i
 \hypertarget{procedure-1}{%
 \subsubsection{Procedure}\label{procedure-1}}
 
-The procedure was identical to Experiment 1 unless otherwise stated. Participants received 320 trials in total. For the first 160 trials, the arrow was presented for the relevant conditions. For the final 160 trials, the arrow was never presented. Rest breaks were given every 60 trials.
+The procedure was the same as Experiment 1 with the following differences. Participants received 320 trials in total. For the first 160 trials, the arrow was presented for the relevant conditions. For the final 160 trials, the arrow was never presented. Rest breaks were given every 60 trials.
 
 \hypertarget{results-1}{%
 \subsection{Results}\label{results-1}}
@@ -324,8 +324,14 @@ For the remaining thirty-three participants we removed trials with a timeout and
 
 }
 
-\caption{(ref:Exp2-RT-figure)}\label{fig:Exp2-RT-figure}
+\caption{RT data for Experiment 2}\label{fig:Exp2-RT-figure}
 \end{figure}
+
+
+
+Figure \ref{fig:Exp2-RT-figure} shows the RT data across the 10 epochs of the experiment. Contextual cuing emerged rapidly in both the arrow and no-arrow conditions. The Phase 1 data were explored with a Bayesian ANOVA with factors of which revealed that the the model with the largest Bayes Factor (BF) contained the factors of epoch, configuration (repeated vs.~random), endogenous cue (arrow present vs.~arrow absent), and the interaction of epoch and configuration, BF\textsubscript{10} = 6.1x10\^{}37. Notably, there was no interaction effect of
+
+, BF\textsubscript{10} = 2.2x10\^{}12. The addition of the interaction term did not substantially improve the model fit, BF\textsubscript{10} 0.5.
 
 \hypertarget{experiment-3}{%
 \section{Experiment 3}\label{experiment-3}}
@@ -386,6 +392,9 @@ Cousineau, D. (2005). Confidence intervals in within-subject designs: {A} simple
 
 \leavevmode\vadjust pre{\hypertarget{ref-endo2004}{}}%
 Endo, N., \& Takeda, Y. (2004). Selective learning of spatial configuration and object identity in visual search. \emph{Perception \& Psychophysics}, \emph{66}(2), 293--302. \url{https://doi.org/10.3758/BF03194880}
+
+\leavevmode\vadjust pre{\hypertarget{ref-kunar2014}{}}%
+Kunar, M. A., John, R., \& Sweetman, H. (2014). A configural dominant account of contextual cueing: {Configural} cues are stronger than colour cues. \emph{Quarterly Journal of Experimental Psychology (2006)}, \emph{67}(7), 1366--1382. \url{https://doi.org/10.1080/17470218.2013.863373}
 
 \end{CSLReferences}
 
