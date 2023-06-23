@@ -685,7 +685,7 @@ phase_1 <-
   mutate(epoch = as.factor(epoch)) %>% 
   filter(epoch %in% c(1,5))
   
-
+# traditional anova
 aov_car(meanRT ~ Error(subj/patArrowP1*TT*epoch), data = phase_1)
 
 
@@ -694,51 +694,103 @@ phase_1_BF <-
           data= data.frame(phase_1),
           whichRandom = "subj")
 
-phase_1_BF_sorted <- sort(phase_1_BF, decreasing = TRUE)
-
-# no evidence for an interaction of arrow training and TT
-# is there evidence for the null?
-phase_1_BF_simple <- 
-  anovaBF(meanRT ~ patArrowP1*TT + subj,
-          data= data.frame(phase_1),
-          whichRandom = "subj", iterations = 100000)
+# does the interaction of TT and cue add anything?
+int_effect <- phase_1_BF[16]/phase_1_BF[14]
 
 
-int_effect <- phase_1_BF_simple[4]/phase_1_BF_simple[3]
-# the evidence favours an absence of an interaction effect
+# focus on blocks 2-5
+
+phase_1_b2_5 <- 
+  rt_summary_data_e2 %>% 
+  mutate(epoch = as.factor(epoch)) %>% 
+  filter(epoch %in% c(2,5))
+
+
+phase_1_BF_b2_5 <- 
+  anovaBF(meanRT ~ patArrowP1*TT*epoch + subj,
+          data= data.frame(phase_1_b2_5),
+          whichRandom = "subj")
+
+# does the interaction of TT and cue add anything?
+int_effect_b2_5 <- phase_1_BF_b2_5[11]/phase_1_BF_b2_5[8]
+
+
+
 
 ```
 
+```{r}
+
+get_BF_and_error <- function(BF_in){
+  
+  paste0("BF~01~ =", extractBF(BF_in)$bf, "&plusmn;", round(100*extractBF(BF_in)$error,2), "%")
+  
+}
+
+```
+
+
 (ref:Exp2-RT-figure) RT data for Experiment 2
 
-Figure \@ref(fig:Exp2-RT-figure) shows the RT data across the 10 epochs of the experiment. Contextual cuing emerged rapidly in both the arrow and no-arrow conditions. The Phase 1 data were explored with a Bayesian ANOVA, which revealed that the the model with the largest Bayes Factor (BF) contained the factors of epoch, configuration (repeated vs. random), endogenous cue (arrow present vs. arrow absent), and the interaction of epoch and configuration, BF~10~ = `r changeSciNot(extractBF(phase_1_BF_sorted[1])$bf)`. Notably, there was no interaction effect of configuration and endongenous cue
+Figure \@ref(fig:Exp2-RT-figure) shows the RT data across the 10 epochs of the experiment. Contextual cuing emerged rapidly in both the arrow and no-arrow conditions, with little suggestion that the CC effect was different in the two cuing conditions. The Phase 1 data were explored with a Bayesian ANOVA, which revealed that the the model with the largest Bayes Factor (BF) contained the factors of epoch, configuration (repeated vs. random), endogenous cue (arrow present vs. arrow absent), and the interaction of epoch and configuration, BF~10~ = `r changeSciNot(extractBF(phase_1_BF[14])$bf)`. The addition of the interaction term between endongenous cue and configuration did not improve the fit of the model, BF~01~ `r extractBF(int_effect)$bf`.  
 
+It is noteworthy that in epoch 1 of the no-arrow condition, participants responded more slowly to repeated configurations than random configurations, a result that almost certainly reflects noise in the data, and not a systematic effect of the configuration type. Indeed, this slower acquisition of the contextual cuing effect in this condition was the opposite of what we predicted on the basis of the competition hypothesis. An exploratory analysis examining the data from epochs 2 to 5 revealed greatest support for the model that contained the three factors, but no interaction effects between them, BF~10~ = `r changeSciNot(extractBF(phase_1_BF[8])$bf)`. In this analysis there was support for an absence of an interaction between the factors of configuration and endogenous cue, BF~01~ `r extractBF(int_effect_b2_5)$bf` &plusmn; `r round(100*extractBF(int_effect_b2_5)$error,2)`%. 
 
-, BF~10~ = `r changeSciNot(extractBF(e1_phase1_BF[3])$bf)`. The addition of the interaction term did not substantially improve the model fit, BF~10~ `r spec_dec(extractBF(e1_phase1_BF[4])$bf/extractBF(e1_phase1_BF[3])$bf,1)`.
-
+`r get_BF_and_error(phase_1_BF[1])`
 
 ```{r phase_2_BFs_exp2}
 # Statistics on Stage 2
 
 phase_2 <- 
   rt_summary_data_e2 %>% 
-  mutate(epoch = as.numeric(epoch)) %>% 
-  filter(epoch > 5)
+  mutate(epoch = as.factor(epoch)) %>% 
+  filter(epoch %in% c(6,10))
 
 aov_car(meanRT ~ Error(subj/patArrowP1*TT*epoch), data = phase_2)
 
 # no evidence for an interaction of arrow training and TT
 # is there evidence for the null?
 phase_2_BF <- 
-  anovaBF(meanRT ~ patArrowP1*TT + subj,
+  anovaBF(meanRT ~ patArrowP1*TT*epoch + subj,
           data= data.frame(phase_2),
           whichRandom = "subj")
 
-phase_2_BF[4]/phase_2_BF[3]
+int_effect_phase2 <- phase_2_BF[11]/phase_2_BF[8]
 # the evidence favours an absence of an interaction effect
 
 
 ```
+
+When the endogenous cue was removed in the second half of the experiment, RTs were equivalent across the two conditions. An effect of configuration was seen for both cuing conditions, with little discernible difference between the size of the cuing effects. We conducted a Bayesian ANOVA with factors of epoch, configuration and endogenous cue condition (arrow vs. no-arrow). The best fitting model was that with just the factors of epoch and configuration with no interaction between the factors, BF~10~ =`r changeSciNot(extractBF(phase_2_BF[7])$bf)` &plusmn; `r round(100*extractBF(phase_2_BF[7])$error,2)`%. To examine the evidence in support of the interaction of the configuration and endongenous cue factors, we compared the model containing the three factors to the model containing the three factors plus the interaction of configuration and endogenous cue, which revealed support for the absence of an interaction, BF~01~ = `r extractBF(int_effect_phase2)$bf` &plusmn; `r round(100*extractBF(int_effect_phase2)$error,2)`%.
+
+```{r all_data_BFs_exp2}
+# Statistics on Stage 2
+
+all_exp2 <- 
+  rt_summary_data_e2 %>% 
+  mutate(epoch = as.factor(epoch)) %>% 
+  filter(epoch %in% c(1,10))
+
+all_exp2_BF <- 
+  anovaBF(meanRT ~ patArrowP1*TT + subj,
+          data= data.frame(all_exp2),
+          whichRandom = "subj")
+
+int_effect_all_exp2 <- all_exp2_BF[4]/all_exp2_BF[3]
+# the evidence favours an absence of an interaction effect
+
+
+
+
+```
+
+To provide further support for the absence of the interaction between the factors of configuration type and endogenous cue, the data from across the experiment (epochs 1-10) were analysed with a Bayesian ANOVA with only the factors of configuration and endogenous cue. The best fitting model was that with the two factors and no interaction, BF~10~ =`r changeSciNot(extractBF(all_exp2_BF[3])$bf)` &plusmn; `r round(100*extractBF(all_exp2_BF[3])$error,2)`%. The addition of the interaction term did not strengthen the model, with support evident for the absence of the interaction, BF~01~ = `r extractBF(int_effect_all_exp2)$bf` &plusmn; `r round(100*extractBF(int_effect_all_exp2)$error,2)`%.
+
+## Discussion
+
+Experiment 2 sought to examine whether the presence of a valid endogenous cue would compete for the acquisition of a contextual cuing effect. In the first phase, two sets of configurations were trained, one of which was always presented in the presence of the endogenous cue, and one set which was presented without the cue. Overall there was considerable evidence that the cue was processed and acted upon, as respones times to the target were much faster on cued trials. However, there was no evidence to suggest that this impaired the acquisition of the configurations on those trials. Similarly, when the endogenous cue was never presented in the final phase of the experiment, the level of contextual cuing was also equivalent between the two sets of configurations. The Bayesian analyses found support for the equivalence of these CC effects. 
+
+The lack of competition effects seen in Experiment 2 are at odds with some findings in the CC literature (i.e., [@endo2004; @kunar2014]), where competition has been seen by more dominant or salient features of the displays. Instead, the findings point towards a more automatic nature to contextual cuing, whereby associations form ubiquitously, so long as they can recieve the focus of attention at some point within the search process (e.g., @beesley2012)
 
 # Experiment 3
 
