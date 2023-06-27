@@ -723,7 +723,7 @@ int_effect_b2_5 <- phase_1_BF_b2_5[11]/phase_1_BF_b2_5[8]
 
 get_BF_and_error <- function(BF_in){
   
-  paste0("BF~01~ =", extractBF(BF_in)$bf, "&plusmn;", round(100*extractBF(BF_in)$error,2), "%")
+  paste0("BF~01~ =", changeSciNot(extractBF(BF_in)$bf), "&plusmn;", round(100*extractBF(BF_in)$error,2), "%")
   
 }
 
