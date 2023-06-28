@@ -176,14 +176,14 @@
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
   pdftitle={Contextual cuing in the presence of an overt instruction},
-  pdfauthor={Tom Beesley1 \& David Luque2},
+  pdfauthor={Tom Beesley1, Louise Earl1, Hope Butler1, Inez Sharp1, Ieva Jaceviciute1, \& David Luque2},
   pdflang={en-EN},
   pdfkeywords={keywords},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
 \title{Contextual cuing in the presence of an overt instruction}
-\author{Tom Beesley\textsuperscript{1} \& David Luque\textsuperscript{2}}
+\author{Tom Beesley\textsuperscript{1}, Louise Earl\textsuperscript{1}, Hope Butler\textsuperscript{1}, Inez Sharp\textsuperscript{1}, Ieva Jaceviciute\textsuperscript{1}, \& David Luque\textsuperscript{2}}
 \date{}
 
 
@@ -272,9 +272,9 @@ Within-subject error bars were computed by a process of normalising the RT data 
 \caption{RT data for Experiment 1}\label{fig:Exp1-RT-figure}
 \end{figure}
 
-These data were explored with a Bayesian ANOVA, using the \emph{BayesFactor::anovaBF()} function (for all analyses in this study the priors were set at the default ``medium'' width). First taking the data from phase 1 (epochs 1-5), the model with the largest Bayes Factor (BF) contained the factors of epoch and configuration (repeated vs.~random), BF\textsubscript{10} = 2.2x10\^{}12. The addition of the interaction term did not substantially improve the model fit, BF\textsubscript{10} = 0.5.
+These data were explored with a Bayesian ANOVA, using the \emph{BayesFactor::anovaBF()} function (for all analyses in this study the priors were set at the default ``medium'' width). First taking the data from phase 1 (epochs 1-5), the model with the largest Bayes Factor (BF) contained the factors of epoch and configuration (repeated vs.~random), BF\textsubscript{10} = 2.1x10\textsuperscript{12} ± 1.35\%. The addition of the interaction term did not substantially improve the model fit, BF\textsubscript{10} = 0.46 ± 2.33\%.
 
-A Bayesian ANOVA on the data from phase 2 (epochs 6-10) found significant support for the model containing the factor of configuration, BF\textsubscript{10} = 88.22. There was evidence to suggest that the addition of the factor of epoch did not substantially improve the model predictions, BF\textsubscript{10} 0.0. Comparing the response times from just ``repeated: consistent'' trials with their respective random trials (random: consistent), revealed support for a difference between these trial types, BF\textsubscript{10} = 4.87. There was no evidence to support a difference between the ``repeated: inconsistent'' trials and the respective random trials, BF\textsubscript{10} = 0.39. There was substantial support for a difference between the repeated consistent and the repeated inconsistent trials, BF\textsubscript{10} = 10.34.
+A Bayesian ANOVA on the data from phase 2 (epochs 6-10) found significant support for the model containing the factor of configuration, BF\textsubscript{10} = 8.9x10\textsuperscript{1} ± 0.73\%. There was evidence to suggest that the addition of the factor of epoch did not substantially improve the model predictions, BF\textsubscript{10} = 0.02 ± 1.34\%. Comparing the response times from just ``repeated: consistent'' trials with their respective random trials (random: consistent), revealed support for a difference between these trial types, BF\textsubscript{10} = 4.79 ± 1.05\%. There was no evidence to support a difference between the ``repeated: inconsistent'' trials and the respective random trials, BF\textsubscript{10} = 0.38 ± 1.06\%. There was substantial support for a difference between the repeated consistent and the repeated inconsistent trials, BF\textsubscript{10} = 10.17 ± 1.21\%.
 
 \hypertarget{discussion}{%
 \subsection{Discussion}\label{discussion}}
@@ -329,15 +329,17 @@ For the remaining thirty-three participants we removed trials with a timeout and
 
 
 
-Figure \ref{fig:Exp2-RT-figure} shows the RT data across the 10 epochs of the experiment. Contextual cuing emerged rapidly in both the arrow and no-arrow conditions, with little suggestion that the CC effect was different in the two cuing conditions. The Phase 1 data were explored with a Bayesian ANOVA, which revealed that the the model with the largest Bayes Factor (BF) contained the factors of epoch, configuration (repeated vs.~random), endogenous cue (arrow present vs.~arrow absent), and the interaction of epoch and configuration, BF\textsubscript{10} = 6.8x10\^{}37. The addition of the interaction term between endongenous cue and configuration did not improve the fit of the model, BF\textsubscript{01} 0.44.
+Figure \ref{fig:Exp2-RT-figure} shows the RT data across the 10 epochs of the experiment. Contextual cuing emerged rapidly in both the arrow and no-arrow conditions, with little suggestion that the CC effect was different in the two cuing conditions. The Phase 1 data were explored with a Bayesian ANOVA, which revealed that the the model with the largest Bayes Factor (BF) contained the factors of epoch, configuration (repeated vs.~random), endogenous cue (arrow present vs.~arrow absent), and the interaction of epoch and configuration, BF\textsubscript{10} = 8x10\textsuperscript{37} ± 23.45\%. The addition of the interaction term between endongenous cue and configuration did not improve the fit of the model, BF\textsubscript{10} = 0.34 ± 23.73\%. It is noteworthy that in epoch 1 of the no-arrow condition, participants responded more slowly to repeated configurations than random configurations, a result that almost certainly reflects noise in the data, and not a systematic effect of the configuration type. Indeed, this slower acquisition of the contextual cuing effect in this condition was the opposite of what we predicted on the basis of the competition hypothesis. An exploratory analysis examining the data from epochs 2 to 5 revealed greatest support for the model that contained the three factors, but no interaction effects between them, BF\textsubscript{10} = 3.2x10\textsuperscript{37} ± 21.16\%. In this analysis there was support for an absence of an interaction between the factors of configuration and endogenous cue, BF\textsubscript{10} = 0.18 ± 5.1\%.
 
-It is noteworthy that in epoch 1 of the no-arrow condition, participants responded more slowly to repeated configurations than random configurations, a result that almost certainly reflects noise in the data, and not a systematic effect of the configuration type. Indeed, this slower acquisition of the contextual cuing effect in this condition was the opposite of what we predicted on the basis of the competition hypothesis. An exploratory analysis examining the data from epochs 2 to 5 revealed greatest support for the model that contained the three factors, but no interaction effects between them, BF\textsubscript{10} = 2.5x10\^{}37. In this analysis there was support for an absence of an interaction between the factors of configuration and endogenous cue, BF\textsubscript{01} 0.18 ± 4.67\%.
+When the endogenous cue was removed in the second half of the experiment, RTs were equivalent across the two conditions. An effect of configuration was seen for both cuing conditions, with little discernible difference between the size of the cuing effects. We conducted a Bayesian ANOVA with factors of epoch, configuration and endogenous cue condition (arrow vs.~no-arrow). The best fitting model was that with just the factors of epoch and configuration with no interaction between the factors, BF\textsubscript{10} = 6.5x10\textsuperscript{9} ± 1.7\%. To examine the evidence in support of the interaction of the configuration and endongenous cue factors, we compared the model containing the three factors to the model containing the three factors plus the interaction of configuration and endogenous cue, which revealed support for the absence of an interaction, BF\textsubscript{10} = 0.34 ± 22.7\%.
 
-BF\textsubscript{01} =3x10\^{}22±0.84\%
+To provide further support for the absence of the interaction between the factors of configuration type and endogenous cue, the data from across the experiment (epochs 1-10) were analysed with a Bayesian ANOVA with only the factors of configuration and endogenous cue. The best fitting model was that with the two factors and no interaction, BF\textsubscript{10} = 3.6x10\textsuperscript{5} ± 2.58\%.
 
-When the endogenous cue was removed in the second half of the experiment, RTs were equivalent across the two conditions. An effect of configuration was seen for both cuing conditions, with little discernible difference between the size of the cuing effects. We conducted a Bayesian ANOVA with factors of epoch, configuration and endogenous cue condition (arrow vs.~no-arrow). The best fitting model was that with just the factors of epoch and configuration with no interaction between the factors, BF\textsubscript{10} =6.5x10\^{}9 ± 2.28\%. To examine the evidence in support of the interaction of the configuration and endongenous cue factors, we compared the model containing the three factors to the model containing the three factors plus the interaction of configuration and endogenous cue, which revealed support for the absence of an interaction, BF\textsubscript{01} = 0.23 ± 4.86\%.
+BF\textsubscript{10} =3.6x10\textsuperscript{5} ± 2.58\%.
 
-To provide further support for the absence of the interaction between the factors of configuration type and endogenous cue, the data from across the experiment (epochs 1-10) were analysed with a Bayesian ANOVA with only the factors of configuration and endogenous cue. The best fitting model was that with the two factors and no interaction, BF\textsubscript{10} =3.6x10\^{}5 ± 2.69\%. The addition of the interaction term did not strengthen the model, with support evident for the absence of the interaction, BF\textsubscript{01} = 0.33 ± 5.35\%.
+The addition of the interaction term did not strengthen the model, with support evident for the absence of the interaction, BF\textsubscript{10} = 0.32 ± 3.1\%.
+
+BF\textsubscript{01} = 0.32 ± 3.10\%.
 
 \hypertarget{discussion-1}{%
 \subsection{Discussion}\label{discussion-1}}
