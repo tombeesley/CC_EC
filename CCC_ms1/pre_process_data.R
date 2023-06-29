@@ -167,12 +167,25 @@ data <-
          tQuad = X6, tLoc = X7, tOrient = X8, switched_T = X9,
          resp = X10, acc = X11, RT = X12)
 
+# remove participant 215 as they failed to complete the experiment
+
+data <-
+  data %>%
+  filter(subj != "215")
+
+
 # some more data cleaning to get the final dataframe we will use for analysis
+
+# need to use rep as P1 has 8 trials per block, and P2 16.)
+data <-
+  data %>%
+  group_by(subj) %>%
+  mutate(epoch = rep(1:10, each = 32))
+
 data <-
   data %>%
   select(-resp, -switched_T) %>% # remove some irrelevant variables
-  mutate(epoch = ceiling(block/4), # this is a recoding of block (epoch 1 = blocks 1-4, epoch 2 = blocks 5-8) - useful for figures.
-         phase = if_else(block <= 20, 1, 2), # new phase variable - standard = 1, with arrow = 2.
+  mutate(phase = if_else(block <= 20, 1, 2), # new phase variable - standard = 1, with arrow = 2.
          exp = "CCC03",
          TT = recode(TT, "1" = "repeated", "2" = "random",
                      "3" = "global (local random)", "4" = "local (global random)")) %>%
