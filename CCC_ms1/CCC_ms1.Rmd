@@ -23,9 +23,7 @@ affiliation:
   - id            : "2"
     institution   : "Universidad Autónoma de Madrid, Spain"
 abstract: |
-  abstract here
-  
-  
+  Three experiments explored the interaction between an endogenous cue of attention and the repetition of a visual search display during contextual cuing. In Experiment 1, participants readily learnt about repeated configurations of visual search, before being presented with an endogenous cue for attention towards the target on every trial. Participants used this cue to improve search times, but the repeated contexts continued to guide attention. Experiment 2 explored whether the presence of the endogenous would impede the acquisition of contextual cuing. It was found that contextual cuing was as strongly acquired in the presence and the absence of the endogenous cue. Experiment 3 confirmed the hypothesis that the contextual cuing relies largely on localised distractor contexts. Together, the experiments point towards a seemless interplay between two drivers of attention: visual search was initially guided by the presence of the valid endogenous cue and then refined by the repeated configurations to facilitate target detection. 
   
   Public significance statement: 
 keywords          : "keywords"
@@ -117,7 +115,12 @@ report_BF_and_error <- function(BF_in, sci_not = TRUE, hyp = "alt"){
 
 ```
 
-Main text here [@beesley2015b]
+It is well established that the process of visual search is guided by past experience. When we encounter a scene, the extent to which the elements of that scene match stored representations in memory will determined the effectiveness of our processing and our search within that scene. This cognitive process is studied effectively in the lab using the contextual cuing (CC) task: participants typically experience a standard serial processing (slow) visual search task, such as searching for a T amongst L shapes. A set of search configurations repeats across trials, and response times to targets are faster compared to those that do not repeat. Thus, the repetition of the search configurations leads to a stored representation of (some aspect of) the configuration in memory. 
+
+The exact nature of how repeated configurations facilitate visual search is focus of much debate within the literature. Firstly, there is a question as to whether CC reflects enhanced attentional processing of the display, such as by reducing the number of distractors processed [@beesley2018], or whether it facilitates the decision process once targets have been detected [e.g, @kunar2007; @sewell2018]
+
+
+
 
 ```{r exploratory_anaysis}
 
@@ -381,7 +384,7 @@ rt_summary_data_e1 %>%
                     ymax = group_RT + group_SE),
                 width = .2,
                 size = .5) +
-  geom_point(aes(fill = TT),size = 6, shape = 21) +
+  geom_point(aes(fill = TT),size = 5, shape = 21) +
   labs(y = "RT (ms)",
        x = "Epochs of 32 trials") +
   scale_fill_manual(name = "", 
@@ -392,8 +395,8 @@ rt_summary_data_e1 %>%
                                "Random: inconsistent")) +
   theme(legend.text = element_text(size = 10),
         legend.spacing.x = unit(0.4, "cm"),
-        legend.position = c(0.5,.1),
-        legend.direction = "horizontal") +
+        legend.position = c(0.75,.75),
+        legend.direction = "vertical") +
   guides(fill = guide_legend(byrow = TRUE)) +
   scale_y_continuous(limits = c(1000, 2400), breaks = seq(1000, 2400, 200))
 
@@ -421,7 +424,7 @@ e1_phase1_BF <-
 
 ```
 
-These data were explored with a Bayesian ANOVA, using the *BayesFactor::anovaBF()* function (for all analyses in this study the priors were set at the default "medium" width). First taking the data from phase 1 (epochs 1-5), the model with the largest Bayes Factor (BF) contained the factors of epoch and configuration (repeated vs. random), `r report_BF_and_error(e1_phase1_BF[3])`. The addition of the interaction term did not substantially improve the model fit, `r report_BF_and_error(e1_phase1_BF[4]/e1_phase1_BF[3], sci_not = FALSE)`.
+These data were explored with a Bayesian ANOVA, using the *BayesFactor::anovaBF()* function (for all analyses in this study the priors were set at the default "medium" width). First taking the data from phase 1 (epochs 1-5), the model with the largest Bayes Factor (BF) contained the factors of epoch and configuration (repeated vs. random), `r report_BF_and_error(e1_phase1_BF[3])`. The addition of the interaction term did not substantially improve the model fit, `r report_BF_and_error(e1_phase1_BF[4]/e1_phase1_BF[3], sci_not = FALSE, hyp = "mc")`. The best fitting model was a better fit than the two models containing only one of the factors, smallest `r report_BF_and_error(e1_phase1_BF[3]/e1_phase1_BF[1], sci_not = FALSE, hyp = "mc")`, providing significant support for the effect of configuration and epoch.
 
 ```{r phase_2_BFs_exp1}
 # Experiment 1 stats
@@ -440,47 +443,22 @@ e1_phase2_BF <-
           data = phase_2,
           whichRandom = "subj")
 
-# explore the main effect of configuration
-phase_2_pairwise <- 
-  data_e1_f %>% 
-  mutate(epoch = as.factor(epoch)) %>% 
-  filter(epoch %in% c(6:10)) %>%  
+exp1_ttestBF_data <- 
+  phase_2 %>% 
   group_by(subj, TT) %>% 
-  summarise(meanRT = mean(RT))
+  summarise(meanRT=mean(meanRT)) %>% 
+  pivot_wider(values_from = meanRT, names_from = TT) %>% 
+  janitor::clean_names()
 
-# consistent vs. random
-CvR <- 
-  phase_2_pairwise %>% 
-  filter(TT %in% c("Repeated: consistent", "Random: consistent")) 
-
-CvR_BF <- 
-  anovaBF(meanRT ~ TT + subj, 
-          data = CvR,
-          whichRandom = "subj")
-
-# inconsistent vs. random
-IvR <- 
-  phase_2_pairwise %>% 
-  filter(TT %in% c("Repeated: inconsistent", "Random: inconsistent")) 
-
-IvR_BF <-
-  anovaBF(meanRT ~ TT + subj, 
-          data = IvR,
-          whichRandom = "subj")
-
-# consistent vs. inconsistent 
-CvI <- 
-  phase_2_pairwise %>% 
-  filter(TT %in% c("Repeated: consistent", "Repeated: inconsistent")) 
-
-CvI_BF <-
-  anovaBF(meanRT ~ TT + subj, 
-          data = CvI,
-          whichRandom = "subj")
+exp3_p2_repC_randC <- ttestBF(x = exp1_ttestBF_data$repeated_consistent, y = exp1_ttestBF_data$random_consistent, paired = TRUE)
+exp3_p2_repI_randI <- ttestBF(x = exp1_ttestBF_data$repeated_inconsistent, y = exp1_ttestBF_data$random_inconsistent, paired = TRUE)
+exp3_p2_repC_repI <- ttestBF(x = exp1_ttestBF_data$repeated_consistent, y = exp1_ttestBF_data$repeated_inconsistent, paired = TRUE)
 
 ```
 
-A Bayesian ANOVA on the data from phase 2 (epochs 6-10) found significant support for the model containing the factor of configuration, `r report_BF_and_error(e1_phase2_BF[2])`. There was evidence to suggest that the addition of the factor of epoch did not substantially improve the model predictions, `r report_BF_and_error(e1_phase2_BF[3]/e1_phase2_BF[2], sci_not = FALSE)`. Comparing the response times from just "repeated: consistent" trials with their respective random trials (random: consistent), revealed support for a difference between these trial types, `r report_BF_and_error(CvR_BF, sci_not = FALSE)`. There was no evidence to support a difference between the "repeated: inconsistent" trials and the respective random trials, `r report_BF_and_error(IvR_BF, sci_not = FALSE)`. There was substantial support for a difference between the repeated consistent and the repeated inconsistent trials, `r report_BF_and_error(CvI_BF, sci_not = FALSE)`.
+A Bayesian ANOVA on the data from phase 2 (epochs 6-10) found significant support for the model containing the factor of configuration, `r report_BF_and_error(e1_phase2_BF[2], sci_not = FALSE)`. The next best fitting model contained the factor of epoch but was a substantially worse fit to the data, `r report_BF_and_error(e1_phase2_BF[3]/e1_phase2_BF[2], sci_not = FALSE)`. Thus there was considerable evidence for an effect of configuration, and evidence that there was no effect of epoch or an interaction between epoch and configuration. 
+
+To explore the differences in response times across the four trial types in phase 2, the data were averaged across the 5 epochs, and Bayesian t-tests were run using BayesFactor::ttestBF with the default Cauchy prior. This revealed support for a difference between the response times on "repeated: consistent" trials and those on the respective random trials (random: consistent), `r report_BF_and_error(exp3_p2_repC_randC, sci_not = FALSE)`. There was also evidence to suggest there was no difference between the response times for the "repeated: inconsistent" trials and the respective random trials, `r report_BF_and_error(exp3_p2_repI_randI, sci_not = FALSE)`. There was substantial support for a difference between the response times on repeated consistent and the repeated inconsistent trials, `r report_BF_and_error(exp3_p2_repC_repI, sci_not = FALSE)`.
 
 ```{r trad_ANOVA_phase_2_exp1}
 # Statistics on Stage 2
@@ -521,7 +499,7 @@ Experiment 1 sought to examine the consequence of an endogenous cue that prompts
 
 # Experiment 2
 
-In Experiment 1 we demonstrated that an established effect of contextual cuing is maintained even when attention is being guided by the presence of a valid endogenous cue. That is, we examined whether the *performance* component of contextual cuing is disrupted by a concurrent controlled attentional behaviour. In Experiment 2 we wanted to explore the *learning* of the contextual cue itself, examining whether the presence of a valid endogenous cue may limit the development of a contextual cuing effect. To do this, we trained each participant on two sets of repeating configurations. One of these sets was always presented in the presence of a valid endognenous cue, while the other set was always presented in the absence of the endogenous cue. The extent to which there is a "cue-competition" effect between the endogneous cue and the contextual cues can be examined by comparing the contextual cuing effect we observe for the two sets of configurations. Given the (expected) difference in RTs we observed in Experiment 1, between the trials with the endogenous cue present and the cue being absent, in a second phase of Experiment 2 we removed the endogenous cue entirely from the task. This second phase therefore allowed us to directly compare the contextual cuing for the two sets of participants when RTs are of the same magnitude. 
+In Experiment 1 we demonstrated that an established effect of contextual cuing is maintained even when attention is being guided by the presence of a valid endogenous cue. That is, we examined whether the *performance* component of contextual cuing is disrupted by a concurrent controlled attentional behaviour. In Experiment 2 we wanted to explore the *learning* of the contextual cue itself, examining whether the presence of a valid endogenous cue may limit the development of a contextual cuing effect. To do this, we trained each participant on two sets of repeating configurations. One of these sets was always presented in the presence of a valid endogenous cue, while the other set was always presented in the absence of the endogenous cue. The extent to which there is a "cue-competition" effect between the endogenous cue and the contextual cues can be examined by comparing the contextual cuing effect we observe for the two sets of configurations. Given the (expected) difference in RTs we observed in Experiment 1, between the trials with the endogenous cue present and the cue being absent, in a second phase of Experiment 2 we removed the endogenous cue entirely from the task. This second phase therefore allowed us to directly compare the contextual cuing for the two sets of participants when RTs are of the same magnitude. 
 
 "Cue-competition" effects have been examined previously in contextual cuing.  @endo2004 trained participants with a contextual cuing task composed of distractor location configurations and repeating distractor identities. Their experiments suggested that the stronger configural (spatial) cue out-competed the cue provided by the distractor identities. Similarly, @kunar2014 found that when colour cues and configural cues both predicted the target location, configural cues were dominant and tended to overshadow the weaker colour cue. @beesley2012 looked at the cue-interaction effects *within* a configuration of distractors. Participants were first trained with half a configuration of repeating distractors that predicted the target (8 out of 16 distractors). In a later stage these distractors were paired with a new half-configuration, such that the whole configuration now predicted the same target location. In contrast to the predictions of the vast majority of models of contingency learning, learning about these new predictive distractors was facilitated, rather than impaired in this second phase (relative to a control condition). Thus, @beesley2012 found that cue-competition was not observed within a configuration of equally predictive distractors. Together these studies suggest that the repeated configuration will out-compete non-configural cues for access to the learning mechanism. The dominance of the configuration in these situations may therefore lead to the prediction that the endogenous cue would not "block" the learning of the configuration in this task. 
 
@@ -680,7 +658,7 @@ rt_summary_data_e2 %>%
                     ymax = group_RT + group_SE),
                 width = .2) +
   geom_point(aes(fill = interaction(TT, patArrowP1),
-                 shape = interaction(TT, patArrowP1)), size = 6) +
+                 shape = interaction(TT, patArrowP1)), size = 5) +
   scale_fill_manual(name = "",
                     labels = factorLbls,
                     values= c(cbPalette[c(1,3)],c(cbPalette[c(1,3)]))) +
@@ -691,10 +669,10 @@ rt_summary_data_e2 %>%
        x = "Epochs of 32 trials") +
   theme(legend.text = element_text(size = 10),
         legend.spacing.x = unit(0.4, "cm"),
-        legend.position = c(0.5,.1),
-        legend.direction = "horizontal") +
+        legend.position = c(0.75,.75),
+        legend.direction = "vertical") +
   guides(fill = guide_legend(byrow = TRUE)) +
-  scale_y_continuous(limits = c(1000, 2800), breaks = seq(1000, 2800, 200)) 
+  scale_y_continuous(limits = c(1200, 2800), breaks = seq(1200, 2800, 200)) 
 
 
   # geom_line()+
@@ -735,7 +713,7 @@ int_effect <- phase_1_BF[16]/phase_1_BF[14]
 
 (ref:Exp2-RT-figure) RT data for Experiment 2
 
-Figure \@ref(fig:Exp2-RT-figure) shows the RT data across the 10 epochs of the experiment. Contextual cuing emerged rapidly in both the arrow and no-arrow conditions, with little suggestion that the CC effect was different in the two cuing conditions. The Phase 1 data were explored with a Bayesian ANOVA, which revealed that the the model with the largest Bayes Factor (BF) contained the factors of epoch, configuration (repeated vs. random), and endogenous cue (arrow present vs. arrow absent), with no interaction terms, `r report_BF_and_error(phase_1_BF[8])`. The next best fitting model contained all three factors and the interaction of epoch and configuration, `r report_BF_and_error(phase_1_BF[14])`, and this model was not a substantially worse fit to the data, `r report_BF_and_error(phase_1_BF[14]/phase_1_BF[8], sci_not = FALSE)`. All other models were substantially worse fits than the best fitting model, largest `r report_BF_and_error(phase_1_BF[11]/phase_1_BF[14], sci_not = FALSE)`. Importantly, the interaction term between the factors of endongenous cue and configuration did not improve the fit of the model, with support for the absence of this interaction, `r report_BF_and_error(phase_1_BF[11]/phase_1_BF[8], sci_not = FALSE)`.
+Figure \@ref(fig:Exp2-RT-figure) shows the RT data across the 10 epochs of the experiment. Contextual cuing emerged rapidly in both the arrow and no-arrow conditions, with little suggestion that the CC effect was different in the two cuing conditions. The Phase 1 data were explored with a Bayesian ANOVA, which revealed that the the model with the largest Bayes Factor (BF) contained the factors of epoch, configuration (repeated vs. random), and endogenous cue (arrow present vs. arrow absent), with no interaction terms, `r report_BF_and_error(phase_1_BF[8])`. The next best fitting model contained all three factors and the interaction of epoch and configuration, `r report_BF_and_error(phase_1_BF[14])`, and this model was not a substantially worse fit to the data, `r report_BF_and_error(phase_1_BF[14]/phase_1_BF[8], sci_not = FALSE)`. All other models were substantially worse fits than the best fitting model, largest `r report_BF_and_error(phase_1_BF[11]/phase_1_BF[14], sci_not = FALSE)`. Importantly, the interaction term between the factors of endogenous cue and configuration did not improve the fit of the model, with support for the absence of this interaction, `r report_BF_and_error(phase_1_BF[11]/phase_1_BF[8], sci_not = FALSE)`.
 
 
 ```{r phase_2_BFs_exp2}
@@ -761,7 +739,7 @@ int_effect_phase2 <- phase_2_BF[11]/phase_2_BF[8]
 
 ```
 
-When the endogenous cue was removed in the second half of the experiment, RTs were equivalent across the two conditions. An effect of configuration was seen for both cuing conditions, with little discernible difference between the size of the cuing effects. We conducted a Bayesian ANOVA with factors of epoch, configuration and endogenous cue condition (arrow vs. no-arrow). The best fitting model was that with just the factors of epoch and configuration with no interaction between the factors, `r report_BF_and_error(phase_2_BF[7])`. There was substantial support for this model over the next best fitting model, `r report_BF_and_error(phase_2_BF[7]/phase_2_BF[8], sci_not = FALSE)`. To examine the interaction of the configuration and endongenous cue factors, we compared the model containing those two factors to the model containing the two factors plus the interaction of configuration and endogenous cue, which revealed support for the absence of an interaction, `r report_BF_and_error(phase_2_BF[10]/phase_2_BF[6], sci_not = FALSE)`.
+When the endogenous cue was removed in the second half of the experiment, RTs were equivalent across the two conditions. An effect of configuration was seen for both cuing conditions, with little discernible difference between the size of the cuing effects. We conducted a Bayesian ANOVA with factors of epoch, configuration and endogenous cue condition (arrow vs. no-arrow). The best fitting model was that with just the factors of epoch and configuration with no interaction between the factors, `r report_BF_and_error(phase_2_BF[7])`. There was substantial support for this model over the next best fitting model, `r report_BF_and_error(phase_2_BF[7]/phase_2_BF[8], sci_not = FALSE)`. To examine the interaction of the configuration and endogenous cue factors, we compared the model containing those two factors to the model containing the two factors plus the interaction of configuration and endogenous cue, which revealed support for the absence of an interaction, `r report_BF_and_error(phase_2_BF[10]/phase_2_BF[6], sci_not = FALSE)`.
 
 ```{r all_data_BFs_exp2}
 # Statistics on Stage 2
@@ -932,7 +910,7 @@ data_e3_f <-
 ```
 
 
-For the remaining `r words(nrow(rt_outlier_summary))` participants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was `r spec_dec(100*mean(rt_outlier_summary$prop_rem),2)`% (SD = `r spec_dec(100*sd(rt_outlier_summary$prop_rem),2)`%). `r words(nrow(outlier_prop_removed))` participants had an unusual proportion of trials removed as outlier RTs and were not included in the final analysis [EAF4S]. 
+For the remaining `r words(nrow(rt_outlier_summary))` participants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was `r spec_dec(100*mean(rt_outlier_summary$prop_rem),2)`% (SD = `r spec_dec(100*sd(rt_outlier_summary$prop_rem),2)`%). `r Words(nrow(outlier_prop_removed))` participants had an unusual proportion of trials removed as outlier RTs and were not included in the final analysis. 
 
 
 ```{r Exp3-RT-figure, fig.align="center", fig.cap="(ref:Exp3-RT-figure)", fig.dim=c(7,5), include=TRUE}
@@ -953,15 +931,15 @@ rt_summary_data_e3 %>%
   geom_errorbar(aes(ymin = group_RT - group_SE,
                     ymax = group_RT + group_SE),
                 width = .05) +
-    geom_point(aes(fill = TT),size = 6, shape = 21) +
+    geom_point(aes(fill = TT),size = 5, shape = 21) +
   labs(y = "RT (ms)",
        x = "Epochs of 32 trials") +
   scale_fill_manual(name = "",
                     values = cbPalette[c(1,3,2,4)]) +
   theme(legend.text = element_text(size = 10),
         legend.spacing.x = unit(0.4, "cm"),
-        legend.position = c(0.5,0.1),
-        legend.direction = "horizontal") +
+        legend.position = c(0.75,0.75),
+        legend.direction = "vertical") +
   guides(fill = guide_legend(byrow = TRUE)) +
   scale_y_continuous(limits = c(1000, 2600), breaks = seq(1000, 2600, 200))
 
@@ -1002,56 +980,6 @@ exp3_p2_BFs <- anovaBF(meanRT ~ TT*epoch + subj,
                        whichRandom = "subj",
                        data = phase_2)
 
-# # repeated vs local random
-# d1v3 <- 
-#   phase_2 %>% 
-#   filter(TT %in% c("Repeated",
-#                    "Repeated LOCAL"))
-# 
-# d1v3_BF <- anovaBF(meanRT ~ TT + subj,
-#                    whichRandom = "subj",
-#                    data = d1v3)
-# 
-# # repeated vs global random
-# d1v4 <- 
-#   phase_2 %>% 
-#   filter(TT %in% c("Repeated",
-#                    "Repeated GLOBAL"))
-# 
-# d1v4_BF <- anovaBF(meanRT ~ TT + subj,
-#                    whichRandom = "subj",
-#                    data = d1v4)
-# 
-# # local vs. random
-# d2v3 <- 
-#   phase_2 %>% 
-#   filter(TT %in% c("Random",
-#                    "Repeated LOCAL"))
-# 
-# d2v3_BF <- anovaBF(meanRT ~ TT + subj,
-#                    whichRandom = "subj",
-#                    data = d2v3)
-# 
-# # global vs. random
-# d2v4 <- 
-#   phase_2 %>% 
-#   filter(TT %in% c("Random",
-#                    "Repeated GLOBAL"))
-# 
-# d2v4_BF <- anovaBF(meanRT ~ TT + subj,
-#                    whichRandom = "subj",
-#                    data = d2v4)
-# 
-# # local  vs. global  
-# d3v4 <- 
-#   phase_2 %>% 
-#   filter(TT %in% c("Repeated LOCAL",
-#                    "Repeated GLOBAL"))
-# 
-# d3v4_BF <- anovaBF(meanRT ~ TT + subj,
-#                    whichRandom = "subj",
-#                    data = d3v4)
-
 ttestBF_data <- 
   phase_2 %>% 
   group_by(subj, TT) %>% 
@@ -1072,7 +1000,13 @@ exp3_p2_global_local <- ttestBF(x = ttestBF_data$repeated_global, y = ttestBF_da
 
 The response times decreased significantly with the presentation of the valid endogenous cue in Phase 2. Response times to the fully repeated configurations were somewhat comparable to those when just the local repeated distractors were present. Response times for the globally repeated distractors appeared to be slower and comparable to the fully random configurations. The Phase 2 data were subjected to a Bayesian ANOVA which found that the best fitting model contained the factors of configuration and epoch but no interaction between the factors, `r report_BF_and_error(exp3_p2_BFs[3])`. This model provided a superior fit to the data compared to the next best fitting model that included the two factors and the interaction term, `r report_BF_and_error(exp3_p2_BFs[3]/exp3_p2_BFs[4], sci_not = FALSE, hyp = "mc")`, providing strong support for the contribution of the two factors and the absence of an interaction between the two factors. 
 
-To explore the differences in response times across the four trial types, the data were averaged across the 5 epochs, and Bayesian ttests were run for all pairwise comparisions using BayesFactor::ttestBF with the default Cauchy prior. The response times to repeated and repeated-local configurations were both faster than those to random configurations, smallest `r report_BF_and_error(exp3_p2_local_rand, sci_not = FALSE)`.  In contrast, there was no evidence that the response times to repeated-global configurations were different from those to random configurations, `r report_BF_and_error(exp3_p2_global_rand, sci_not = FALSE)`. Response times to repeated configurations were faster than those to repeated-local configurations, `r report_BF_and_error(exp3_p2_rep_local, sci_not = FALSE)`. Response times to repeated-local configurations were faster than those to repeated-global configurations, `r report_BF_and_error(exp3_p2_global_local, sci_not = FALSE)`. 
+To explore the differences in response times across the four trial types, the data were averaged across the 5 epochs, and Bayesian t-tests were run for all pairwise comparisons using BayesFactor::ttestBF with the default Cauchy prior. The response times to repeated and repeated-local configurations were both faster than those to random configurations, smallest `r report_BF_and_error(exp3_p2_local_rand, sci_not = FALSE)`.  In contrast, there was no evidence that the response times to repeated-global configurations were different from those to random configurations, `r report_BF_and_error(exp3_p2_global_rand, sci_not = FALSE)`. Response times to repeated configurations were faster than those to repeated-local configurations, `r report_BF_and_error(exp3_p2_rep_local, sci_not = FALSE)`. Response times to repeated-local configurations were faster than those to repeated-global configurations, `r report_BF_and_error(exp3_p2_global_local, sci_not = FALSE)`. 
+
+## Discussion
+
+Experiment 3 explored the localisation of the distractors driving contextual cuing when attention is guided initially by an endogenous cue. As expected, there was substantial evidence that contextual cuing was present when the distractors close to the target were maintained, but not when these distractors were randomly arranged. These data provide confirmatory evidence for the hypothesised interplay between the two drivers of attention: initially attention is guided by the endogenous cue towards one half of the screen. Despite visual search never commencing in this manner in the first half of the experiment, a CC effect was readily observed, but only for those configurations in which the local distractors were present. Thus it seems that the stored representations of configurations surrounding target positions are very flexibly deployed in visual search. These data lend support to the notion that the effect of the repeated configuration comes late on in the visual search process, and that each trial commences with a random search process that is not guided by the repeated configuration [@beesley2018; @tseng2004].
+
+# General Disucssion
 
 
 \newpage
