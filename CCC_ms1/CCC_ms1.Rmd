@@ -232,11 +232,11 @@ Distractor stimuli were an 'L' shape (rotated 0°, 90°, 180°, or 270°) while 
 
 Phase 1 employed a within-subjects design with factors of epoch (1-5) and configuration (repeated and random). All configurations contained 16 distractors, equally divided between the four quadrants of the display, and one target. Four repeated configurations were trained. Four target locations were used, with one from each quadrant assigned to each of the repeated configurations. These same four target positions were used for the random configurations throughout the task. Each of these four target positions was chosen at random from one of five locations within each quadrant, that were approximately equidistant from the center of the screen. Distractors could not appear in these target locations.
 
-Phase 2 employed a within-subjects design with factors of epoch (6-10) and configuration (repeated: consistent; repeated: inconsistent; random: consistent; random:inconsistent). On each trial, there was a .5 probability that an "inconsistent" version of the configuration would be presented. This meant that the target was relocated to a diametrically opposed target position such as to maximise the displacement from the trained target position (see Figure \@ref(fig:schematic)).. This could occur for both the repeated and random configurations, hence creating four unique trial types for this phase. While random configurations did not have a "trained", associated, target position, it is necessary to divide the random trials into consistent and inconsistent trial types in this way in order to assess any target frequency effects that may occur, since the inconsistent target locations used in this phase were novel.
+Phase 2 employed a within-subjects design with factors of epoch (6-10) and configuration (repeated: consistent; repeated: inconsistent; random: consistent; random:inconsistent). On each trial, there was a .5 probability that an "inconsistent" version of the configuration would be presented. This meant that the target was relocated to a diametrically opposed target position such as to maximise the displacement from the trained target position (see Figure \@ref(fig:blah-image)). This could occur for both the repeated and random configurations, hence creating four unique trial types for this phase. While random configurations did not have a "trained", associated, target position, it is necessary to divide the random trials into consistent and inconsistent trial types in this way in order to assess any target frequency effects that may occur, since the inconsistent target locations used in this phase were novel.
 
-(ref:schematic) Schematic of the manipulation of target position in consistent and inconsistent trials of Phase 2 
+(ref:schematicCC) Schematic of the manipulation of target position in consistent and inconsistent trials of Phase 2 
 
-```{r schematic, out.width="60%", fig.align = "center", fig.cap="(ref:schematic)"}
+```{r blah-image, out.width="60%", fig.align = "center", fig.cap="(ref:schematicCC)"}
 knitr::include_graphics('Schematic.png')
 ```
 
@@ -1026,11 +1026,9 @@ phase_2_TT_e3 <-
   summarise(group_RT = mean(meanRT),
             group_SE = sd(normRT)/sqrt(n()))
 
-phase_2_TT_e3 %>% 
-  mutate(TT = fct_relevel(TT, levels = c("Repeated",
-                                   "Repeated PROXIMAL",
-                                   "Repeated DISTAL",
-                                   "Random"))) %>% 
+phase_2_TT_e3 %>%
+  mutate(TT = fct_relevel(TT, "Repeated", "Repeated PROXIMAL",
+                          "Repeated DISTAL", "Random")) %>% 
   ggplot(aes(x = TT, y = group_RT, fill = TT)) +
   geom_col(colour = "black", size = 1) +
   geom_errorbar(aes(ymin = group_RT - group_SE,
@@ -1086,9 +1084,7 @@ rt_summary_data_e3 %>%
   select(-random) %>% 
   pivot_longer(cols = c("repeated", "repeated_distal", "repeated_proximal"), 
                names_to = "TT", values_to = "meanRT") %>% 
-  mutate(TT = fct_relevel(TT, levels = c("repeated",
-                                   "repeated_proximal",
-                                   "repeated_distal"))) %>% 
+  mutate(TT = fct_relevel(TT, "repeated", "repeated_proximal", "repeated_distal")) %>% 
   ggplot(aes(x = TT, y = meanRT)) +
   geom_violin(aes(fill = TT), alpha = .5) +
   geom_jitter(width = .05) +
