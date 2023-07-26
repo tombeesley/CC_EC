@@ -43,10 +43,9 @@ header-includes:
 csl               : "apa7.csl"
 documentclass     : "apa7"
 classoption       : "man"
-output            : papaja::apa6_docx
+output            : papaja::apa6_pdf
 editor_options: 
   chunk_output_type: console
-bibliography: references.bib
 ---
 
 ```{r knitr-options}
@@ -231,9 +230,15 @@ Distractor stimuli were an 'L' shape (rotated 0°, 90°, 180°, or 270°) while 
 
 ### Design
 
-Phase 1 employed a within-subjects design with factors of epoch (1-5) and configuration (repeated and random). All configurations contained 16 distractors, equally divided between the four quadrants of the display, and one target. Four repeated configurations were trained. Four target locations were used, with one from each quadrant assigned to each of the repeated configurations. These same four target positions were used for the the random configurations throughout the task. Each of these four target positions was chosen at random from one of five locations within each quadrant, that were approximately equidistant from the center of the screen. Distractors could not appear in these target locations.
+Phase 1 employed a within-subjects design with factors of epoch (1-5) and configuration (repeated and random). All configurations contained 16 distractors, equally divided between the four quadrants of the display, and one target. Four repeated configurations were trained. Four target locations were used, with one from each quadrant assigned to each of the repeated configurations. These same four target positions were used for the random configurations throughout the task. Each of these four target positions was chosen at random from one of five locations within each quadrant, that were approximately equidistant from the center of the screen. Distractors could not appear in these target locations.
 
-Phase 2 employed a within-subjects design with factors of epoch (6-10) and configuration (repeated: consistent; repeated: inconsistent; random: consistent; random:inconsistent). On each trial, there was a .5 probability that an "inconsistent" version of the configuration would be presented. This meant that the target was relocated to a diametrically opposed target position such as to maximise the displacement from the trained target position. This could occur for both the repeated and random configurations, hence creating four unique trial types for this phase. While random configurations did not have a "trained", associated, target position, it is necessary to divide the random trials into consistent and inconsistent trial types in this way in order to assess any target frequency effects that may occur, since the inconsistent target locations used in this phase were novel.
+Phase 2 employed a within-subjects design with factors of epoch (6-10) and configuration (repeated: consistent; repeated: inconsistent; random: consistent; random:inconsistent). On each trial, there was a .5 probability that an "inconsistent" version of the configuration would be presented. This meant that the target was relocated to a diametrically opposed target position such as to maximise the displacement from the trained target position (see Figure \@ref(fig:schematic)).. This could occur for both the repeated and random configurations, hence creating four unique trial types for this phase. While random configurations did not have a "trained", associated, target position, it is necessary to divide the random trials into consistent and inconsistent trial types in this way in order to assess any target frequency effects that may occur, since the inconsistent target locations used in this phase were novel.
+
+(ref:schematic) Schematic of the manipulation of target position in consistent and inconsistent trials of Phase 2 
+
+```{r schematic, out.width="60%", fig.align = "center", fig.cap="(ref:schematic)"}
+knitr::include_graphics('Schematic.png')
+```
 
 ### Procedure
 
