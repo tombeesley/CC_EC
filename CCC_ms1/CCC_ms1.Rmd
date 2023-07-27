@@ -66,9 +66,7 @@ library(BayesFactor)
 library(apa)
 library(pwr) # power calculations
 library(lsr) # effect size estimate
-# library(skimr)
-# library(rstudioapi)
-# library(kableExtra)
+library(patchwork)
 
 # function used to set rounding and presentation of decimals to specific length
 spec_dec <- function(x, k) trimws(format(round(x, k), nsmall=k)) # useful for controlling decimals
@@ -76,18 +74,14 @@ spec_dec <- function(x, k) trimws(format(round(x, k), nsmall=k)) # useful for co
 # function to force scientific formatting of numbers (used for large BFs)
 changeSciNot <- function(n) {
   output <- format(n, scientific = TRUE, digits = 2) #Transforms the number into scientific notation even if small
-  output <- sub("e", "x10^", output) #Replace e with 10^
+  output <- sub("e", " × 10^", output) #Replace e with 10^
   output <- sub("\\+0?", "", output) #Remove + symbol and leading zeros on exponent, if > 1
   output <- sub("-0?", "-", output) #Leaves - symbol but removes leading zeros on exponent, if < 1
   output <- paste0(output,"^") # makes the exponent superscript
   output
 }
 
-# setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) # set wd to current file location
-
-theme_set(theme_classic(base_size = 12))
-
-cbPalette <- c("#C1272D", "#E69F00", "#56B4E9", "#008176", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+#setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) # set wd to current file location
 
 # function to extract and report BFs with error %s
 report_BF_and_error <- function(BF_in, sci_not = TRUE, hyp = "alt"){
@@ -112,6 +106,24 @@ report_BF_and_error <- function(BF_in, sci_not = TRUE, hyp = "alt"){
          round(100*extractBF(BF_in)$error,2), 
          "%")
 }
+
+```
+
+
+```{r set_ggplot_theme}
+
+# set global ggplot theme properties
+
+theme_set(theme_classic(base_size = 14))
+
+theme_update(axis.title = element_text(face = "bold", size = 14),
+             axis.text = element_text(size = 12),
+             legend.text = element_text(size = 12),
+             legend.spacing.x = unit(0.4, "cm"))
+
+cbPalette <- c("#C1272D", "#E69F00", "#56B4E9", "#008176", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+
 
 ```
 
@@ -232,11 +244,11 @@ Distractor stimuli were an 'L' shape (rotated 0°, 90°, 180°, or 270°) while 
 
 Phase 1 employed a within-subjects design with factors of epoch (1-5) and configuration (repeated and random). All configurations contained 16 distractors, equally divided between the four quadrants of the display, and one target. Four repeated configurations were trained. Four target locations were used, with one from each quadrant assigned to each of the repeated configurations. These same four target positions were used for the random configurations throughout the task. Each of these four target positions was chosen at random from one of five locations within each quadrant, that were approximately equidistant from the center of the screen. Distractors could not appear in these target locations.
 
-Phase 2 employed a within-subjects design with factors of epoch (6-10) and configuration (repeated: consistent; repeated: inconsistent; random: consistent; random:inconsistent). On each trial, there was a .5 probability that an "inconsistent" version of the configuration would be presented. This meant that the target was relocated to a diametrically opposed target position such as to maximise the displacement from the trained target position (see Figure \@ref(fig:blah-image)). This could occur for both the repeated and random configurations, hence creating four unique trial types for this phase. While random configurations did not have a "trained", associated, target position, it is necessary to divide the random trials into consistent and inconsistent trial types in this way in order to assess any target frequency effects that may occur, since the inconsistent target locations used in this phase were novel.
+Phase 2 employed a within-subjects design with factors of epoch (6-10) and configuration (repeated: consistent; repeated: inconsistent; random: consistent; random:inconsistent). On each trial, there was a .5 probability that an "inconsistent" version of the configuration would be presented. This meant that the target was relocated to a diametrically opposed target position such as to maximise the displacement from the trained target position (see Figure \@ref(fig:schematicCC)). This could occur for both the repeated and random configurations, hence creating four unique trial types for this phase. While random configurations did not have a "trained", associated, target position, it is necessary to divide the random trials into consistent and inconsistent trial types in this way in order to assess any target frequency effects that may occur, since the inconsistent target locations used in this phase were novel.
 
 (ref:schematicCC) Schematic of the manipulation of target position in consistent and inconsistent trials of Phase 2 
 
-```{r blah-image, out.width="60%", fig.align = "center", fig.cap="(ref:schematicCC)"}
+```{r schematicCC, out.width="75%", fig.align = "center", fig.cap="(ref:schematicCC)", include = TRUE}
 knitr::include_graphics('Schematic.png')
 ```
 
@@ -244,7 +256,7 @@ knitr::include_graphics('Schematic.png')
 
 Participants were tested individually in a quiet testing room. They were given instructions on how to complete the task, including the presentation of an example of a search trial. Participants were shown the two correct responses for the two possible orientations of targets.
 
-Each trial commenced with a fixation cross presented in the center of the screen for 500 ms, which was then replaced immediately by the search configuration. Participants searched for the target stimulus and responded with a left or right response depending on its orientation. Reaction times (RTs) were recorded from the onset of the search configuration. Following a valid response (c or n), the configuration was removed from the screen. The response-- stimulus interval (hereafter RSI) was 1,000 ms. If participants made an incorrect response to the target orientation, "INCORRECT RESPONSE" appeared in red in the center of the screen for 3000 ms, prior to the RSI. If participants did not respond within 6000 ms, "TIMEOUT - TOO SLOW" appeared in red in the center of the screen for 3000 ms, prior to the RSI.
+Each trial commenced with a fixation cross presented in the center of the screen for 500 ms, which was then replaced immediately by the search configuration. Participants searched for the target stimulus and responded with a left or right response depending on its orientation. Reaction times (RTs) were recorded from the onset of the search configuration. Following a valid response (c or n), the configuration was removed from the screen. The response-- stimulus interval (hereafter RSI) was 1000 ms. If participants made an incorrect response to the target orientation, "INCORRECT RESPONSE" appeared in red in the center of the screen for 3000 ms, prior to the ITI. If participants did not respond within 6000 ms, "TIMEOUT - TOO SLOW" appeared in red in the center of the screen for 3000 ms, prior to the ITI.
 
 Each block of eight trials contained each of the four different repeated configurations and four random configurations. These eight configurations could appear in any order with the constraint that the position of the target did not repeat across trials or across consecutive blocks.
 
@@ -346,7 +358,7 @@ data_e1_f <-
 
 ```
 
-For the remaining `r words(nrow(rt_outlier_summary))` participants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was `r spec_dec(100*mean(rt_outlier_summary$prop_rem),2)`% (SD = `r spec_dec(100*sd(rt_outlier_summary$prop_rem),2)`%). `r Words(nrow(outlier_prop_removed))` participants had an unusual proportion of trials removed as outlier RTs.
+For the remaining `r words(nrow(rt_outlier_summary))` participants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was `r spec_dec(100*mean(rt_outlier_summary$prop_rem),2)`% (SD = `r spec_dec(100*sd(rt_outlier_summary$prop_rem),2)`%). `r Words(nrow(outlier_prop_removed))` participants had an unusual proportion of trials removed as outlier RTs (greater than 2.5 SDs above the mean).
 
 ```{r rt_summary_exp1}
 # compute grand mean RT 
@@ -379,13 +391,14 @@ rt_summary_data_e1 <-
 
 ```
 
-(ref:Exp1-RT-figure) RT data for Experiment 1
+(ref:Exp1-RT-figure) RT data for Experiment 1. Within-subject error bars were computed by a process of normalising the RT data for the sample [@cousineau2005].
 
-Within-subject error bars were computed by a process of normalising the RT data for the sample [@cousineau2005]. Figure \@ref(fig:Exp1-RT-figure) shows the RT data across the 10 epochs of the experiment. In phase 1 (epochs 1-5) a contextual cuing effect rapidly emerged. In phase 2, the presence of the guiding arrow had a dramatic effect on the reduction of response times. For all participants, the mean RT across epochs 4 and 5 was higher than the mean RTs across epochs 6 and 7. Despite the clear evidence for the processing of the endogenous cue, the underlying search configuration continued to play a role in the guidance of attention, with faster response times for (consistent) repeated configurations compared to random configurations.
+Figure \@ref(fig:Exp1-RT-figure) shows the RT data across the 10 epochs of the experiment. In phase 1 (epochs 1-5) a contextual cuing effect emerged, with faster responses to repeated over random configurations. In phase 2, the presence of the guiding arrow lead to a clear reduction in the response times. For all participants, the mean RT across epochs 4 and 5 was higher than the mean RTs across epochs 6 and 7. Despite the clear evidence for the processing of the endogenous cue, the underlying search configuration continued to play a role in the guidance of attention, with faster response times for (consistent) repeated configurations compared to random configurations.
 
 ```{r Exp1-RT-figure, fig.align="center", fig.cap="(ref:Exp1-RT-figure)", fig.dim=c(7,5), include = TRUE}
 
 # summarise at the group level and plot
+rt_all_exp1 <- 
 rt_summary_data_e1 %>% 
   group_by(epoch, TT) %>% 
   summarise(group_RT = mean(meanRT),
@@ -405,13 +418,43 @@ rt_summary_data_e1 %>%
                                "Repeated: inconsistent",
                                "Random: consistent",
                                "Random: inconsistent")) +
-  theme(legend.text = element_text(size = 10),
-        legend.spacing.x = unit(0.4, "cm"),
-        legend.position = c(0.75,.75),
-        legend.direction = "vertical") +
+  theme(legend.position = c(0.25,.25),
+        legend.direction = "vertical",
+        plot.margin = unit(c(0,0.1,0.1,0.1),"inches")) +
   guides(fill = guide_legend(byrow = TRUE)) +
   scale_y_continuous(limits = c(1000, 2400), breaks = seq(1000, 2400, 200))
 
+phase2_avg_col <- 
+  rt_summary_data_e1 %>% 
+  filter(epoch %in% c(6:10)) %>% 
+  group_by(TT) %>% 
+  summarise(group_RT = mean(meanRT),
+            group_SE = sd(mean_norm_RT)/sqrt(n())) %>% 
+  ggplot(aes(x = TT, y = group_RT, fill = TT)) +
+  geom_errorbar(aes(ymin = group_RT,
+                    ymax = group_RT + group_SE),
+                width = .2,
+                size = .5) +
+  geom_col(colour = "black", size = 0.5, width = .8) +
+  scale_fill_manual(name = "", 
+                    values = cbPalette) +
+  coord_cartesian(ylim = c(1200,1450)) +
+  theme(legend.position = "None",
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(), 
+        plot.title = element_text(size = 10, hjust = 0.5, face = "bold"),
+        plot.background = element_rect(fill = "#f2f2f2", colour = "black"),
+        panel.background = element_rect(fill = "#f2f2f2")) +
+  labs(y = "RT (ms)",
+       x = "Trial type",
+       title = "Phase 2 averages")
+
+layout <- c(
+  area(t = 1, l = 1, b = 32, r = 32),
+  area(t = 2, l = 23, b = 15, r = 31)
+)
+
+rt_all_exp1 + phase2_avg_col + plot_layout(design = layout)
 
 ```
 
@@ -434,9 +477,10 @@ e1_phase1_BF <-
 
 ```
 
-These data were explored with a Bayesian ANOVA, using the *BayesFactor::anovaBF()* function (for all analyses in this study the priors were set at the default "medium" width) [^1]. First taking the data from phase 1 (epochs 1-5), the model with the largest Bayes Factor (BF) contained the factors of epoch and configuration (repeated vs. random), `r report_BF_and_error(e1_phase1_BF[3])`. The addition of the interaction term did not substantially improve the model fit, `r report_BF_and_error(e1_phase1_BF[4]/e1_phase1_BF[3], sci_not = FALSE, hyp = "mc")`. The best fitting model was a better fit than the two models containing only one of the factors, smallest `r report_BF_and_error(e1_phase1_BF[3]/e1_phase1_BF[1], sci_not = FALSE, hyp = "mc")`, providing significant support for the effects of configuration and epoch.
+These data were analysed with a Bayesian ANOVA[^1], using the *BayesFactor::anovaBF()* function in R. All analyses in this study used the deafult parameters for the priors, which "places mass in reason-
+able ranges [of effect sizes] without being overcommitted to any one point" [@rouder2017, p. 317]. First taking the data from phase 1 (epochs 1-5), the model with the largest Bayes Factor (BF) contained the factors of epoch and configuration (repeated vs. random), `r report_BF_and_error(e1_phase1_BF[3])`. The addition of the interaction term did not substantially improve the model fit, `r report_BF_and_error(e1_phase1_BF[4]/e1_phase1_BF[3], sci_not = FALSE, hyp = "mc")`. The best fitting model was a better fit than the two models containing only one of the factors, smallest `r report_BF_and_error(e1_phase1_BF[3]/e1_phase1_BF[1], sci_not = FALSE, hyp = "mc")`, providing significant support for the effects of configuration and epoch.
 
-[^1]: The Bayesian analyses here follow the process outlined in @rouder2017. Breifly, we present the best fitting model, followed by a comparison with other models. Where the comparison of two models (i.e., A against B) reveals a Bayes Factor of greater than 3, this is taken as support for the components of model A that are not present in model B. Bayes Factors of less than 0.33 are taken as evidence in support of the equivalence of two models
+[^1]: The Bayesian analyses here follow the process outlined in @rouder2017. Briefly, we present the best fitting model, and then compare this fit to that of other models. Where the comparison of two models (i.e., A against B) reveals a Bayes Factor of greater than 3, this is taken as support for the components of model A that are not present in model B. Bayes Factors of less than 0.33 are taken as evidence in support of the equivalence of two models
 
 ```{r phase_2_BFs_exp1}
 # Experiment 1 stats
@@ -947,7 +991,7 @@ rt_summary_data_e3 %>%
   geom_errorbar(aes(ymin = group_RT - group_SE,
                     ymax = group_RT + group_SE),
                 width = .05) +
-    geom_point(aes(fill = TT),size = 5, shape = 21, alpha = .6) +
+    geom_point(aes(fill = TT),size = 5, shape = 21, alpha = 1) +
   labs(y = "RT (ms)",
        x = "Epochs of 32 trials") +
   scale_fill_manual(name = "",
@@ -977,6 +1021,8 @@ exp3_p1_BFs <- anovaBF(meanRT ~ TT*epoch + subj,
                        data = phase_1)
 
 ```
+
+(ref:Exp3-RT-figure) RT data for Experiment 3. Error bars show standard error of the mean on normalised data.
 
 Figure \@ref(fig:Exp3-RT-figure) shows the RT data across the 10 epochs of Experiment 3. As in Experiment 1, contextual cuing was readily established in Phase 1. These data were subjected to a Bayesian ANOVA which revealed that the best fitting model contained the factors of configuration (repeated vs. random) and epoch, and an interaction between those factors, `r report_BF_and_error(exp3_p1_BFs[4])`. However, the model without the interaction provided a strong fit to the data, `r report_BF_and_error(exp3_p1_BFs[3])`, and a comparison between the two models did not find significant evidence in support of the interaction term, `r report_BF_and_error(exp3_p1_BFs[3]/exp3_p1_BFs[4], sci_not = FALSE, hyp = "mc")`. The best fitting model was substantially supported over the remaining models, smallest `r report_BF_and_error(exp3_p1_BFs[4]/exp3_p1_BFs[1], sci_not = FALSE, hyp = "mc")`, providing considerable support for the factors of epoch and configuration.
 
@@ -1096,7 +1142,7 @@ rt_summary_data_e3 %>%
   
 ```
 
-(ref:Exp3-Phase-2-figure) The distribution of RT data for phase 2 of Experiment 3, plotted as difference scores (RT to random configurations minus RT to repeated configuration type). Individual points are presented and linked across trial types.
+(ref:Exp3-Phase-2-RTdiff-figure) The distribution of RT data for phase 2 of Experiment 3, plotted as difference scores (RT to random configurations minus RT to repeated configuration type). Individual points are presented and linked across trial types.
 
 \newpage
 
