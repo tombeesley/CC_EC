@@ -391,70 +391,81 @@ rt_summary_data_e1 <-
 
 ```
 
-(ref:Exp1-RT-figure) RT data for Experiment 1. Within-subject error bars were computed by a process of normalising the RT data for the sample [@cousineau2005].
+(ref:Exp1-RT-figure) RT data for Experiment 1. The Phase 2 averages across the four trial types are shown inset. Within-subject error bars were computed by a process of normalising the RT data for the sample [@cousineau2005].
 
 Figure \@ref(fig:Exp1-RT-figure) shows the RT data across the 10 epochs of the experiment. In phase 1 (epochs 1-5) a contextual cuing effect emerged, with faster responses to repeated over random configurations. In phase 2, the presence of the guiding arrow lead to a clear reduction in the response times. For all participants, the mean RT across epochs 4 and 5 was higher than the mean RTs across epochs 6 and 7. Despite the clear evidence for the processing of the endogenous cue, the underlying search configuration continued to play a role in the guidance of attention, with faster response times for (consistent) repeated configurations compared to random configurations.
 
 ```{r Exp1-RT-figure, fig.align="center", fig.cap="(ref:Exp1-RT-figure)", fig.dim=c(7,5), include = TRUE}
 
+factorLbls <- c("Repeated: Consistent", "Random: Consistent", "Repeated: Inconsistent", "Random: Inconsistent")
+
 # summarise at the group level and plot
 rt_all_exp1 <- 
-rt_summary_data_e1 %>% 
-  group_by(epoch, TT) %>% 
+  rt_summary_data_e1 %>% 
+  separate(TT, into = c("config", "targ_pos"), sep = ": ") %>%   # split the TT into factors of Config and target consistency
+  mutate(config = as.factor(fct_relevel(config, "Repeated", "Random")),
+         targ_pos = as.factor(fct_relevel(targ_pos, "consistent", "inconsistent")))
+  
+  
+rf_fig_exp1 <- 
+  rt_all_exp1 %>%   
+  group_by(epoch, config, targ_pos) %>% 
   summarise(group_RT = mean(meanRT),
             group_SE = sd(mean_norm_RT)/sqrt(n())) %>% 
-  ggplot(aes(x = epoch, y = group_RT, group = TT)) +
-  geom_line(size = .5) +
+  ggplot(aes(x = epoch, y = group_RT)) +
+  geom_line(aes(group = interaction(config, targ_pos)), size = .5) +
   geom_errorbar(aes(ymin = group_RT - group_SE,
                     ymax = group_RT + group_SE),
                 width = .2,
                 size = .5) +
-  geom_point(aes(fill = TT),size = 5, shape = 21) +
+  geom_point(aes(fill = interaction(config, targ_pos),
+                 shape = interaction(config, targ_pos)), size = 5) +
   labs(y = "RT (ms)",
        x = "Epochs of 32 trials") +
-  scale_fill_manual(name = "", 
-                    values = cbPalette,
-                    labels = c("Repeated: consistent",
-                               "Repeated: inconsistent",
-                               "Random: consistent",
-                               "Random: inconsistent")) +
+  scale_fill_manual(name = "",
+                    labels = factorLbls,
+                    values= c(cbPalette[c(1,3)],c(cbPalette[c(1,3)]))) +
+  scale_shape_manual(name = "",
+                     labels = factorLbls,
+                     values = c(21,21,22,22)) +
   theme(legend.position = c(0.25,.25),
-        legend.direction = "vertical",
-        plot.margin = unit(c(0,0.1,0.1,0.1),"inches")) +
+        legend.direction = "vertical") +
   guides(fill = guide_legend(byrow = TRUE)) +
   scale_y_continuous(limits = c(1000, 2400), breaks = seq(1000, 2400, 200))
 
 phase2_avg_col <- 
-  rt_summary_data_e1 %>% 
+  rt_all_exp1 %>% 
   filter(epoch %in% c(6:10)) %>% 
-  group_by(TT) %>% 
+  group_by(config, targ_pos) %>% 
   summarise(group_RT = mean(meanRT),
             group_SE = sd(mean_norm_RT)/sqrt(n())) %>% 
-  ggplot(aes(x = TT, y = group_RT, fill = TT)) +
+  ggplot(aes(x = config, y = group_RT, fill = targ_pos)) +
   geom_errorbar(aes(ymin = group_RT,
                     ymax = group_RT + group_SE),
                 width = .2,
-                size = .5) +
-  geom_col(colour = "black", size = 0.5, width = .8) +
-  scale_fill_manual(name = "", 
-                    values = cbPalette) +
-  coord_cartesian(ylim = c(1200,1450)) +
-  theme(legend.position = "None",
-        axis.text.x = element_blank(),
-        axis.ticks.x = element_blank(), 
-        plot.title = element_text(size = 10, hjust = 0.5, face = "bold"),
+                size = .5,
+                position = position_dodge(.8)) +
+  geom_col(colour = "black", size = 0.5, width = .8, position = position_dodge()) +
+  scale_fill_manual(name = "",
+                    labels = c("Consistent", "Inconsistent"),
+                    values= c(cbPalette[c(1,3)],c(cbPalette[c(1,3)]))) +
+  coord_cartesian(ylim = c(1200,1600)) +
+  theme(plot.title = element_text(size = 10, hjust = 0.5, face = "bold"),
         plot.background = element_rect(fill = "#f2f2f2", colour = "black"),
-        panel.background = element_rect(fill = "#f2f2f2")) +
+        panel.background = element_rect(fill = "#f2f2f2"),
+        legend.position = c(0.5,0.9),
+        legend.background = element_blank(),
+        legend.direction = "vertical",
+        legend.text = element_text(size = 8),
+        legend.key.size = unit(0.4, "cm"),
+        axis.title.x = element_blank(),
+        axis.text.x = element_text(size = 8),
+        axis.text.y = element_text(size = 8),
+        axis.title.y = element_text(size = 10)) +
   labs(y = "RT (ms)",
-       x = "Trial type",
        title = "Phase 2 averages")
 
-layout <- c(
-  area(t = 1, l = 1, b = 32, r = 32),
-  area(t = 2, l = 23, b = 15, r = 31)
-)
-
-rt_all_exp1 + phase2_avg_col + plot_layout(design = layout)
+rf_fig_exp1 + inset_element(phase2_avg_col, 0.55, 0.5, 1, 1)
 
 ```
 
@@ -490,31 +501,34 @@ able ranges [of effect sizes] without being overcommitted to any one point" [@ro
 phase_2 <- 
   rt_summary_data_e1 %>% 
   mutate(epoch = as.factor(epoch)) %>% 
-  filter(epoch %in% c(6:10))
-
-#exp1_phase1_anova <- aov_car(meanRT ~ Error(subj/TT*epoch), data = phase_1)
+  filter(epoch %in% c(6:10)) %>% 
+  separate(TT, into = c("config", "targ_pos"), sep = ": ") %>%   # split the TT into factors of Config and target consistency
+  mutate(config = as.factor(config),
+         targ_pos = as.factor(targ_pos))
 
 e1_phase2_BF <- 
-  anovaBF(meanRT ~ TT * epoch + subj, 
+  anovaBF(meanRT ~ config * targ_pos * epoch + subj, 
           data = phase_2,
           whichRandom = "subj")
 
 exp1_ttestBF_data <- 
-  phase_2 %>% 
+  rt_summary_data_e1 %>% 
+  mutate(epoch = as.factor(epoch)) %>% 
+  filter(epoch %in% c(6:10)) %>% 
   group_by(subj, TT) %>% 
   summarise(meanRT=mean(meanRT)) %>% 
   pivot_wider(values_from = meanRT, names_from = TT) %>% 
   janitor::clean_names()
 
-exp3_p2_repC_randC <- ttestBF(x = exp1_ttestBF_data$repeated_consistent, y = exp1_ttestBF_data$random_consistent, paired = TRUE)
-exp3_p2_repI_randI <- ttestBF(x = exp1_ttestBF_data$repeated_inconsistent, y = exp1_ttestBF_data$random_inconsistent, paired = TRUE)
-exp3_p2_repC_repI <- ttestBF(x = exp1_ttestBF_data$repeated_consistent, y = exp1_ttestBF_data$repeated_inconsistent, paired = TRUE)
+exp1_p2_repC_randC <- ttestBF(x = exp1_ttestBF_data$repeated_consistent, y = exp1_ttestBF_data$random_consistent, paired = TRUE)
+exp1_p2_repI_randI <- ttestBF(x = exp1_ttestBF_data$repeated_inconsistent, y = exp1_ttestBF_data$random_inconsistent, paired = TRUE)
+exp1_p2_repC_repI <- ttestBF(x = exp1_ttestBF_data$repeated_consistent, y = exp1_ttestBF_data$repeated_inconsistent, paired = TRUE)
 
 ```
 
-A Bayesian ANOVA on the data from phase 2 (epochs 6-10) found significant support for the model containing the factor of configuration, `r report_BF_and_error(e1_phase2_BF[2], sci_not = FALSE)`. The next best fitting model contained the factor of epoch but was a substantially worse fit to the data, `r report_BF_and_error(e1_phase2_BF[3]/e1_phase2_BF[2], sci_not = FALSE)`. Thus there was considerable evidence for an effect of configuration, and evidence that there was no effect of epoch or an interaction between epoch and configuration.
+A Bayesian ANOVA on the data from phase 2 (epochs 6-10) found significant support for the model containing the factors of configuration (repeated vs. random) and target position (consistent vs. inconsistent), `r report_BF_and_error(e1_phase2_BF[7], sci_not = FALSE)`. The next best fitting model contained these two factors and the interaction term, and was not a substantially worse fit to the data, `r report_BF_and_error(e1_phase2_BF[13]/e1_phase2_BF[7], sci_not = FALSE, hyp = "mc")`. The best fitting model (with factors of configuration and target position, but no interaction) was a substantially better fit to the data than the model containing only the factor of configuration `r report_BF_and_error(e1_phase2_BF[7]/e1_phase2_BF[2], sci_not = FALSE, hyp = "mc")` providing evidence that RTs were faster on consistent than inconsistent trials. There was no difference between the best fitting model and the model containing only the factor of target position, `r report_BF_and_error(e1_phase2_BF[7]/e1_phase2_BF[5], sci_not = FALSE, hyp = "mc")`.
 
-To explore the differences in response times across the four trial types in phase 2, the data were averaged across the 5 epochs, and Bayesian t-tests were run using BayesFactor::ttestBF with the default Cauchy prior. This revealed support for a difference between the response times on "repeated: consistent" trials and those on the respective random trials (random: consistent), `r report_BF_and_error(exp3_p2_repC_randC, sci_not = FALSE)`. There was also evidence to suggest there was no difference between the response times for the "repeated: inconsistent" trials and the respective random trials, `r report_BF_and_error(exp3_p2_repI_randI, sci_not = FALSE)`. There was substantial support for a difference between the response times on repeated consistent and the repeated inconsistent trials, `r report_BF_and_error(exp3_p2_repC_repI, sci_not = FALSE)`.
+To further explore responses to the different trial types in phase 2, Bayesian t-tests were run using BayesFactor::ttestBF (using the default Cauchy prior) for comparisons between the repeated and random configurations, across the two target position conditions (consistent and inconsistent). This revealed support for a difference between the response times on "repeated: consistent" trials and those on the respective random trials (random: consistent), `r report_BF_and_error(exp1_p2_repC_randC, sci_not = FALSE)`. There was also evidence to suggest there was no difference between the response times for the "repeated: inconsistent" trials and the respective random trials, `r report_BF_and_error(exp1_p2_repI_randI, sci_not = FALSE)`. 
 
 ```{r trad_ANOVA_phase_2_exp1}
 # Statistics on Stage 2
