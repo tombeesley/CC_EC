@@ -827,13 +827,13 @@ Experiment 2 sought to examine whether the presence of a valid endogenous cue wo
 
 The lack of competition effects seen in Experiment 2 are at odds with some findings in the CC literature [i.e., @endo2004; @kunar2014], where competition has been seen by more dominant or salient features of the displays. Instead, the findings point towards a more automatic nature to contextual cuing, whereby associations form ubiquitously, so long as they receive the focus of attention at some point within the search process [e.g., @beesley2012].
 
-Taken together with the findings of Experiment 1, these data suggest that attention can be initially cued in an endogenous manner, before the underlying search configuration refines this attentional process to facilitate search for the target in repeated configurations. The equivalence of the CC effects in the two conditions (cued and uncued) suggests that the guidance by the context was driven largely (or perhaps entirely) by the distractors that appear close to the target. That is, while search times are longer in the uncued condition, and therefore more distractors are inevitably processed in this condition, this additional distractor processing does not result in stronger associative learning. Experiment 3 explored this hypothesis.
+Taken together with the findings of Experiment 1, these data suggest that when attention is cued in an endogenous manner, the underlying search configuration will still play a significant role in guiding search for the target. Since the endogenous cue appears at the point of fixation, the most plausible interaction of these processes is that the guidance by the endogenous cue is followed by the guidance by the repeated context. The equivalence of the CC effects in the two conditions (cued and uncued) would therefore suggest that the guidance by the context was driven largely (or perhaps entirely) by the distractors that appear close to the target. Accordingly, the longer search times in the uncued condition suggest that more distractors are processed in this condition, but that the influence of the repeated distractors on attentional guidance may be limited to those occurring later in the search process, and therefore those nearer to the target. Alternatively, the interaction of these two processes (endogenous and configuration-driven attention) need not interact in this order. It is at least possible that the configuration is processed rapidly at the onset of the trial, before the effects of the endogenous cue on attention are observed. If this is the case, then those repeated distractors that influence search (producing the CC effect) need not be localised around the target. Experiment 3 provided a test of these two possible accounts. 
 
 # Experiment 3
 
 Existing data from studies of contextual cuing has pointed towards a localised learning effect for repeated configurations, with those distractors closest to the target being preferentially weighted in the learning process over those located further from the target. For example, @olson2002 trained participants with three sets of repeating configurations that differed in terms of which distractors repeated across trials. For one set, the entire global context (all of the distractors) repeated, while for the other two sets only the short-range (those close to the target) or the long-range distractors (those far from the target) repeated across trials. They found no difference between the CC effect in the short-range and global configurations, while the CC effect was not significant for the long-range context. Similar results have been shown by @brady2007 which led to the development of the spatial constraints model of contextual cuing, in which distractor-target associations occurring in close proximal space are weighted more heavily in the learning process (over those occurring across greater spatial distance).
 
-It is important to consider how the bias towards local learning may interact with the attentional scanning process during contextual cuing. The analysis of eye-movements during contextual cuing tasks [@beesley2018; @tseng2004] has revealed a characteristic scanning pattern comprising two phases: search initially occurs in a seemingly random manner, as the eyes move between distractors in the central region of the distractor field, before then moving in a more directed manner towards the target position. Contextual cuing appears to result from a cessation of the first (random) search phase at an earlier time point in the entire search process, such that processing of repeated distractors will, on average, result in fewer fixations. With respect to the current study, in Experiments 1 and 2 we have initially directed attention towards the side of the screen that contains the target on cued trials. This will bring about an early cessation of the first phase of the search process. From here, however, it seems that eye-movements are still facilitated by the repetition of the context.
+It is important to consider how the bias towards local learning may interact with the attentional scanning process during contextual cuing. The analysis of eye-movements during contextual cuing tasks [@beesley2018; @tseng2004] has revealed a characteristic scanning pattern comprising two phases: search initially occurs in a seemingly random manner, as the eyes move between distractors in the central region of the distractor field, before then moving in a more directed manner towards the target position. Contextual cuing appears to result from a cessation of the first (random) search phase at an earlier time point in the entire search process, such that processing of repeated distractors will, on average, result in fewer fixations. With respect to the current study, in Experiments 1 and 2 we have initially directed attention towards the side of the screen that contains the target on cued trials. This may bring about an early cessation of the first phase of the search process. From here, however, it seems that eye-movements are still facilitated by the repetition of the context.
 
 To test this characterisation of the interaction between the endogenous cue and the repeated context, we exposed participants to the same procedure as used in phase 1 of Experiment 1, which establishes a contextual cuing effect prior to the use of the endogenous cue. In a second phase we then presented the endogenous cue on every trial (as in Experiment 1), but we manipulated the presence of the repeated distractors within the configurations. For each repeated configuration we created two variations: in the "proximal" configurations, only the distractors in the quadrant containing the target match those from the full repeated configuration, while the distractors in the other three quadrants were randomly arranged on each trial; in the "distal" configurations, the distractors closest to the target were randomised, while the distractors in the other three quadrants were the same as those in the full repeated configuration. During this phase we also presented fully repeated configurations and fully randomised configurations. Comparison of the response times across these four trial types will allow us to determine the contribution of proximal and distal distractors to the CC effect in this task.
 
@@ -995,7 +995,8 @@ rt_summary_data_e3 <-
             normRT = mean(normRT))
 
 # summarise at the group level and plot
-rt_summary_data_e3 %>%
+rf_fig_exp3 <- 
+  rt_summary_data_e3 %>%
   group_by(epoch, TT) %>%
   summarise(group_RT = mean(meanRT),
             group_SE = sd(normRT)/sqrt(n())) %>%
@@ -1011,11 +1012,48 @@ rt_summary_data_e3 %>%
                     values = cbPalette[c(1,3,2,4)]) +
   theme(legend.text = element_text(size = 10),
         legend.spacing.x = unit(0.4, "cm"),
-        legend.position = c(0.75,0.75),
+        legend.position = c(0.25,0.25),
         legend.direction = "vertical") +
   guides(fill = guide_legend(byrow = TRUE)) +
   scale_y_continuous(limits = c(1000, 2600), breaks = seq(1000, 2600, 200))
 
+# summarise at the group level for phase 2
+phase_2_TT_e3 <- 
+  rt_summary_data_e3 %>%
+  filter(epoch %in% c(6,10)) %>% 
+  group_by(TT) %>%
+  summarise(group_RT = mean(meanRT),
+            group_SE = sd(normRT)/sqrt(n()))
+
+# plot for inset graph
+phase_2_avg_RT <- 
+  phase_2_TT_e3 %>%
+  mutate(TT = fct_relevel(TT, "Repeated", "Rep. PROXIMAL",
+                          "Rep. DISTAL", "Random")) %>% 
+  ggplot(aes(x = TT, y = group_RT, fill = TT)) +
+  geom_col(colour = "black", size = 1) +
+  geom_errorbar(aes(ymin = group_RT - group_SE,
+                    ymax = group_RT + group_SE),
+                width = .05, size = 0.5
+                ) +
+  coord_cartesian(ylim = c(1100,1500)) +
+  labs(title = "Phase 2 averages",
+       y = "RT (ms)",
+       x = "Configuration type") +
+  scale_fill_manual(name = "",
+                  values = cbPalette[c(1,3,2,4)]) +
+  theme(plot.title = element_text(size = 10, hjust = 0.5, face = "bold"),
+        plot.background = element_rect(fill = "#f2f2f2", colour = "black"),
+        panel.background = element_rect(fill = "#f2f2f2"),
+        legend.position = "None",
+        axis.title.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.text.y = element_text(size = 8),
+        axis.title.y = element_text(size = 10),
+        axis.ticks.x = element_blank()) +
+  scale_x_discrete(labels = scales::label_wrap(10))
+
+rf_fig_exp3 + inset_element(phase_2_avg_RT, 0.55, 0.5, 1, 1)
 
 ```
 
@@ -1037,7 +1075,7 @@ exp3_p1_BFs <- anovaBF(meanRT ~ TT*epoch + subj,
 
 (ref:Exp3-RT-figure) RT data for Experiment 3. Error bars show standard error of the mean on normalised data.
 
-Figure \@ref(fig:Exp3-RT-figure) shows the RT data across the 10 epochs of Experiment 3. As in Experiment 1, contextual cuing was readily established in phase 1. These data were subjected to a Bayesian ANOVA which revealed that the best fitting model contained the factors of configuration (repeated vs. random) and epoch, and an interaction between those factors, `r report_BF_and_error(exp3_p1_BFs[4])`. However, the model without the interaction provided a strong fit to the data, `r report_BF_and_error(exp3_p1_BFs[3])`, and a comparison between the two models did not find significant evidence in support of the interaction term, `r report_BF_and_error(exp3_p1_BFs[3]/exp3_p1_BFs[4], sci_not = FALSE, hyp = "mc")`. The best fitting model was substantially supported over the remaining models, smallest `r report_BF_and_error(exp3_p1_BFs[4]/exp3_p1_BFs[1], sci_not = FALSE, hyp = "mc")`, providing considerable support for the factors of epoch and configuration.
+Figure \@ref(fig:Exp3-RT-figure) (main panel) shows the RT data across the 10 epochs of Experiment 3. As in Experiment 1, contextual cuing was readily established in phase 1. These data were subjected to a Bayesian ANOVA which revealed that the best fitting model contained the factors of configuration (repeated vs. random) and epoch, and an interaction between those factors, `r report_BF_and_error(exp3_p1_BFs[4])`. However, the model without the interaction provided a strong fit to the data, `r report_BF_and_error(exp3_p1_BFs[3])`, and a comparison between the two models did not find any evidence in support of the interaction term, `r report_BF_and_error(exp3_p1_BFs[3]/exp3_p1_BFs[4], sci_not = FALSE, hyp = "mc")`. There was strong support for the best fitting model over the remaining models, smallest `r report_BF_and_error(exp3_p1_BFs[4]/exp3_p1_BFs[1], sci_not = FALSE, hyp = "mc")`, providing strong support for the factors of epoch and configuration.
 
 ```{r}
 # Statistics on Stage 2
@@ -1075,7 +1113,9 @@ exp3_p2_global_local <- ttestBF(x = ttestBF_data$repeated_distal, y = ttestBF_da
 
 The response times decreased significantly with the presentation of the valid endogenous cue in phase 2. Response times to the fully repeated configurations were somewhat comparable to those when just the proximal repeated distractors were present. Response times for the distal repeated distractors appeared to be slower and comparable to the fully random configurations. The phase 2 data were subjected to a Bayesian ANOVA which found that the best fitting model contained the factors of configuration and epoch but no interaction between the factors, `r report_BF_and_error(exp3_p2_BFs[3])`. This model provided a superior fit to the data compared to the next best fitting model that included the two factors and the interaction term, `r report_BF_and_error(exp3_p2_BFs[3]/exp3_p2_BFs[4], sci_not = FALSE, hyp = "mc")`, providing strong support for the contribution of the two factors and the absence of an interaction between the two factors.
 
-```{r Exp3-Phase-2-figure, fig.align="center", fig.cap="(ref:Exp3-Phase-2-figure)", fig.dim=c(5,4), include=TRUE}
+```{r Exp3-Phase-2-figure, fig.align="center", fig.cap="(ref:Exp3-Phase-2-figure)", fig.dim=c(5,4), include=FALSE}
+
+# THIS PLOT IS NO LONGER PRESENTED
 
 # summarise at the group level and plot
 phase_2_TT_e3 <- 
@@ -1105,9 +1145,7 @@ phase_2_TT_e3 %>%
 
 ```
 
-(ref:Exp3-Phase-2-figure) RT data for phase 2 of Experiment 3. Error bars show standard error of the mean on normalised data.
-
-Figure \@ref(fig:Exp3-Phase-2-figure) shows the mean RTs to the four types of configuration, averaged across the 5 epochs of phase 2 (see the Appendix for a plot of these data showing the distribution of individual data points for RT differences). To explore the differences in response times Bayesian t-tests were run for all pairwise comparisons using BayesFactor::ttestBF with the default Cauchy prior. The response times to repeated and repeated-proximal configurations were both faster than those to random configurations, smallest `r report_BF_and_error(exp3_p2_local_rand, sci_not = FALSE)`. In contrast, there was no evidence that the response times to repeated-distal configurations were different from those to random configurations, `r report_BF_and_error(exp3_p2_global_rand, sci_not = FALSE)`. Response times to repeated configurations were faster than those to repeated-proximal configurations, `r report_BF_and_error(exp3_p2_rep_local, sci_not = FALSE)`. Response times to repeated-proximal configurations were faster than those to repeated-distal configurations, `r report_BF_and_error(exp3_p2_global_local, sci_not = FALSE)`.
+The inset graph in Figure \@ref(fig:Exp3-RT-figure) shows the mean RTs to the four types of configuration, averaged across the 5 epochs of phase 2. To explore the differences in response times, Bayesian t-tests were run for all pairwise comparisons. The response times to repeated and repeated-proximal configurations were both faster than those to random configurations, smallest `r report_BF_and_error(exp3_p2_local_rand, sci_not = FALSE)`. In contrast, there was no evidence that the response times to repeated-distal configurations were different from those to random configurations, `r report_BF_and_error(exp3_p2_global_rand, sci_not = FALSE)`. Response times to repeated configurations were faster than those to repeated-proximal configurations, `r report_BF_and_error(exp3_p2_rep_local, sci_not = FALSE)`. Response times to repeated-proximal configurations were faster than those to repeated-distal configurations, `r report_BF_and_error(exp3_p2_global_local, sci_not = FALSE)`.
 
 ## Discussion
 
@@ -1129,7 +1167,9 @@ In conclusion....
 
 # Appendix
 
-```{r Exp3-Phase-2-RTdiff-figure, fig.align="center", fig.cap="(ref:Exp3-Phase-2-RTdiff-figure)", fig.dim=c(5,4), include=TRUE}
+```{r Exp3-Phase-2-RTdiff-figure, fig.align="center", fig.cap="(ref:Exp3-Phase-2-RTdiff-figure)", fig.dim=c(5,4), include=FALSE}
+
+# THIS FIGURE IS NO LONGER PRESENTED
 
 rt_summary_data_e3 %>%
   filter(epoch %in% c(6,10)) %>% 
@@ -1152,10 +1192,14 @@ rt_summary_data_e3 %>%
                   values = cbPalette[c(1,3,2,4)]) +
   labs(y = "CC effect (RT difference from random)") +
   theme(legend.position = "None")
-  
+
+# note text below
+
+# (ref:Exp3-Phase-2-RTdiff-figure) The distribution of RT data for phase 2 of Experiment 3, plotted as difference scores (RT to random configurations minus RT to repeated configuration type). Individual points are presented and linked across trial types.
+
 ```
 
-(ref:Exp3-Phase-2-RTdiff-figure) The distribution of RT data for phase 2 of Experiment 3, plotted as difference scores (RT to random configurations minus RT to repeated configuration type). Individual points are presented and linked across trial types.
+
 
 \newpage
 
