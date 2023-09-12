@@ -1,5 +1,5 @@
 ---
-title             : "Contextual cuing in the presence of an endgenous cue for attention"
+title             : "Contextual cuing in the presence of an endogenous cue for attention"
 shorttitle        : "Contextual cuing and endogenous cuing"
 author: 
   - name          : "Tom Beesley"
@@ -139,7 +139,7 @@ More direct examination of the role of top-down control processes on CC comes fr
 
 One potential issue with the studies presented by Luque and colleagues [@luque2017b; @luque2021] is that participants are instructed to engage in a new search process for a new target object: participants initially search for a T and are later instructed to search for a Y. The role of a prior target template is important for visual search [@vickery2005; @vo2012], and object identities appear to play an important role in the contextual cuing effect [@makovski2017; @makovski2018]. While it is unclear how dependent CC is on the identity of the target, it is possible that distractor-target associations may well be sensitive to target identity and to the goals of the participant. For this reason, the current study assesses the impact of top-down instruction on CC when participants maintain the same task goal of searching for a single target identity within the display.
 
-The overarching aim of the current study is to explore the interaction between controlled (top-down) attentional processes and the pattern of search behaviour established by the repeated configurations. Specifically we seek to understand whether repeated configurations continue to guide attention even when participants are directed to alter their natural search patterns by the presence of an endogenous cue. The experiments explore both the performance aspect of CC in terms of whether it continues to guide behaviour once an endogenous cue is introduced, and also whether the development of the search behaviour is impeded when trained concurrently with the endogenous cue.
+The overarching aim of the current study is to explore the interaction between controlled (top-down) attentional processes and the pattern of search behaviour established by the repeated configurations. Specifically we seek to understand whether repeated configurations continue to guide attention even when participants are directed to alter their natural search patterns by the presence of an endogenous cue (an arrow that instructs the participant to direct attention in a specific direction). The experiments explore both the performance aspect of CC in terms of whether it continues to guide behaviour once an endogenous cue is introduced, and also whether the development of the search behaviour is impeded when trained concurrently with the endogenous cue.
 
 ```{r exploratory_anaysis}
 
@@ -238,7 +238,7 @@ demographics <-
 
 Participants were tested individually in a quiet room with a Dell laptop with a 15.6" screen, a screen resolution of 1920 x 1080, and a full size external keyboard for participants to use to respond to the task. Participants sat approximately 50 cm from the screen. Stimulus presentation was controlled by MATLAB using the Psychophysics Toolbox extensions (Brainard, 1997; Kleiner, Brainard & Pelli, 2007; Pelli, 1997). Responses to the target stimulus were made by pressing the 'c' or 'n' key on a standard keyboard. All experimental materials are available at the github repository for this study.
 
-Distractor stimuli were an 'L' shape (rotated 0°, 90°, 180°, or 270°) while the target stimulus was a 'T' shape (rotated at either 90° or 270°). Stimuli were XX mm (X.X°) square and arranged in a square grid of 144 evenly spaced cells (12 x 12) which was positioned centrally on the screen and was XXX mm (XX°) square. The grid itself was invisible to participants. The fixation cross (displayed centrally before each trial) was XX mm (X.X°) square. The background of the screen was grey (RGB: .6, .6, .6) and the stimuli were presented in black (RGB: 1, 1, 1). There was a small offset in the vertical line of the 'L' distractors, which increased the similarity between the 'L' distractors and the target 'T', making the search task more difficult (Duncan & Humphreys, 1989).
+Distractor stimuli were an 'L' shape (rotated 0°, 90°, 180°, or 270°) while the target stimulus was a 'T' shape (rotated at either 90° or 270°). Stimuli were 8 mm square and arranged in a square grid of 144 evenly spaced cells (12 x 12) which was positioned centrally on the screen and was 170 mm square. The grid itself was invisible to participants. The fixation cross (displayed centrally before each trial) was 4 mm square. The background of the screen was grey (RGB: .6, .6, .6) and the stimuli were presented in black (RGB: 1, 1, 1). There was a small offset in the vertical line of the 'L' distractors, which increased the similarity between the 'L' distractors and the target 'T', making the search task more difficult (Duncan & Humphreys, 1989).
 
 ### Design
 
@@ -596,7 +596,7 @@ demographics <-
 
 ### Materials
 
-Participants were tested in a quiet laboratory testing cubicle, with a standard PC and a 24" monitor set at a resolution of 1920 x 1080 pixels. All other materials and stimuli were identical to Experiment 1.
+Participants were tested in a quiet laboratory testing cubicle, with a standard PC and a 24" monitor set at a resolution of 1920 x 1080 pixels. Since the monitor was larger for this experiment, the dimensions of the presented stimuli had a proportional increase in size: Distractor stimuli were 11 mm square; the search grid was 240 mm square; the fixation cross was 6 mm square. All other aspects of the materials was the same as Experiment 1. 
 
 ### Design
 
@@ -875,7 +875,7 @@ demographics <-
 
 ### Materials
 
-The experiment was conducted in a quiet testing cubicle, as described in Experiment 2. All other materials and stimuli were identical to Experiment 1.
+All materials, including stimuli and testing environment were identical to Experiment 2.
 
 ### Design
 
