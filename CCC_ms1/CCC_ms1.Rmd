@@ -43,7 +43,7 @@ header-includes:
 csl               : "apa7.csl"
 documentclass     : "apa7"
 classoption       : "man"
-output            : papaja::apa6_docx
+output            : papaja::apa6_pdf
 editor_options: 
   chunk_output_type: console
 ---
@@ -106,6 +106,10 @@ report_BF_and_error <- function(BF_in, sci_not = TRUE, hyp = "alt"){
          round(100*extractBF(BF_in)$error,2), 
          "%")
 }
+
+# set number of iterations for the Bayesian MC process
+
+numIterations = 50000
 
 ```
 
@@ -192,7 +196,7 @@ summary_acc %>%
 
 # Transparency and Openness
 
-The raw data, analysis scripts, experimental materials, and the manuscript source files, are available at <http://github.com/tombeesley/CC_Control>. The analyses reported in this manuscript are computationally reproducible from the manuscript source files (using R v4.1.1), which are available at the github repository. The study design and analyses were not pre-registered.
+The raw data, analysis scripts, experimental materials, and the manuscript source files, are available at <http://github.com/tombeesley/CC_Control>. The analyses reported in this manuscript are computationally reproducible from the manuscript source files (using R v4.3.1), which are available at the github repository. The study design and analyses were not pre-registered.
 
 # Experiment 1
 
@@ -232,7 +236,7 @@ demographics <-
 
 ```
 
-`r Words(nrow(demographics))` undergraduate students from Lancaster University were recruited (mean age = `r mean(demographics$age)`, SD = `r sd(demographics$age)`; `r count(demographics[,2:3], gender)[1,2]` identified as male and `r count(demographics[,2:3], gender)[2,2]` as female) via the Psychology Research Participation System in the Department of Psychology at Lancaster University, in return for the opportunity to use the recruitment system for their own research in future years.
+`r Words(nrow(demographics))` undergraduate students from Lancaster University were recruited (mean age = `r mean(demographics$age)`, SD = `r sd(demographics$age)`; `r sum(demographics$gender=="f")` identified as female and `r sum(demographics$gender=="m")` as female) via the Psychology Research Participation System in the Department of Psychology at Lancaster University, in return for the opportunity to use the recruitment system for their own research in future years.
 
 ### Materials
 
@@ -246,7 +250,7 @@ Phase 1 employed a within-subjects design with factors of epoch (1-5) and config
 
 Phase 2 employed a within-subjects design with factors of epoch (6-10) and configuration (repeated: consistent; repeated: inconsistent; random: consistent; random:inconsistent). On each trial, there was a .5 probability that an "inconsistent" version of the configuration would be presented. This meant that the target was relocated to a diametrically opposed target position such as to maximise the displacement from the trained target position (see Figure \@ref(fig:schematicCC)). This could occur for both the repeated and random configurations, hence creating four unique trial types for this phase. While random configurations did not have a "trained", associated, target position, it is necessary to divide the random trials into consistent and inconsistent trial types in this way in order to assess any target frequency effects that may occur, since the inconsistent target locations used in this phase were novel.
 
-(ref:schematicCC) Schematic of the manipulation of target position in consistent and inconsistent trials of phase 2 
+(ref:schematicCC) Schematic of the manipulation of target position in consistent and inconsistent trials of phase 2. The dashed lines show the division of the stimuli into quadrants, but were not present in the task procedure.  
 
 ```{r schematicCC, out.width="75%", fig.align = "center", fig.cap="(ref:schematicCC)", include = TRUE}
 knitr::include_graphics('Schematic.png')
@@ -256,7 +260,7 @@ knitr::include_graphics('Schematic.png')
 
 Participants were tested individually in a quiet testing room. They were given instructions on how to complete the task, including the presentation of an example of a search trial. Participants were shown the two correct responses for the two possible orientations of targets.
 
-Each trial commenced with a fixation cross presented in the center of the screen for 500 ms, which was then replaced immediately by the search configuration. Participants searched for the target stimulus and responded with a left or right response depending on its orientation. Reaction times (RTs) were recorded from the onset of the search configuration. Following a valid response (c or n), the configuration was removed from the screen. The response-- stimulus interval (hereafter RSI) was 1000 ms. If participants made an incorrect response to the target orientation, "INCORRECT RESPONSE" appeared in red in the center of the screen for 3000 ms, prior to the ITI. If participants did not respond within 6000 ms, "TIMEOUT - TOO SLOW" appeared in red in the center of the screen for 3000 ms, prior to the ITI.
+Each trial commenced with a fixation cross presented in the center of the screen for 500 ms, which was then replaced immediately by the search configuration. Participants searched for the target stimulus and responded with a left or right response depending on its orientation. Reaction times (RTs) were recorded from the onset of the search configuration. Following a valid response (c or n), the configuration was removed from the screen. The ITI was 1000 ms. If participants made an incorrect response to the target orientation, "INCORRECT RESPONSE" appeared in red in the center of the screen for 3000 ms, prior to the ITI. If participants did not respond within 6000 ms, "TIMEOUT - TOO SLOW" appeared in red in the center of the screen for 3000 ms, prior to the ITI.
 
 Each block of eight trials contained each of the four different repeated configurations and four random configurations. These eight configurations could appear in any order with the constraint that the position of the target did not repeat across trials or across consecutive blocks.
 
@@ -393,7 +397,7 @@ rt_summary_data_e1 <-
 
 (ref:Exp1-RT-figure) RT data for Experiment 1. The phase 2 averages across the four trial types are shown inset. Within-subject error bars were computed by a process of normalising the RT data for the sample [@cousineau2005].
 
-Figure \@ref(fig:Exp1-RT-figure) shows the RT data across the 10 epochs of the experiment. In phase 1 (epochs 1-5) a contextual cuing effect emerged, with faster responses to repeated over random configurations. In phase 2, the presence of the guiding arrow lead to a clear reduction in the response times. For all participants, the mean RT across epochs 4 and 5 was higher than the mean RTs across epochs 6 and 7. Despite the clear evidence for the processing of the endogenous cue, the underlying search configuration continued to play a role in the guidance of attention, with faster response times for (consistent) repeated configurations compared to random configurations.
+Figure \@ref(fig:Exp1-RT-figure) shows the RT data across the 10 epochs of the experiment. In phase 1 (epochs 1-5) a contextual cuing effect emerged, with faster responses to repeated over random configurations. In phase 2, the presence of the guiding arrow led to a clear reduction in the response times. For all participants, the mean RT across epochs 4 and 5 was higher than the mean RTs across epochs 6 and 7. Despite the clear evidence for the processing of the endogenous cue, the underlying search configuration continued to play a role in the guidance of attention, with faster response times for (consistent) repeated configurations compared to random configurations.
 
 ```{r Exp1-RT-figure, fig.align="center", fig.cap="(ref:Exp1-RT-figure)", fig.dim=c(7,5), include = TRUE}
 
@@ -484,7 +488,8 @@ phase_1 <-
 e1_phase1_BF <- 
   anovaBF(meanRT ~ TT * epoch + subj, 
           data = phase_1,
-          whichRandom = "subj")
+          whichRandom = "subj",
+          iterations = numIterations)
 
 ```
 
@@ -508,7 +513,8 @@ phase_2 <-
 e1_phase2_BF <- 
   anovaBF(meanRT ~ config * targ_pos * epoch + subj, 
           data = phase_2,
-          whichRandom = "subj")
+          whichRandom = "subj",
+          iterations = numIterations)
 
 exp1_ttestBF_data <- 
   rt_summary_data_e1 %>% 
@@ -519,9 +525,20 @@ exp1_ttestBF_data <-
   pivot_wider(values_from = meanRT, names_from = TT) %>% 
   janitor::clean_names()
 
-exp1_p2_repC_randC <- ttestBF(x = exp1_ttestBF_data$repeated_consistent, y = exp1_ttestBF_data$random_consistent, paired = TRUE)
-exp1_p2_repI_randI <- ttestBF(x = exp1_ttestBF_data$repeated_inconsistent, y = exp1_ttestBF_data$random_inconsistent, paired = TRUE)
-exp1_p2_repC_repI <- ttestBF(x = exp1_ttestBF_data$repeated_consistent, y = exp1_ttestBF_data$repeated_inconsistent, paired = TRUE)
+exp1_p2_repC_randC <- ttestBF(x = exp1_ttestBF_data$repeated_consistent, 
+                              y = exp1_ttestBF_data$random_consistent, 
+                              paired = TRUE, 
+                              iterations = numIterations)
+
+exp1_p2_repI_randI <- ttestBF(x = exp1_ttestBF_data$repeated_inconsistent, 
+                              y = exp1_ttestBF_data$random_inconsistent,
+                              paired = TRUE, 
+                              iterations = numIterations)
+
+exp1_p2_repC_repI <- ttestBF(x = exp1_ttestBF_data$repeated_consistent, 
+                             y = exp1_ttestBF_data$repeated_inconsistent, 
+                             paired = TRUE, 
+                             iterations = numIterations)
 
 ```
 
@@ -592,11 +609,11 @@ demographics <-
 
 ```
 
-`r Words(nrow(demographics))` undergraduate students from Lancaster University were recruited (mean age = `r mean(demographics$age)`, SD = `r sd(demographics$age)`; `r count(demographics[,2:3], gender)[1,2]` identified as male and `r count(demographics[,2:3], gender)[2,2]` as female) via the Psychology Research Participation System in the Department of Psychology at Lancaster University, in return for the opportunity to use the recruitment system for their own research in future years.
+`r Words(nrow(demographics))` undergraduate students from Lancaster University were recruited (mean age = `r mean(demographics$age)`, SD = `r sd(demographics$age)`; `r sum(demographics$gender=="f")` identified as female and `r sum(demographics$gender=="m")` as male) via the Psychology Research Participation System in the Department of Psychology at Lancaster University, in return for the opportunity to use the recruitment system for their own research in future years.
 
 ### Materials
 
-Participants were tested in a quiet laboratory testing cubicle, with a standard PC and a 24" monitor set at a resolution of 1920 x 1080 pixels. Since the monitor was larger for this experiment, the dimensions of the presented stimuli had a proportional increase in size: Distractor stimuli were 11 mm square; the search grid was 240 mm square; the fixation cross was 6 mm square. All other aspects of the materials was the same as Experiment 1. 
+Participants were tested in a quiet laboratory testing cubicle, with a standard PC and a 24" monitor set at a resolution of 1920 x 1080 pixels. Since the monitor was larger for this experiment, the dimensions of the presented stimuli had a proportional increase in size: Distractor stimuli were 11 mm square; the search grid was 240 mm square; the fixation cross was 6 mm square. In all other respects, the materials were the same as those detailed in Experiment 1. 
 
 ### Design
 
@@ -764,20 +781,18 @@ phase_1 <-
 aov_car(meanRT ~ Error(subj/patArrowP1*TT*epoch), data = phase_1)
 
 
-phase_1_BF <- 
+phase_1_BF_exp2 <- 
   anovaBF(meanRT ~ patArrowP1*TT*epoch + subj,
           data= data.frame(phase_1),
-          whichRandom = "subj")
-
-# does the interaction of TT and cue add anything?
-int_effect <- phase_1_BF[16]/phase_1_BF[14]
+          whichRandom = "subj",
+          iterations = numIterations)
 
 
 ```
 
 (ref:Exp2-RT-figure) RT data for Experiment 2. Error bars show standard error of the mean on normalised data.
 
-Figure \@ref(fig:Exp2-RT-figure) shows the RT data across the 10 epochs of the experiment. Contextual cuing emerged rapidly in both the arrow and no-arrow conditions, with little suggestion that the CC effect was different in the two conditions. The phase 1 data were explored with a Bayesian ANOVA, which revealed that the best fitting model contained the factors of epoch, configuration (repeated vs. random), and endogenous cue (arrow present vs. arrow absent), with no interaction terms, `r report_BF_and_error(phase_1_BF[8])`. The next best fitting model contained all three factors and the interaction of epoch and configuration, `r report_BF_and_error(phase_1_BF[14])`, and this model was not a substantially worse fit to the data, `r report_BF_and_error(phase_1_BF[14]/phase_1_BF[8], sci_not = FALSE, hyp = "mc")`. All other models were substantially worse fits than the best fitting model, largest `r report_BF_and_error(phase_1_BF[11]/phase_1_BF[14], sci_not = FALSE, hyp = "mc")`. Importantly, the interaction term between the factors of endogenous cue and configuration did not improve the fit of the model, providing substantial support for the absence of this interaction, `r report_BF_and_error(phase_1_BF[11]/phase_1_BF[8], sci_not = FALSE, hyp = "mc")`.
+Figure \@ref(fig:Exp2-RT-figure) shows the RT data across the 10 epochs of the experiment. Contextual cuing emerged rapidly in both the arrow and no-arrow conditions, with little suggestion that the CC effect was different in the two conditions. The phase 1 data were explored with a Bayesian ANOVA, which revealed that the best fitting model contained the factors of epoch, configuration (repeated vs. random), and endogenous cue (arrow present vs. arrow absent), with no interaction terms, `r report_BF_and_error(phase_1_BF_exp2[8])`. The next best fitting model contained all three factors and the interaction of epoch and configuration, `r report_BF_and_error(phase_1_BF_exp2[14])`, and this model was not a substantially worse fit to the data, `r report_BF_and_error(phase_1_BF_exp2[14]/phase_1_BF_exp2[8], sci_not = FALSE, hyp = "mc")`. All other models were substantially worse fits than the best fitting model, largest `r report_BF_and_error(phase_1_BF_exp2[11]/phase_1_BF_exp2[14], sci_not = FALSE, hyp = "mc")`. Importantly, the interaction term between the factors of endogenous cue and configuration did not improve the fit of the model, providing substantial support for the absence of this interaction, `r report_BF_and_error(phase_1_BF_exp2[11]/phase_1_BF_exp2[8], sci_not = FALSE, hyp = "mc")`.
 
 ```{r phase_2_BFs_exp2}
 # Statistics on Stage 2
@@ -794,7 +809,8 @@ aov_car(meanRT ~ Error(subj/patArrowP1*TT*epoch), data = phase_2)
 phase_2_BF <- 
   anovaBF(meanRT ~ patArrowP1*TT*epoch + subj,
           data= data.frame(phase_2),
-          whichRandom = "subj")
+          whichRandom = "subj",
+          iterations = numIterations)
 
 int_effect_phase2 <- phase_2_BF[11]/phase_2_BF[8]
 # the evidence favours an absence of an interaction effect
@@ -815,11 +831,12 @@ all_exp2 <-
 all_exp2_BF <- 
   anovaBF(meanRT ~ patArrowP1*TT + subj,
           data= data.frame(all_exp2),
-          whichRandom = "subj")
+          whichRandom = "subj",
+          iterations = numIterations)
 
 ```
 
-To provide further support for the absence of the interaction between the factors of configuration type and endogenous cue, the data from across the experiment (epochs 1-10) were analysed with a Bayesian ANOVA with only the factors of configuration and endogenous cue. The best fitting model was that with the two factors and no interaction, `r report_BF_and_error(all_exp2_BF[3])`. The addition of the interaction term did not strengthen the model, providing substantial evidence for the absence of the interaction, `r report_BF_and_error(all_exp2_BF[4]/all_exp2_BF[3], sci_not = FALSE, hyp = "mc")`.
+To provide further support for the absence of the interaction between the factors of configuration type and endogenous cue, the data from across the experiment (epochs 1-10) were analysed with a Bayesian ANOVA with only the factors of configuration and endogenous cue. The best fitting model was that with the two factors and no interaction, `r report_BF_and_error(all_exp2_BF[3])`. The addition of the interaction term did not strengthen the model, with substantial evidence for the absence of the interaction, `r report_BF_and_error(all_exp2_BF[4]/all_exp2_BF[3], sci_not = FALSE, hyp = "mc")`.
 
 ## Discussion
 
@@ -871,7 +888,7 @@ demographics <-
 
 ```
 
-`r Words(nrow(demographics))` undergraduate students from Lancaster University were recruited (mean age = `r mean(demographics$age)`, SD = `r sd(demographics$age)`; `r count(demographics[,2:3], gender)[1,2]` identified as male and `r count(demographics[,2:3], gender)[2,2]` as female) via the Psychology Research Participation System in the Department of Psychology at Lancaster University, in return for the opportunity to use the recruitment system for their own research in future years.
+`r Words(nrow(demographics))` undergraduate students from Lancaster University were recruited (mean age = `r mean(demographics$age)`, SD = `r sd(demographics$age)`; `r sum(demographics$gender=="f")` identified as female and `r sum(demographics$gender=="m")` as male) via the Psychology Research Participation System in the Department of Psychology at Lancaster University, in return for the opportunity to use the recruitment system for their own research in future years.
 
 ### Materials
 
@@ -1069,7 +1086,8 @@ aov_car(meanRT ~ Error(subj/TT*epoch), data = phase_1)
 
 exp3_p1_BFs <- anovaBF(meanRT ~ TT*epoch + subj,
                        whichRandom = "subj",
-                       data = phase_1)
+                       data = phase_1,
+                       iterations = numIterations)
 
 ```
 
@@ -1091,7 +1109,8 @@ aov_car(meanRT ~ Error(subj/TT*epoch), data = phase_2)
 
 exp3_p2_BFs <- anovaBF(meanRT ~ TT*epoch + subj,
                        whichRandom = "subj",
-                       data = phase_2)
+                       data = phase_2,
+                       iterations = numIterations)
 
 ttestBF_data <- 
   phase_2 %>% 
@@ -1100,12 +1119,12 @@ ttestBF_data <-
   pivot_wider(values_from = meanRT, names_from = TT) %>% 
   janitor::clean_names()
 
-exp3_p2_rep_rand <- ttestBF(x = ttestBF_data$repeated, y = ttestBF_data$random, paired = TRUE)
-exp3_p2_rep_global <- ttestBF(x = ttestBF_data$repeated, y = ttestBF_data$repeated_distal, paired = TRUE)
-exp3_p2_rep_local <- ttestBF(x = ttestBF_data$repeated, y = ttestBF_data$repeated_proximal, paired = TRUE)
-exp3_p2_global_rand <- ttestBF(x = ttestBF_data$repeated_distal, y = ttestBF_data$random, paired = TRUE)
-exp3_p2_local_rand <- ttestBF(x = ttestBF_data$repeated_proximal, y = ttestBF_data$random, paired = TRUE)
-exp3_p2_global_local <- ttestBF(x = ttestBF_data$repeated_distal, y = ttestBF_data$repeated_proximal, paired = TRUE)
+exp3_p2_rep_rand <- ttestBF(x = ttestBF_data$repeated, y = ttestBF_data$random, paired = TRUE, iterations = numIterations)
+exp3_p2_rep_global <- ttestBF(x = ttestBF_data$repeated, y = ttestBF_data$repeated_distal, paired = TRUE, iterations = numIterations)
+exp3_p2_rep_local <- ttestBF(x = ttestBF_data$repeated, y = ttestBF_data$repeated_proximal, paired = TRUE, iterations = numIterations)
+exp3_p2_global_rand <- ttestBF(x = ttestBF_data$repeated_distal, y = ttestBF_data$random, paired = TRUE, iterations = numIterations)
+exp3_p2_local_rand <- ttestBF(x = ttestBF_data$repeated_proximal, y = ttestBF_data$random, paired = TRUE, iterations = numIterations)
+exp3_p2_global_local <- ttestBF(x = ttestBF_data$repeated_distal, y = ttestBF_data$repeated_proximal, paired = TRUE, iterations = numIterations)
 
 
 

@@ -212,7 +212,7 @@ all_data %<>%
 
 # clean up column values
 all_data %<>%
-  mutate(gender = recode(gender, "F" = "f", "female" = "f"),
+  mutate(gender = recode(gender, "F" = "f", "Female" = "f", "female" = "f", "M" = "m", "Male" = "m", "male" = "m"),
          age = as.numeric(age))
 
 # make relevant columns factors
