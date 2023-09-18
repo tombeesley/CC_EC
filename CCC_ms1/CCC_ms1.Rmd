@@ -781,7 +781,7 @@ phase_1 <-
 aov_car(meanRT ~ Error(subj/patArrowP1*TT*epoch), data = phase_1)
 
 
-phase_1_BF_exp2 <- 
+e2_phase1_BF <- 
   anovaBF(meanRT ~ patArrowP1*TT*epoch + subj,
           data= data.frame(phase_1),
           whichRandom = "subj",
@@ -792,7 +792,7 @@ phase_1_BF_exp2 <-
 
 (ref:Exp2-RT-figure) RT data for Experiment 2. Error bars show standard error of the mean on normalised data.
 
-Figure \@ref(fig:Exp2-RT-figure) shows the RT data across the 10 epochs of the experiment. Contextual cuing emerged rapidly in both the arrow and no-arrow conditions, with little suggestion that the CC effect was different in the two conditions. The phase 1 data were explored with a Bayesian ANOVA, which revealed that the best fitting model contained the factors of epoch, configuration (repeated vs. random), and endogenous cue (arrow present vs. arrow absent), with no interaction terms, `r report_BF_and_error(phase_1_BF_exp2[8])`. The next best fitting model contained all three factors and the interaction of epoch and configuration, `r report_BF_and_error(phase_1_BF_exp2[14])`, and this model was not a substantially worse fit to the data, `r report_BF_and_error(phase_1_BF_exp2[14]/phase_1_BF_exp2[8], sci_not = FALSE, hyp = "mc")`. All other models were substantially worse fits than the best fitting model, largest `r report_BF_and_error(phase_1_BF_exp2[11]/phase_1_BF_exp2[14], sci_not = FALSE, hyp = "mc")`. Importantly, the interaction term between the factors of endogenous cue and configuration did not improve the fit of the model, providing substantial support for the absence of this interaction, `r report_BF_and_error(phase_1_BF_exp2[11]/phase_1_BF_exp2[8], sci_not = FALSE, hyp = "mc")`.
+Figure \@ref(fig:Exp2-RT-figure) shows the RT data across the 10 epochs of the experiment. Contextual cuing emerged rapidly in both the arrow and no-arrow conditions, with little suggestion that the CC effect was different in the two conditions. The phase 1 data were explored with a Bayesian ANOVA, which revealed that the best fitting model contained the factors of epoch, configuration (repeated vs. random), and endogenous cue (arrow present vs. arrow absent), with no interaction terms, `r report_BF_and_error(e2_phase1_BF[8])`. The next best fitting model contained all three factors and the interaction of epoch and configuration, `r report_BF_and_error(e2_phase1_BF[14])`, and this model was not a substantially worse fit to the data, `r report_BF_and_error(e2_phase1_BF[14]/e2_phase1_BF[8], sci_not = FALSE, hyp = "mc")`. All other models were substantially worse fits than the best fitting model, largest `r report_BF_and_error(e2_phase1_BF[11]/e2_phase1_BF[14], sci_not = FALSE, hyp = "mc")`. Importantly, the interaction term between the factors of endogenous cue and configuration did not improve the fit of the model, providing substantial support for the absence of this interaction, `r report_BF_and_error(e2_phase1_BF[11]/e2_phase1_BF[8], sci_not = FALSE, hyp = "mc")`.
 
 ```{r phase_2_BFs_exp2}
 # Statistics on Stage 2
@@ -806,19 +806,17 @@ aov_car(meanRT ~ Error(subj/patArrowP1*TT*epoch), data = phase_2)
 
 # no evidence for an interaction of arrow training and TT
 # is there evidence for the null?
-phase_2_BF <- 
+e2_phase2_BF <- 
   anovaBF(meanRT ~ patArrowP1*TT*epoch + subj,
           data= data.frame(phase_2),
           whichRandom = "subj",
           iterations = numIterations)
 
-int_effect_phase2 <- phase_2_BF[11]/phase_2_BF[8]
-# the evidence favours an absence of an interaction effect
 
 
 ```
 
-When the endogenous cue was removed in the second half of the experiment, RTs were equivalent across the two conditions. An effect of configuration was seen for both cuing conditions, with little discernible difference between the size of the cuing effects. We conducted a Bayesian ANOVA with factors of epoch, configuration and endogenous cue condition (arrow vs. no-arrow). The best fitting model was that with just the factors of epoch and configuration with no interaction between the factors, `r report_BF_and_error(phase_2_BF[7])`. There was substantial support for this model over the next best fitting model, `r report_BF_and_error(phase_2_BF[7]/phase_2_BF[8], sci_not = FALSE, hyp = "mc")`. To examine the interaction of the configuration and endogenous cue factors, we compared the model containing those two factors to the model containing the two factors plus the interaction of configuration and endogenous cue, which revealed substantial support for the absence of an interaction, `r report_BF_and_error(phase_2_BF[10]/phase_2_BF[6], sci_not = FALSE, hyp = "mc")`.
+When the endogenous cue was removed in the second half of the experiment, RTs were equivalent across the two conditions. An effect of configuration was seen for both cuing conditions, with little discernible difference between the size of the cuing effects. We conducted a Bayesian ANOVA with factors of epoch, configuration and endogenous cue condition (arrow vs. no-arrow). The best fitting model was that with just the factors of epoch and configuration with no interaction between the factors, `r report_BF_and_error(e2_phase2_BF[7])`. There was substantial support for this model over the next best fitting model, `r report_BF_and_error(e2_phase2_BF[7]/e2_phase2_BF[8], sci_not = FALSE, hyp = "mc")`. To examine the interaction of the configuration and endogenous cue factors, we compared the model containing those two factors to the model containing the two factors plus the interaction of configuration and endogenous cue, which revealed substantial support for the absence of an interaction, `r report_BF_and_error(e2_phase2_BF[10]/e2_phase2_BF[6], sci_not = FALSE, hyp = "mc")`.
 
 ```{r all_data_BFs_exp2}
 # Statistics on Stage 2
@@ -1084,7 +1082,7 @@ phase_1 <-
 
 aov_car(meanRT ~ Error(subj/TT*epoch), data = phase_1)
 
-exp3_p1_BFs <- anovaBF(meanRT ~ TT*epoch + subj,
+e3_phase1_BF <- anovaBF(meanRT ~ TT*epoch + subj,
                        whichRandom = "subj",
                        data = phase_1,
                        iterations = numIterations)
@@ -1093,7 +1091,7 @@ exp3_p1_BFs <- anovaBF(meanRT ~ TT*epoch + subj,
 
 (ref:Exp3-RT-figure) RT data for Experiment 3. Error bars show standard error of the mean on normalised data.
 
-Figure \@ref(fig:Exp3-RT-figure) (main panel) shows the RT data across the 10 epochs of Experiment 3. As in Experiment 1, contextual cuing was readily established in phase 1. These data were subjected to a Bayesian ANOVA which revealed that the best fitting model contained the factors of configuration (repeated vs. random) and epoch, and an interaction between those factors, `r report_BF_and_error(exp3_p1_BFs[4])`. However, the model without the interaction provided a strong fit to the data, `r report_BF_and_error(exp3_p1_BFs[3])`, and a comparison between the two models did not find any evidence in support of the interaction term, `r report_BF_and_error(exp3_p1_BFs[3]/exp3_p1_BFs[4], sci_not = FALSE, hyp = "mc")`. There was strong support for the best fitting model over the remaining models, smallest `r report_BF_and_error(exp3_p1_BFs[4]/exp3_p1_BFs[1], sci_not = FALSE, hyp = "mc")`, providing strong support for the factors of epoch and configuration.
+Figure \@ref(fig:Exp3-RT-figure) (main panel) shows the RT data across the 10 epochs of Experiment 3. As in Experiment 1, contextual cuing was readily established in phase 1. These data were subjected to a Bayesian ANOVA which revealed that the best fitting model contained the factors of configuration (repeated vs. random) and epoch, and an interaction between those factors, `r report_BF_and_error(e3_phase1_BF[4])`. However, the model without the interaction provided a strong fit to the data, `r report_BF_and_error(e3_phase1_BF[3])`, and a comparison between the two models did not find any evidence in support of the interaction term, `r report_BF_and_error(e3_phase1_BF[3]/e3_phase1_BF[4], sci_not = FALSE, hyp = "mc")`. There was strong support for the best fitting model over the remaining models, smallest `r report_BF_and_error(e3_phase1_BF[4]/e3_phase1_BF[1], sci_not = FALSE, hyp = "mc")`, providing strong support for the factors of epoch and configuration.
 
 ```{r}
 # Statistics on Stage 2
@@ -1107,7 +1105,7 @@ aov_car(meanRT ~ Error(subj/TT*epoch), data = phase_2)
 
 # Bayesian analysis of phase 2
 
-exp3_p2_BFs <- anovaBF(meanRT ~ TT*epoch + subj,
+e3_phase2_BF <- anovaBF(meanRT ~ TT*epoch + subj,
                        whichRandom = "subj",
                        data = phase_2,
                        iterations = numIterations)
@@ -1130,39 +1128,7 @@ exp3_p2_global_local <- ttestBF(x = ttestBF_data$repeated_distal, y = ttestBF_da
 
 ```
 
-The response times decreased significantly with the presentation of the valid endogenous cue in phase 2. Response times to the fully repeated configurations were somewhat comparable to those when just the proximal repeated distractors were present. Response times for the distal repeated distractors appeared to be slower and comparable to the fully random configurations. The phase 2 data were subjected to a Bayesian ANOVA which found that the best fitting model contained the factors of configuration and epoch but no interaction between the factors, `r report_BF_and_error(exp3_p2_BFs[3])`. This model provided a superior fit to the data compared to the next best fitting model that included the two factors and the interaction term, `r report_BF_and_error(exp3_p2_BFs[3]/exp3_p2_BFs[4], sci_not = FALSE, hyp = "mc")`, providing strong support for the contribution of the two factors and the absence of an interaction between the two factors.
-
-```{r Exp3-Phase-2-figure, fig.align="center", fig.cap="(ref:Exp3-Phase-2-figure)", fig.dim=c(5,4), include=FALSE}
-
-# THIS PLOT IS NO LONGER PRESENTED
-
-# summarise at the group level and plot
-phase_2_TT_e3 <- 
-  rt_summary_data_e3 %>%
-  filter(epoch %in% c(6,10)) %>% 
-  group_by(TT) %>%
-  summarise(group_RT = mean(meanRT),
-            group_SE = sd(normRT)/sqrt(n()))
-
-phase_2_TT_e3 %>%
-  mutate(TT = fct_relevel(TT, "Repeated", "Repeated PROXIMAL",
-                          "Repeated DISTAL", "Random")) %>% 
-  ggplot(aes(x = TT, y = group_RT, fill = TT)) +
-  geom_col(colour = "black", size = 1) +
-  geom_errorbar(aes(ymin = group_RT - group_SE,
-                    ymax = group_RT + group_SE),
-                width = .05, size = 0.5
-                ) +
-  coord_cartesian(ylim = c(1100,1500)) +
-  labs(y = "RT (ms)",
-       x = "Configuration type") +
-  scale_fill_manual(name = "",
-                  values = cbPalette[c(1,3,2,4)]) +
-  theme(legend.position = "None") +
-  scale_x_discrete(labels = scales::label_wrap(10))
-
-
-```
+The response times decreased significantly with the presentation of the valid endogenous cue in phase 2. Response times to the fully repeated configurations were somewhat comparable to those when just the proximal repeated distractors were present. Response times for the distal repeated distractors appeared to be slower and comparable to the fully random configurations. The phase 2 data were subjected to a Bayesian ANOVA which found that the best fitting model contained the factors of configuration and epoch but no interaction between the factors, `r report_BF_and_error(e3_phase2_BF[3])`. This model provided a superior fit to the data compared to the next best fitting model that included the two factors and the interaction term, `r report_BF_and_error(e3_phase2_BF[3]/e3_phase2_BF[4], sci_not = FALSE, hyp = "mc")`, providing strong support for the contribution of the two factors and the absence of an interaction between the two factors.
 
 The inset graph in Figure \@ref(fig:Exp3-RT-figure) shows the mean RTs to the four types of configuration, averaged across the 5 epochs of phase 2. To explore the differences in response times, Bayesian t-tests were run for all pairwise comparisons. The response times to repeated and repeated-proximal configurations were both faster than those to random configurations, smallest `r report_BF_and_error(exp3_p2_local_rand, sci_not = FALSE)`. In contrast, there was no evidence that the response times to repeated-distal configurations were different from those to random configurations, `r report_BF_and_error(exp3_p2_global_rand, sci_not = FALSE)`. Response times to repeated configurations were faster than those to repeated-proximal configurations, `r report_BF_and_error(exp3_p2_rep_local, sci_not = FALSE)`. Response times to repeated-proximal configurations were faster than those to repeated-distal configurations, `r report_BF_and_error(exp3_p2_global_local, sci_not = FALSE)`.
 
@@ -1184,37 +1150,20 @@ The current data reveal that the influence of repeated contexts has a relatively
 
 \newpage
 
-```{r Exp3-Phase-2-RTdiff-figure, fig.align="center", fig.cap="(ref:Exp3-Phase-2-RTdiff-figure)", fig.dim=c(5,4), include=FALSE}
+```{r}
 
-# THIS FIGURE IS NO LONGER PRESENTED
+# save results of Bayesian ANOVAs
 
-rt_summary_data_e3 %>%
-  filter(epoch %in% c(6,10)) %>% 
-  group_by(subj,TT) %>%
-  summarise(meanRT = mean(meanRT)) %>% 
-  pivot_wider(names_from = TT, values_from = meanRT) %>% 
-  janitor::clean_names() %>% 
-  mutate(repeated = random - repeated,
-         repeated_distal = random - repeated_distal,
-         repeated_proximal = random - repeated_proximal) %>% 
-  select(-random) %>% 
-  pivot_longer(cols = c("repeated", "repeated_distal", "repeated_proximal"), 
-               names_to = "TT", values_to = "meanRT") %>% 
-  mutate(TT = fct_relevel(TT, "repeated", "repeated_proximal", "repeated_distal")) %>% 
-  ggplot(aes(x = TT, y = meanRT)) +
-  geom_violin(aes(fill = TT), alpha = .5) +
-  geom_jitter(width = .05) +
-  geom_line(aes(group = subj), alpha = .3) +
-  scale_fill_manual(name = "",
-                  values = cbPalette[c(1,3,2,4)]) +
-  labs(y = "CC effect (RT difference from random)") +
-  theme(legend.position = "None")
-
-# note text below
-
-# (ref:Exp3-Phase-2-RTdiff-figure) The distribution of RT data for phase 2 of Experiment 3, plotted as difference scores (RT to random configurations minus RT to repeated configuration type). Individual points are presented and linked across trial types.
+save(e1_phase1_BF, 
+     e1_phase2_BF,
+     e2_phase1_BF,
+     e2_phase2_BF,
+     e3_phase1_BF,
+     e3_phase2_BF,
+     file = "anova_BF_saved_results.RData")
 
 ```
+
 
 
 
