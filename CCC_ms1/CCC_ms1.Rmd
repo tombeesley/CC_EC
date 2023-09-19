@@ -25,9 +25,9 @@ affiliation:
 abstract: |
   Three experiments explored the interaction between an endogenous cue of attention and the repetition of a visual search display during contextual cuing. In Experiment 1, participants readily learnt about repeated configurations of visual search, before being presented with an endogenous cue for attention towards the target on every trial. Participants used this cue to improve search times, but the repeated contexts continued to guide attention. Experiment 2 demonstrated that the presence of the endogenous did not impede the acquisition of contextual cuing. Experiment 3 confirmed the hypothesis that the contextual cuing effect relies largely on localised distractor contexts, following the guidance of attention. Together, the experiments point towards an interplay between two drivers of attention: after the initial guidance of attention, memory representations of the context are flexibly deployed to facilitate the target detection.  
   
-  Public significance statement: 
+  Public significance statement: This study provides a test of how attention is governed by different aspects of the environment. We examine whether the control of attention by an instructional stimulus (an arrow that directs attention) will interfere with the way in which attention is governed by other learnt visual patterns in the environment. 
 keywords          : "visual search; contextual cuing; endogenous cuing"
-wordcount         : "7812"
+wordcount         : "7999"
 bibliography      : ["references.bib"]
 figsintext        : yes
 floatsintext      : no
