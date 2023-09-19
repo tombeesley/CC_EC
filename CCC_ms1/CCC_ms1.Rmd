@@ -27,7 +27,7 @@ abstract: |
   
   Public significance statement: 
 keywords          : "visual search; contextual cuing; endogenous cuing"
-wordcount         : "7754"
+wordcount         : "7812"
 bibliography      : ["references.bib"]
 figsintext        : yes
 floatsintext      : no
@@ -63,6 +63,7 @@ library(english)
 library(extrafont)
 library(afex) 
 library(BayesFactor)
+library(effectsize)
 library(apa)
 library(pwr) # power calculations
 library(lsr) # effect size estimate
@@ -109,7 +110,7 @@ report_BF_and_error <- function(BF_in, sci_not = TRUE, hyp = "alt"){
 
 # set number of iterations for the Bayesian MC process
 
-numIterations = 50000
+numIterations = 500
 
 ```
 
@@ -483,7 +484,7 @@ phase_1 <-
   mutate(epoch = as.factor(epoch)) %>% 
   filter(epoch %in% c(1:5))
 
-#exp1_phase1_anova <- aov_car(meanRT ~ Error(subj/TT*epoch), data = phase_1)
+
 
 e1_phase1_BF <- 
   anovaBF(meanRT ~ TT * epoch + subj, 
@@ -491,9 +492,14 @@ e1_phase1_BF <-
           whichRandom = "subj",
           iterations = numIterations)
 
+# computing effect sizes
+e1_phase1_ES <- effectsize::eta_squared(aov_car(meanRT ~ Error(subj/TT*epoch), data = phase_1), 
+                                        partial = TRUE)
+
+
 ```
 
-These data were analysed with a Bayesian ANOVA[^1], using the *BayesFactor::anovaBF()* function in R. All analyses in this study used the default parameters for the priors, which "places mass in reason-able ranges [of effect sizes] without being overcommitted to any one point" [@rouder2017, p. 317]. First taking the data from phase 1 (epochs 1-5), there was strong support for the model containing the factors of epoch and configuration (repeated vs. random), `r report_BF_and_error(e1_phase1_BF[3])`. The addition of the interaction term did not improve the model fit, `r report_BF_and_error(e1_phase1_BF[4]/e1_phase1_BF[3], sci_not = FALSE, hyp = "mc")`, though there was no evidence for the absence of the interaction. The best fitting model was a better fit than the two models containing only one of the factors, smallest `r report_BF_and_error(e1_phase1_BF[3]/e1_phase1_BF[1], sci_not = FALSE, hyp = "mc")`, providing strong support for both the effects of configuration and epoch.
+These data were analysed with a Bayesian ANOVA[^1], using the *BayesFactor::anovaBF()* function in R. All analyses in this study used the default parameters for the priors, which "places mass in reason-able ranges [of effect sizes] without being overcommitted to any one point" [@rouder2017, p. 317]. First taking the data from phase 1 (epochs 1-5), there was strong support for the model containing the factors of epoch and configuration (repeated vs. random), `r report_BF_and_error(e1_phase1_BF[3])`. The addition of the interaction term did not improve the model fit, `r report_BF_and_error(e1_phase1_BF[4]/e1_phase1_BF[3], sci_not = FALSE, hyp = "mc")`, though there was no evidence for the absence of the interaction. The best fitting model was a better fit than the two models containing only one of the factors, smallest `r report_BF_and_error(e1_phase1_BF[3]/e1_phase1_BF[1], sci_not = FALSE, hyp = "mc")`, providing strong support for both the effects of configuration and epoch. Partial eta-squared ($n^2_p$) effect sizes were calculated from the linear model using *effectsize::ea_squared*, which gave values of: `r e1_phase1_ES[1,2]` for the effect of configuration; `r e1_phase1_ES[2,2]` for the effect of epoch; and `r e1_phase1_ES[3,2]` for the interaction effect.
 
 [^1]: The Bayesian analyses here follow the process outlined in @rouder2017. Briefly, we present the best fitting model evaluated against the null model, and then compare this fit to that of other models. Where the comparison of two models (i.e., A against B) reveals a Bayes Factor of greater than 3, this is taken as support for the components of model A that are not present in model B. Bayes Factors of less than 0.33 are taken as evidence in support of the equivalence of two models. Following @wetzels2011a we use the terms "substantial" (BF>3; BF<1/3), and "strong" (BF>10; BF<1/10) to reflect the levels of support for the results of the model comparisons. 
 
@@ -539,6 +545,13 @@ exp1_p2_repC_repI <- ttestBF(x = exp1_ttestBF_data$repeated_consistent,
                              y = exp1_ttestBF_data$repeated_inconsistent, 
                              paired = TRUE, 
                              iterations = numIterations)
+
+# computing effect sizes
+e2_phase1_ES <- effectsize::eta_squared(aov_car(meanRT ~ Error(subj/config*targ_pos*epoch), 
+                                                data = phase_2), 
+                                        partial = TRUE,
+                                        alternative = "two.sided")
+
 
 ```
 
