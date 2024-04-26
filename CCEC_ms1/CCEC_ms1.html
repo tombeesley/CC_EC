@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Jane Doe">
+<meta name="keywords" content="keyword1, keyword2, keyword3">
+
+<title>My Title</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="CCEC_ms1_files/libs/clipboard/clipboard.min.js"></script>
+<script src="CCEC_ms1_files/libs/quarto-html/quarto.js"></script>
+<script src="CCEC_ms1_files/libs/quarto-html/popper.min.js"></script>
+<script src="CCEC_ms1_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="CCEC_ms1_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="CCEC_ms1_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="CCEC_ms1_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="CCEC_ms1_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="CCEC_ms1_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="_extensions/wjschne/apaquarto/apa.css">
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#transparency-and-openness" id="toc-transparency-and-openness" class="nav-link active" data-scroll-target="#transparency-and-openness">Transparency and Openness</a></li>
+  <li><a href="#experiment-1" id="toc-experiment-1" class="nav-link" data-scroll-target="#experiment-1">Experiment 1</a>
+  <ul class="collapse">
+  <li><a href="#method" id="toc-method" class="nav-link" data-scroll-target="#method">Method</a>
+  <ul class="collapse">
+  <li><a href="#participants" id="toc-participants" class="nav-link" data-scroll-target="#participants">Participants</a></li>
+  <li><a href="#materials" id="toc-materials" class="nav-link" data-scroll-target="#materials">Materials</a></li>
+  <li><a href="#design" id="toc-design" class="nav-link" data-scroll-target="#design">Design</a></li>
+  <li><a href="#procedure" id="toc-procedure" class="nav-link" data-scroll-target="#procedure">Procedure</a></li>
+  </ul></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
+  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a></li>
+  </ul></li>
+  <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix">Appendix</a></li>
+  <li><a href="#title-for-appendix" id="toc-title-for-appendix" class="nav-link" data-scroll-target="#title-for-appendix">Title for Appendix</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="CCEC_ms1.docx"><i class="bi bi-file-word"></i>MS Word (apaquarto)</a></li><li><a href="CCEC_ms1.pdf"><i class="bi bi-file-pdf"></i>PDF (apaquarto)</a></li></ul></div></nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+</div>
+<main class="content" id="quarto-document-content">
+
+
+
+
+<p>@CameronTrivedi2013</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.2     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors
+Loading required package: tinylabels
+
+Registering fonts with R
+
+Loading required package: lme4
+
+Loading required package: Matrix
+
+
+Attaching package: 'Matrix'
+
+
+The following objects are masked from 'package:tidyr':
+
+    expand, pack, unpack
+
+
+************
+Welcome to afex. For support visit: http://afex.singmann.science/
+
+- Functions for ANOVAs: aov_car(), aov_ez(), and aov_4()
+- Methods for calculating p-values with mixed(): 'S', 'KR', 'LRT', and 'PB'
+- 'afex_aov' and 'mixed' objects can be passed to emmeans() for follow-up tests
+- Get and set global package options with: afex_options()
+- Set sum-to-zero contrasts globally: set_sum_contrasts()
+- For example analyses see: browseVignettes("afex")
+************
+
+
+Attaching package: 'afex'
+
+
+The following object is masked from 'package:lme4':
+
+    lmer
+
+
+Loading required package: coda
+
+************
+Welcome to BayesFactor 0.9.12-4.4. If you have questions, please contact Richard Morey (richarddmorey@gmail.com).
+
+Type BFManual() to open the manual.
+************
+
+
+Attaching package: 'apa'
+
+
+The following object is masked from 'package:effectsize':
+
+    cohens_d</code></pre>
+</div>
+</div>
+<p>It is well established that the process of visual search is guided by past experience. When we encounter a scene, the extent to which the the stimuli within that scene match representations in memory will determine the effectiveness of the processing and subsequent search through the elements of that scene. This cognitive process is studied in the lab using the contextual cuing (CC) task: participants typically experience a standard visual search task (i.e., serial processing; slow search), such as searching for a T amongst L shapes. A set of search configurations is repeated across trials, and response times to targets are faster compared to those in configurations that do not repeat. Thus, the repetition of the search configurations leads to the formation of a representation of the configuration in memory, and future processing of the same configuration activates this representation, driving more efficient behaviour within that scene.</p>
+<p>Much work has focused on the nature of the memory and attention processes responsible for contextual cuing. The effect was initially suggested to be implicit in nature, with repeated configurations seemingly guiding search unconsciously: typically participants are unable to articulate their knowledge of the repeated configurations, and show poor ability to recognise learnt configurations in memory tests <span class="citation" data-cites="chun1998 colagiuri2016">(e.g., <a href="#ref-chun1998" role="doc-biblioref"><strong>chun1998?</strong></a>; <a href="#ref-colagiuri2016" role="doc-biblioref"><strong>colagiuri2016?</strong></a>)</span>, although this view of CC has been strongly contested <span class="citation" data-cites="smyth2008 vadillo2016">(e.g., <a href="#ref-smyth2008" role="doc-biblioref"><strong>smyth2008?</strong></a>; <a href="#ref-vadillo2016" role="doc-biblioref"><strong>vadillo2016?</strong></a>)</span>. There are also a number of plausible computational models of how memory representations of repeated configurations are formed and result in the CC effect <span class="citation" data-cites="beesley2015b brady2007">(e.g., <a href="#ref-beesley2015b" role="doc-biblioref"><strong>beesley2015b?</strong></a>; <a href="#ref-brady2007" role="doc-biblioref"><strong>brady2007?</strong></a>)</span>. The predominant view is that the memory representations are best characterised as associative in nature, whereby distractors <span class="citation" data-cites="beesley2016">(or groups of distractors, see <a href="#ref-beesley2016" role="doc-biblioref"><strong>beesley2016?</strong></a>)</span> form associations that activate more strongly the contingent target position within each repeated configuration.</p>
+<p>The exact nature of how repeated configurations come to facilitate visual search is the focus of much debate within the literature. Broadly there are two quite distinct theoretical accounts of why responses are faster for repeated configurations: the early attentional guidance account, and the late response facilitation account. According to the early account, recognition of the configuration leads to a more efficient search process through the distractor array, such that the target is localised (fixated) at an earlier time point in search. Perhaps the clearest (and arguably simplest) evidence in support of this account comes from studies of eye-tracking during CC. For example, search through repeated configurations results in fewer fixations prior to target localisation <span class="citation" data-cites="beesley2018 tseng2004">(e.g., <a href="#ref-beesley2018" role="doc-biblioref"><strong>beesley2018?</strong></a>; <a href="#ref-tseng2004" role="doc-biblioref"><strong>tseng2004?</strong></a>)</span>. According to the late response facilitation account, the benefit for repeated configurations comes about as a result of enhanced target processing once it has been localised by attention. One conceptualisation of this process is that repeated configurations lead to a reduction in the evidence threshold required to ascertain that the target is present in its location, such that responses can be initiated earlier. Such an account has been put forward by @sewell2018, in order to explain the evidence supporting the late account from response time modelling of the CC effect.</p>
+<p>It seems likely that the both early and late processes contribute to the overall CC effect <span class="citation" data-cites="sisk2019">(for a review see <a href="#ref-sisk2019" role="doc-biblioref"><strong>sisk2019?</strong></a>)</span>. The current article focuses on exploration of the early-stage attentional account of CC. The term “early” here reflects the fact that the CC benefit is present prior to the detection of the target and the initiation of the response to the target. Analysis of eye-movements has shown that serial visual search can be defined as having two distinct phases: an initial ineffective search in which the direction of saccades is not consistent (arguably random) and a secondary effective phase in which each saccade will draw attention closer to the target. CC appears to result from having more trials with a shorter ineffective phase.</p>
+<p>One interpretation of these data is that CC is initially random, and that the initial distractor processing is not beneficial for CC. Supporting evidence for this account comes from @olson2002, where participants were trained on a CC task in which either all the distractors repeated, those in the half of the screen containing the target (short-range-context), or those in the half of the screen that didn’t contain the target (long-range-context). CC was observed in the short-range-context, but not in the long-range-context condition. Thus it would appear that the distractors further from the target are not critical to the generation of a CC effect.</p>
+<p>@brady2007’s computational account features a mechanism that ensures spatial constraints are placed on the learning of associations with relation to their proximity to the target. If the spatial constraints are tuned to modulate learning and restrict associative formations to only those distractors close to the target, this model can accurately model the data from @olson2002. Since the only consenquential mechanism in the model for CC is the associative weights (and thir modulation by spatial constraints), then one prediction that follows from this account is the the initial phase of search is inconsequential for observing CC.</p>
+<p>The current article provides a test of this prediction by significantly interrupting the search process with an endogenous cue for attention. In all experiments participants complete a contextual cuing visual search task but are also presented with an arrow that signals the side of the screen on which the target will appear. Thus, this cue disrupts the natural search process, eliminating entirely the early phase of search. In contrast to the localised facilitation account, it’s possible that contextual cuing involves learning of a procedural template that guides eye-movements in a consistent pattern for each repeated configuration. While the initial process may be inefficient in nature, it may nevertheless be an important part of the procedural response to the configuration in terms of the sequence of eye-movements. Recent data from [Seitz and Geyer] has suggested that</p>
+<p>A number of studies have explored how flexible the learned behaviours are in contextual cuing. For example, a number of studies have shown that moving the target to a new position within the display will abolish the established CC effect <span class="citation" data-cites="makovski2011 manginelli2009">(<a href="#ref-makovski2011" role="doc-biblioref"><strong>makovski2011?</strong></a>; <a href="#ref-manginelli2009" role="doc-biblioref"><strong>manginelli2009?</strong></a>)</span>. Notably, @zellin2013 explored the remapping of target positions over a longer training period, observing that with extended training, new associations will form for these new target positions, though the effects are limited to targets that appear closer to those that are initially trained. This suggests that any relocation effect is driven strongly by a generalisation of the pre-existing associations. Furthermore, strong contextual cuing effects were observed for the initially trained targets in a final “return phase” at the end of the experiment. All of these results point towards CC constituting a fairly inflexible behaviour that is activated somewhat automatically during search.</p>
+<p>More direct examination of the role of top-down control processes on CC comes from @luque2017b (Experiment 3). They used a task in which participants were initially given a standard CC experiment (search for a T amongst Ls), before then being told in a second phase that the target would appear in two designated positions along the horizontal mid-line of the screen. Participants were given an explicit instruction to search in these two locations for a new target (a Y); in this phase participants engaged in a new search task requiring controlled attention to specified locations. Yet the underlying configuration of repeated distractors was still present, as was the original target, which appeared in its trained location for that configuration. Luque et al.&nbsp;found that the acquired knowledge of the configurations did not affect performance in this second phase: responses to the new target were comparable when the old target was pointed in either the same or opposite direction to the new target, suggesting that there was no detectable processing of the old target <span class="citation" data-cites="luque2021">(see also <a href="#ref-luque2021" role="doc-biblioref"><strong>luque2021?</strong></a>)</span>. The suggestion is that contextual cuing can be controlled in the presence of a top-down instruction to search in a new location - search is not automatic in nature in the CC task.</p>
+<p>One potential issue with the studies presented by Luque and colleagues <span class="citation" data-cites="luque2017b luque2021">(<a href="#ref-luque2017b" role="doc-biblioref"><strong>luque2017b?</strong></a>; <a href="#ref-luque2021" role="doc-biblioref"><strong>luque2021?</strong></a>)</span> is that participants are instructed to engage in a new search process for a new target object: participants initially search for a T and are later instructed to search for a Y. The role of a prior target template is important for visual search <span class="citation" data-cites="vickery2005 vo2012">(<a href="#ref-vickery2005" role="doc-biblioref"><strong>vickery2005?</strong></a>; <a href="#ref-vo2012" role="doc-biblioref"><strong>vo2012?</strong></a>)</span>, and object identities appear to play an important role in the contextual cuing effect <span class="citation" data-cites="makovski2017 makovski2018">(<a href="#ref-makovski2017" role="doc-biblioref"><strong>makovski2017?</strong></a>; <a href="#ref-makovski2018" role="doc-biblioref"><strong>makovski2018?</strong></a>)</span>. While it is unclear how dependent CC is on the identity of the target, it is possible that distractor-target associations may well be sensitive to target identity and to the goals of the participant. For this reason, the current study assesses the impact of top-down instruction on CC when participants maintain the same task goal of searching for a single target identity within the display.</p>
+<p>The overarching aim of the current study is to explore the interaction between controlled (top-down) attentional processes and the pattern of search behaviour established by the repeated configurations. Specifically we seek to understand whether repeated configurations continue to guide attention even when participants are directed to alter their natural search patterns by the presence of an endogenous cue (an arrow that instructs the participant to direct attention in a specific direction). The experiments explore both the performance aspect of CC in terms of whether it continues to guide behaviour once an endogenous cue is introduced, and also whether the development of the search behaviour is impeded when trained concurrently with the endogenous cue.</p>
+<section id="transparency-and-openness" class="level1">
+<h1>Transparency and Openness</h1>
+<p>The raw data, analysis scripts, experimental materials, and the manuscript source files, are available at <a href="http://github.com/tombeesley/CC_Control" class="uri">http://github.com/tombeesley/CC_Control</a>. The analyses reported in this manuscript are computationally reproducible from the manuscript source files (using R v4.3.1), which are available at the github repository. The study design and analyses were not pre-registered.</p>
+</section>
+<section id="experiment-1" class="level1">
+<h1>Experiment 1</h1>
+<p>Experiment 1 sought to examine whether the learnt attentional behaviour that develops during contextual cuing is expressed when participants are directed by an endogenous (instructional) cue to search in a particular region of the visual scene. Participants were first trained with a set of four repeating configurations in phase 1 across 5 epochs of 32 trials each. Then prior to phase 2, participants were told that an arrow would appear before every trial indicating the side of the screen on which the target would be located. This arrow was valid on every trial. In phase 2, the repeating configurations were presented in two forms: “consistent”, where the target appeared in the same position as it has appeared for that configuration in phase 1; and “inconsistent”, where the target appeared in a position in the opposite quadrant of the screen from where it had appeared in phase 1. Random configurations were also presented in this phase. If the contextual cues within the repeated configurations continue to guide attention in the presence of the instructional cue, then we would expect that response times would be faster on consistent trials compared to random trials. In addition, we would also expect that the contextual cues would guide attention <em>away</em> from the (new) target quadrant on inconsistent trials, and so response times should be slower on these trials compared to those on random trials.</p>
+<section id="method" class="level2">
+<h2 data-anchor-id="method">Method</h2>
+<section id="participants" class="level3">
+<h3 data-anchor-id="participants">Participants</h3>
+<p>Thirty-one undergraduate students from Lancaster University were recruited (mean age = 20.1290323, SD = 1.0875641; 17 identified as female and 14 as female) via the Psychology Research Participation System in the Department of Psychology at Lancaster University, in return for the opportunity to use the recruitment system for their own research in future years.</p>
+</section>
+<section id="materials" class="level3">
+<h3 data-anchor-id="materials">Materials</h3>
+<p>Participants were tested individually in a quiet room with a Dell laptop with a 15.6” screen, a screen resolution of 1920 x 1080, and a full size external keyboard for participants to use to respond to the task. Participants sat approximately 50 cm from the screen. Stimulus presentation was controlled by MATLAB using the Psychophysics Toolbox extensions (Brainard, 1997; Kleiner, Brainard &amp; Pelli, 2007; Pelli, 1997). Responses to the target stimulus were made by pressing the ‘c’ or ‘n’ key on a standard keyboard. All experimental materials are available at the github repository for this study.</p>
+<p>Distractor stimuli were an ‘L’ shape (rotated 0°, 90°, 180°, or 270°) while the target stimulus was a ‘T’ shape (rotated at either 90° or 270°). Stimuli were 8 mm square and arranged in a square grid of 144 evenly spaced cells (12 x 12) which was positioned centrally on the screen and was 170 mm square. The grid itself was invisible to participants. The fixation cross (displayed centrally before each trial) was 4 mm square. The background of the screen was grey (RGB: .6, .6, .6) and the stimuli were presented in black (RGB: 1, 1, 1). There was a small offset in the vertical line of the ‘L’ distractors, which increased the similarity between the ‘L’ distractors and the target ‘T’, making the search task more difficult (Duncan &amp; Humphreys, 1989).</p>
+</section>
+<section id="design" class="level3">
+<h3 data-anchor-id="design">Design</h3>
+<p>Phase 1 employed a within-subjects design with factors of epoch (1-5) and configuration (repeated and random). All configurations contained 16 distractors, equally divided between the four quadrants of the display, and one target. Four repeated configurations were trained. Four target locations were used, with one from each quadrant assigned to each of the repeated configurations. These same four target positions were used for the random configurations throughout the task. Each of these four target positions was chosen at random from one of five locations within each quadrant, that were approximately equidistant from the center of the screen. Distractors could not appear in these target locations.</p>
+<p>Phase 2 employed a within-subjects design with factors of epoch (6-10) and configuration (repeated: consistent; repeated: inconsistent; random: consistent; random:inconsistent). On each trial, there was a .5 probability that an “inconsistent” version of the configuration would be presented. This meant that the target was relocated to a diametrically opposed target position such as to maximise the displacement from the trained target position (see Figure @ref(fig:schematicCC)). This could occur for both the repeated and random configurations, hence creating four unique trial types for this phase. While random configurations did not have a “trained”, associated, target position, it is necessary to divide the random trials into consistent and inconsistent trial types in this way in order to assess any target frequency effects that may occur, since the inconsistent target locations used in this phase were novel.</p>
+<p>(ref:schematicCC) Schematic of the manipulation of target position in consistent and inconsistent trials of phase 2. The dashed lines show the division of the stimuli into quadrants, but were not present in the task procedure.</p>
+<ul>
+<li>insert schematic here</li>
+</ul>
+</section>
+<section id="procedure" class="level3">
+<h3 data-anchor-id="procedure">Procedure</h3>
+<p>Participants were tested individually in a quiet testing room. They were given instructions on how to complete the task, including the presentation of an example of a search trial. Participants were shown the two correct responses for the two possible orientations of targets.</p>
+<p>Each trial commenced with a fixation cross presented in the center of the screen for 500 ms, which was then replaced immediately by the search configuration. Participants searched for the target stimulus and responded with a left or right response depending on its orientation. Reaction times (RTs) were recorded from the onset of the search configuration. Following a valid response (c or n), the configuration was removed from the screen. The ITI was 1000 ms. If participants made an incorrect response to the target orientation, “INCORRECT RESPONSE” appeared in red in the center of the screen for 3000 ms, prior to the ITI. If participants did not respond within 6000 ms, “TIMEOUT - TOO SLOW” appeared in red in the center of the screen for 3000 ms, prior to the ITI.</p>
+<p>Each block of eight trials contained each of the four different repeated configurations and four random configurations. These eight configurations could appear in any order with the constraint that the position of the target did not repeat across trials or across consecutive blocks.</p>
+<p>A rest break of 30 seconds was given every 80 trials. Trials started automatically after these breaks.</p>
+<p>After 160 trials, prior to phase 2, participants were given an instruction screen which detailed the arrow that would appear on the screen prior to the configuration. They were able to ask any questions they had at this stage and then proceeded to phase 2. The arrow appeared for 1000ms following the fixation cross, before the presentation of the search configuration. The task was otherwise identical to that used in phase 1.</p>
+</section>
+</section>
+<section id="results" class="level2">
+<h2 data-anchor-id="results">Results</h2>
+<p>Our criterion for removing outlier data, at both the participant level and the trial level, was 2.5 standard deviations above or below the mean of the sample. On average, trials ended with a timeout on 1.97% of trials (SD = 2.53). Two participants had an usually high proportion of timeouts and were removed from the analysis. The mean accuracy of participants (not including timeout trials) was 98.10% (SD = 1.65%). One participant had an unusually low proportion of accurate trials and was also removed. The only participant deemed to be an outlier in terms of mean response time (hereafter RT) was also excluded on the basis of the timeout criterion, noted above.</p>
+<p>For the remaining twenty-eight participants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was 3.03% (SD = 0.79%). Zero participants had an unusual proportion of trials removed as outlier RTs (greater than 2.5 SDs above the mean).</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'subj', 'epoch'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+</div>
+<p>(ref:Exp1-RT-figure) RT data for Experiment 1. The phase 2 averages across the four trial types are shown inset. Within-subject error bars were computed by a process of normalising the RT data for the sample <span class="citation" data-cites="cousineau2005">(<a href="#ref-cousineau2005" role="doc-biblioref"><strong>cousineau2005?</strong></a>)</span>.</p>
+<p>Figure @ref(fig:Exp1-RT-figure) shows the RT data across the 10 epochs of the experiment. In phase 1 (epochs 1-5) a contextual cuing effect emerged, with faster responses to repeated over random configurations. In phase 2, the presence of the guiding arrow led to a clear reduction in the response times. For all participants, the mean RT across epochs 4 and 5 was higher than the mean RTs across epochs 6 and 7. Despite the clear evidence for the processing of the endogenous cue, the underlying search configuration continued to play a role in the guidance of attention, with faster response times for (consistent) repeated configurations compared to random configurations.</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: data coerced from tibble to data frame</code></pre>
+</div>
+</div>
+<p>These data were analysed with a Bayesian ANOVA<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, using the <em>BayesFactor::anovaBF()</em> function in R. All analyses in this study used the default parameters for the priors, which “places mass in reason-able ranges [of effect sizes] without being overcommitted to any one point” <span class="citation" data-cites="rouder2017">(<a href="#ref-rouder2017" role="doc-biblioref"><strong>rouder2017?</strong></a>)</span>. First taking the data from phase 1 (epochs 1-5), there was strong support for the model containing the factors of epoch and configuration (repeated vs.&nbsp;random), BF<sub>10</sub> = 2.1 × 10<sup>12</sup> ± 1.4%. The addition of the interaction term did not improve the model fit, BF = 0.46 ± 1.63%, though there was no evidence for the absence of the interaction. The best fitting model was a better fit than the two models containing only one of the factors, smallest BF = 35.56 ± 1.41%, providing strong support for both the effects of configuration and epoch. Partial eta-squared (<span class="math inline">n^2_p</span>) effect sizes were calculated using <em>effectsize::eta_squared</em>, giving values of: 0.2169638 for the effect of configuration; 0.3897725 for the effect of epoch; and 0.1014833 for the interaction effect.</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: data coerced from tibble to data frame</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'subj'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: More than one observation per design cell, aggregating data using `fun_aggregate = mean`.
+To turn off this warning, pass `fun_aggregate = mean` explicitly.</code></pre>
+</div>
+</div>
+<p>A Bayesian ANOVA on the data from phase 2 (epochs 6-10) found strong support for the model containing the factors of configuration (repeated vs.&nbsp;random) and target position (consistent vs.&nbsp;inconsistent), BF<sub>10</sub> = 48.1 ± 1.97%. The next best fitting model contained these two factors and the interaction term, and was not a substantially worse fit to the data, BF = 0.53 ± 2.59%. The best fitting model (with factors of configuration and target position, but no interaction) was a substantially better fit to the data than the model containing only the factor of configuration BF = 21.43 ± 2.09% providing evidence that RTs were faster on consistent than inconsistent trials. There was no evidence for a difference between the best fitting model and the model containing only the factor of target position, BF = 2.35 ± 3.17%. The relevant effect sizes (<span class="math inline">n^2_p</span>) were: 0.1394981 for the effect of configuration; 0.2230093 for the effect of target position; and 0.1350565 for the interaction of these two factors.</p>
+<p>To further explore responses to the different trial types in phase 2, Bayesian t-tests were run using BayesFactor::ttestBF (using the default Cauchy prior) for comparisons between the repeated and random configurations, across the two target position conditions (consistent and inconsistent). This revealed substantial support for a difference between the response times on “repeated: consistent” trials and those on the respective random trials (random: consistent), BF<sub>10</sub> = 4.14 ± 0%. There was also substantial evidence to suggest there was no meaningful difference between the response times for the “repeated: inconsistent” trials and the respective random trials, BF<sub>10</sub> = 0.24 ± 0.03%.</p>
+</section>
+<section id="discussion" class="level2">
+<h2 data-anchor-id="discussion">Discussion</h2>
+<p>Experiment 1 sought to examine the consequence of an endogenous cue that prompts top-down control of the search process on contextual cuing. In phase 1 we established a robust contextual cuing effect. Following this, participants received instruction that each trial would be preceded by an arrow stimulus that would signal the side of the screen on which the target would appear. This cue was valid on all trials in phase 2. Consistent with these instructions and the processing of this cue, we observed substantially reduced search times in phase 2 compared to phase 1. The same set of repeated configurations were presented in phase 2, but for half of the trials, the target was relocated to the diagonally opposed quadrant of the screen. Therefore, on these “repeated inconsistent” trials, the underlying configuration of distractors predicted the target in a location that opposed that of the (valid) endogenous cue. Across this phase we observed significant contextual cuing for the repeated consistent trials, demonstrating that the underlying configuration of distractors continued to guide attention in the presence of the endogenous cue. However, the repeated inconsistent trials did not lead to an impairment in response times relative to random trials, suggesting that the underlying configuration did not influence search on these trials.</p>
+<!-- References will auto-populate in the refs div below -->
+<div id="refs" role="list">
+
+</div>
+</section>
+</section>
+<section id="appendix" class="level1">
+<h1>Appendix</h1>
+</section>
+<section id="title-for-appendix" class="level1">
+<h1>Title for Appendix</h1>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>The Bayesian analyses here follow the process outlined in @rouder2017. Briefly, we present the best fitting model evaluated against the null model, and then compare this fit to that of other models. Where the comparison of two models (i.e., A against B) reveals a Bayes Factor of greater than 3, this is taken as support for the components of model A that are not present in model B. Bayes Factors of less than 0.33 are taken as evidence in support of the equivalence of two models. Following @wetzels2011a we use the terms “substantial” (BF&gt;3; BF&lt;1/3), and “strong” (BF&gt;10; BF&lt;1/10) to reflect the levels of support for the results of the model comparisons.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
