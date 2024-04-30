@@ -1,0 +1,12 @@
+---
+title: "test"
+format: pdf
+editor: visual
+bibliography: references.bib
+---
+
+## Quarto
+
+this is the text @olson2002
+
+this is the text [@olson2002]
