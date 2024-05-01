@@ -147,9 +147,9 @@ One interpretation of these data is that CC is initially random, and that the in
 
 @brady2007's computational account features a mechanism that ensures spatial constraints are placed on the learning of associations with relation to their proximity to the target. If the spatial constraints are tuned to modulate learning and restrict associative formations to only those distractors close to the target, this model can accurately model the data from @olson2002. Since the only consequential mechanism in the model for CC is the associative weights (and their modulation by spatial constraints), then one prediction that follows from this account is that the initial phase of search is inconsequential for observing CC.
 
-The current article provides a test of this prediction by significantly interrupting the search process with an endogenous cue for attention. In all experiments participants complete a contextual cuing visual search task but are also presented with an arrow that signals the side of the screen on which the target will appear. Thus, this cue disrupts the natural search process, eliminating entirely the early phase of search. In contrast to the localised facilitation account, it's possible that contextual cuing involves learning of a procedural template that guides eye-movements in a consistent pattern for each repeated configuration. While the initial process may be inefficient in nature, it may nevertheless be an important part of the procedural response to the configuration in terms of the sequence of eye-movements. Recent experiments from @seitz2023
+The current article provides a test of this prediction by significantly interrupting the search process with an endogenous cue for attention. In all experiments participants complete a contextual cuing visual search task but are also presented with an arrow that signals the side of the screen on which the target will appear. Thus, this cue disrupts the natural search process, eliminating entirely the early phase of search. In contrast to the localised facilitation account, it's possible that contextual cuing involves learning of a procedural template that guides eye-movements in a consistent pattern for each repeated configuration. While the initial process may be inefficient in nature, it may nevertheless be an important part of the procedural response in terms of the sequence of eye-movements. Recent experiments from @seitz2023 suggests that more generic scanning behaviour forms part of the procedural knowledge that contributes to CC. 
 
-
+In the current experiments we explored how CC is affected by the interruption of the search process by a clear direction of attention from an endogenous cue. In Experiment 1 we examine whether a learnt pattern of behaviour is disrupted due to the onset of the endogenous cue, while in Experiment 2 we seek to establish whether the CC effect is weaker under these conditions. Experiment 3 explores the underlying drivers of the CC effect, in terms of the distractor-target associations, during these procedures. 
 
 ```{r exploratory_anaysis}
 
@@ -206,7 +206,7 @@ The raw data, analysis scripts, experimental materials, and the manuscript sourc
 
 # Experiment 1
 
-Experiment 1 sought to examine whether the learnt attentional behaviour that develops during contextual cuing is expressed when participants are directed by an endogenous (instructional) cue to search in a particular region of the visual scene. Participants were first trained with a set of four repeating configurations in phase 1 across 5 epochs of 32 trials each. Then prior to phase 2, participants were told that an arrow would appear before every trial indicating the side of the screen on which the target would be located. This arrow was valid on every trial. In phase 2, the repeating configurations were presented in two forms: "consistent", where the target appeared in the same position as it has appeared for that configuration in phase 1; and "inconsistent", where the target appeared in a position in the opposite quadrant of the screen from where it had appeared in phase 1. Random configurations were also presented in this phase. If the contextual cues within the repeated configurations continue to guide attention in the presence of the instructional cue, then we would expect that response times would be faster on consistent trials compared to random trials. In addition, we would also expect that the contextual cues would guide attention *away* from the (new) target quadrant on inconsistent trials, and so response times should be slower on these trials compared to those on random trials.
+Experiment 1 sought to examine whether the learnt attentional behaviour that develops during contextual cuing is still expressed when participants are directed by an endogenous (instructional) cue to search in a particular region of the visual scene. Participants were first trained with a set of four repeating configurations in phase 1 across 5 epochs of 32 trials each. Then prior to phase 2, participants were told that an arrow would appear before every trial indicating the side of the screen on which the target would be located. This arrow was valid on every trial. In phase 2, the repeating configurations were presented in two forms: "consistent", where the target appeared in the same position as it has appeared for that configuration in phase 1; and "inconsistent", where the target appeared in a position in the opposite quadrant of the screen from where it had appeared in phase 1. Random configurations were also presented in this phase. If the contextual cues within the repeated configurations continue to guide attention in the presence of the instructional cue, then we would expect that response times would be faster on consistent trials compared to random trials. In addition, we would also expect that the contextual cues would guide attention *away* from the (new) target quadrant on inconsistent trials, and so response times should be slower on these trials compared to those on random trials.
 
 ## Method
 
@@ -385,15 +385,40 @@ rt_summary_data_e1 <-
   summarise(meanRT = mean(RT),
             mean_norm_RT = mean(normRT)) # used for normalised SE bars
 
-# # explore whether all Ps showed reduction in RTs phase 1 to phase 2 - yes they did
-# data_e1_f %>% 
-#   filter(epoch %in% c(4:7),
-#          acc == 1) %>% 
-#   group_by(subj, epoch) %>%
-#   summarise(meanRT = mean(RT)) %>% 
-#   pivot_wider(names_from = epoch, names_prefix = "epoch_", values_from = meanRT) %>% 
-#   rowwise() %>% 
-#   mutate(drop_in_RT = mean(c(epoch_4,epoch_5)) - mean(c(epoch_6,epoch_7)))
+# explore whether all Ps showed reduction in RTs phase 1 to phase 2 - yes they did
+by_subj_avgRT_transition_e1 <- 
+  data_e1_f %>%
+  filter(epoch %in% c(4:7)) %>%
+  group_by(subj, epoch) %>%
+  summarise(meanRT = mean(RT)) %>%
+  pivot_wider(names_from = epoch, names_prefix = "epoch_", values_from = meanRT) %>%
+  rowwise() %>%
+  mutate(drop_in_RT = mean(c(epoch_4,epoch_5)) - mean(c(epoch_6,epoch_7)))
+
+# work out CC effect for con trials across blocks
+by_subj_CCeffect_transition_e1 <- 
+  data_e1_f %>%
+  filter(str_detect(TT, pattern = "inconsistent", negate = TRUE)) %>% 
+  group_by(subj, TT, epoch) %>%
+  summarise(meanRT = mean(RT)) %>%
+  pivot_wider(names_from = TT, values_from = meanRT) %>% 
+  rename(rep = "Repeated: consistent",
+         rand = "Random: consistent") %>% 
+  mutate(CC_effect = rand-rep)
+
+# plot of the CC effect across blocks
+# by_subj_CCeffect_transition_e1 %>% 
+#   group_by(epoch) %>% 
+#   summarise(meanCC = mean(CC_effect),
+#             seCC = sd(CC_effect)/sqrt(n())) %>% 
+#   ungroup() %>% 
+#   ggplot(aes(x = epoch, y = meanCC, group = 1)) +
+#   geom_line()
+
+# avg CC effect before and after transition
+by_subj_CCeffect_transition_e1 %>%
+  filter(epoch %in% c(4:7)) %>% 
+  pivot_wider(names_from = epoch, values_from = CC_effect)
 
 ```
 
@@ -489,8 +514,6 @@ phase_1 <-
   rt_summary_data_e1 %>% 
   mutate(epoch = as.factor(epoch)) %>% 
   filter(epoch %in% c(1:5))
-
-
 
 e1_phase1_BF <- 
   anovaBF(meanRT ~ TT * epoch + subj, 

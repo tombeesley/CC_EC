@@ -329,9 +329,19 @@ In contrast to the localised facilitation account, it's possible that
 contextual cuing involves learning of a procedural template that guides
 eye-movements in a consistent pattern for each repeated configuration.
 While the initial process may be inefficient in nature, it may
-nevertheless be an important part of the procedural response to the
-configuration in terms of the sequence of eye-movements. Recent
-experiments from (\textbf{seitz2023?})
+nevertheless be an important part of the procedural response in terms of
+the sequence of eye-movements. Recent experiments from
+(\textbf{seitz2023?}) suggests that more generic scanning behaviour
+forms part of the procedural knowledge that contributes to CC.
+
+In the current experiments we explored how CC is affected by the
+interruption of the search process by a clear direction of attention
+from an endogenous cue. In Experiment 1 we examine whether a learnt
+pattern of behaviour is disrupted due to the onset of the endogenous
+cue, while in Experiment 2 we seek to establish whether the CC effect is
+weaker under these conditions. Experiment 3 explores the underlying
+drivers of the CC effect, in terms of the distractor-target
+associations, during these procedures.
 
 \section{Transparency and Openness}\label{transparency-and-openness}
 
@@ -345,26 +355,26 @@ repository. The study design and analyses were not pre-registered.
 \section{Experiment 1}\label{experiment-1}
 
 Experiment 1 sought to examine whether the learnt attentional behaviour
-that develops during contextual cuing is expressed when participants are
-directed by an endogenous (instructional) cue to search in a particular
-region of the visual scene. Participants were first trained with a set
-of four repeating configurations in phase 1 across 5 epochs of 32 trials
-each. Then prior to phase 2, participants were told that an arrow would
-appear before every trial indicating the side of the screen on which the
-target would be located. This arrow was valid on every trial. In phase
-2, the repeating configurations were presented in two forms:
-``consistent'', where the target appeared in the same position as it has
-appeared for that configuration in phase 1; and ``inconsistent'', where
-the target appeared in a position in the opposite quadrant of the screen
-from where it had appeared in phase 1. Random configurations were also
-presented in this phase. If the contextual cues within the repeated
-configurations continue to guide attention in the presence of the
-instructional cue, then we would expect that response times would be
-faster on consistent trials compared to random trials. In addition, we
-would also expect that the contextual cues would guide attention
-\emph{away} from the (new) target quadrant on inconsistent trials, and
-so response times should be slower on these trials compared to those on
-random trials.
+that develops during contextual cuing is still expressed when
+participants are directed by an endogenous (instructional) cue to search
+in a particular region of the visual scene. Participants were first
+trained with a set of four repeating configurations in phase 1 across 5
+epochs of 32 trials each. Then prior to phase 2, participants were told
+that an arrow would appear before every trial indicating the side of the
+screen on which the target would be located. This arrow was valid on
+every trial. In phase 2, the repeating configurations were presented in
+two forms: ``consistent'', where the target appeared in the same
+position as it has appeared for that configuration in phase 1; and
+``inconsistent'', where the target appeared in a position in the
+opposite quadrant of the screen from where it had appeared in phase 1.
+Random configurations were also presented in this phase. If the
+contextual cues within the repeated configurations continue to guide
+attention in the presence of the instructional cue, then we would expect
+that response times would be faster on consistent trials compared to
+random trials. In addition, we would also expect that the contextual
+cues would guide attention \emph{away} from the (new) target quadrant on
+inconsistent trials, and so response times should be slower on these
+trials compared to those on random trials.
 
 \subsection{Method}\label{method}
 
@@ -542,12 +552,12 @@ for the priors, which ``places mass in reason-able ranges {[}of effect
 sizes{]} without being overcommitted to any one point'' (Rouder et al.,
 2017, p. 317). First taking the data from phase 1 (epochs 1-5), there
 was strong support for the model containing the factors of epoch and
-configuration (repeated vs.~random), BF\textsubscript{10} = 2 ×
-10\textsuperscript{12} ± 6.28\%. The addition of the interaction term
-did not improve the model fit, BF = 0.52 ± 11.83\%, though there was no
+configuration (repeated vs.~random), BF\textsubscript{10} = 2.9 ×
+10\textsuperscript{12} ± 20.03\%. The addition of the interaction term
+did not improve the model fit, BF = 0.3 ± 21.99\%, though there was no
 evidence for the absence of the interaction. The best fitting model was
 a better fit than the two models containing only one of the factors,
-smallest BF = 31.64 ± 7.54\%, providing strong support for both the
+smallest BF = 46.21 ± 20.64\%, providing strong support for both the
 effects of configuration and epoch. Partial eta-squared (\(n^2_p\))
 effect sizes were calculated using \emph{effectsize::eta\_squared},
 giving values of: 0.2169638 for the effect of configuration; 0.3897725
@@ -556,16 +566,16 @@ for the effect of epoch; and 0.1014833 for the interaction effect.
 A Bayesian ANOVA on the data from phase 2 (epochs 6-10) found strong
 support for the model containing the factors of configuration (repeated
 vs.~random) and target position (consistent vs.~inconsistent),
-BF\textsubscript{10} = 36.82 ± 8.34\%. The next best fitting model
+BF\textsubscript{10} = 39.7 ± 8.14\%. The next best fitting model
 contained these two factors and the interaction term, and was not a
-substantially worse fit to the data, BF = 0.96 ± 29.79\%. The best
+substantially worse fit to the data, BF = 0.59 ± 17.87\%. The best
 fitting model (with factors of configuration and target position, but no
 interaction) was a substantially better fit to the data than the model
-containing only the factor of configuration BF = 17.02 ± 10.9\%
+containing only the factor of configuration BF = 14.16 ± 29.68\%
 providing evidence that RTs were faster on consistent than inconsistent
 trials. There was no evidence for a difference between the best fitting
 model and the model containing only the factor of target position, BF =
-1.89 ± 12.93\%. The relevant effect sizes (\(n^2_p\)) were: 0.1394981
+1.75 ± 14.45\%. The relevant effect sizes (\(n^2_p\)) were: 0.1394981
 for the effect of configuration; 0.2230093 for the effect of target
 position; and 0.1350565 for the interaction of these two factors.
 
@@ -744,16 +754,16 @@ different in the two conditions. The phase 1 data were explored with a
 Bayesian ANOVA, which revealed that the best fitting model contained the
 factors of epoch, configuration (repeated vs.~random), and endogenous
 cue (arrow present vs.~arrow absent), with no interaction terms,
-BF\textsubscript{10} = 7.4 × 10\textsuperscript{100} ± 31.31\%. The next
+BF\textsubscript{10} = 7.5 × 10\textsuperscript{100} ± 19.75\%. The next
 best fitting model contained all three factors and the interaction of
-epoch and configuration, BF\textsubscript{10} = 5.8 ×
-10\textsuperscript{100} ± 15.4\%, and this model was not a substantially
-worse fit to the data, BF = 0.79 ± 34.89\%. All other models were
-substantially worse fits than the best fitting model, largest BF = 0.17
-± 19.95\%. Importantly, the interaction term between the factors of
+epoch and configuration, BF\textsubscript{10} = 3.8 ×
+10\textsuperscript{100} ± 6.81\%, and this model was not a substantially
+worse fit to the data, BF = 0.51 ± 20.89\%. All other models were
+substantially worse fits than the best fitting model, largest BF = 1.86
+± 86.24\%. Importantly, the interaction term between the factors of
 endogenous cue and configuration did not improve the fit of the model,
 providing substantial support for the absence of this interaction, BF =
-0.13 ± 33.78\%. The relevant effect sizes (\(n^2_p\)) were: 0.018597 for
+0.94 ± 88.22\%. The relevant effect sizes (\(n^2_p\)) were: 0.018597 for
 the effect of epoch; 0.3973327 for the effect of configuration;
 0.8454521 for the effect of endogenous cue; 0.1240887 for the
 interaction effect between configuration and epoch; and 0.0227117 for
@@ -766,14 +776,14 @@ discernible difference between the size of the cuing effects. We
 conducted a Bayesian ANOVA with factors of epoch, configuration and
 endogenous cue condition (arrow vs.~no-arrow). The best fitting model
 was that with just the factors of epoch and configuration with no
-interaction between the factors, BF\textsubscript{10} = 8.2 ×
-10\textsuperscript{14} ± 4.79\%. There was substantial support for this
-model over the next best fitting model, BF = 6.82 ± 20.71\%. To examine
+interaction between the factors, BF\textsubscript{10} = 1.3 ×
+10\textsuperscript{15} ± 32.91\%. There was substantial support for this
+model over the next best fitting model, BF = 14.4 ± 33.61\%. To examine
 the interaction of the configuration and endogenous cue factors, we
 compared the model containing those two factors to the model containing
 the two factors plus the interaction of configuration and endogenous
 cue, which revealed substantial support for the absence of an
-interaction, BF = 0.11 ± 13.77\%. The relevant effect sizes (\(n^2_p\))
+interaction, BF = 0.1 ± 15.45\%. The relevant effect sizes (\(n^2_p\))
 were: 0.6153937 for the effect of configuration; and 0.2521965 for the
 effect of epoch.
 
@@ -782,10 +792,10 @@ the factors of configuration type and endogenous cue, the data from
 across the experiment (epochs 1-10) were analysed with a Bayesian ANOVA
 with only the factors of configuration and endogenous cue. The best
 fitting model was that with the two factors and no interaction,
-BF\textsubscript{10} = 3.4 × 10\textsuperscript{51} ± 9.68\%. The
+BF\textsubscript{10} = 3.3 × 10\textsuperscript{51} ± 10.21\%. The
 addition of the interaction term did not strengthen the model, with
-substantial evidence for the absence of the interaction, BF = 0.07 ±
-12.28\%. The relevant effect sizes (\(n^2_p\)) were: 0.7699908 for the
+substantial evidence for the absence of the interaction, BF = 0.1 ±
+15.07\%. The relevant effect sizes (\(n^2_p\)) were: 0.7699908 for the
 effect of the endogenous cue; and 0.606466 for the effect of
 configuration.
 
@@ -970,17 +980,17 @@ epochs of Experiment 3. As in Experiment 1, contextual cuing was readily
 established in phase 1. These data were subjected to a Bayesian ANOVA
 which revealed that the best fitting model contained the factors of
 configuration (repeated vs.~random) and epoch, and an interaction
-between those factors, BF\textsubscript{10} = 5.1 ×
-10\textsuperscript{24} ± 10.67\%. However, the model without the
+between those factors, BF\textsubscript{10} = 5.4 ×
+10\textsuperscript{24} ± 15.57\%. However, the model without the
 interaction provided a strong fit to the data, BF\textsubscript{10} =
-5.2 × 10\textsuperscript{24} ± 10.3\%, and a comparison between the two
+5.4 × 10\textsuperscript{24} ± 16.62\%, and a comparison between the two
 models did not find any evidence in support of the interaction term, BF
-= 1.01 ± 14.83\%. There was strong support for the best fitting model
-over the remaining models, smallest BF = 3957.7 ± 10.92\%, providing
-strong support for the factors of epoch and configuration. The relevant
-effect sizes (\(n^2_p\)) were: 0.3790593 for the effect of the
-endogenous cue; and 0.4687663 for the effect of configuration; and
-0.0805809 for the interaction of these two factors.
+= 1 ± 22.77\%. There was strong support for the best fitting model over
+the remaining models, smallest BF = 4215.91 ± 15.83\%, providing strong
+support for the factors of epoch and configuration. The relevant effect
+sizes (\(n^2_p\)) were: 0.3790593 for the effect of the endogenous cue;
+and 0.4687663 for the effect of configuration; and 0.0805809 for the
+interaction of these two factors.
 
 The response times decreased significantly with the presentation of the
 valid endogenous cue in phase 2. Response times to the fully repeated
@@ -990,10 +1000,10 @@ repeated distractors appeared to be slower and comparable to the fully
 random configurations. The phase 2 data were subjected to a Bayesian
 ANOVA which found that the best fitting model contained the factors of
 configuration and epoch but no interaction between the factors,
-BF\textsubscript{10} = 1.3 × 10\textsuperscript{14} ± 5.98\%. This model
-provided a superior fit to the data compared to the next best fitting
-model that included the two factors and the interaction term, BF =
-125.35 ± 7.96\%, providing strong support for the contribution of the
+BF\textsubscript{10} = 1.6 × 10\textsuperscript{14} ± 11.44\%. This
+model provided a superior fit to the data compared to the next best
+fitting model that included the two factors and the interaction term, BF
+= 25.61 ± 76.51\%, providing strong support for the contribution of the
 two factors and the absence of an interaction between the two factors.
 The relevant effect sizes (\(n^2_p\)) were: 0.3722881 for the effect of
 configuration; and 0.159434 for the effect of epoch.
