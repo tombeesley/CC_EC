@@ -35,8 +35,6 @@ abstract: "This document is a template."
 keywords: [keyword1, keyword2, keyword3]
 bibliography: bibliography.bib
 format:
-  apaquarto-docx: default
-  apaquarto-html: default
   apaquarto-pdf:
     fig-pos: 'H'
     documentmode: man
@@ -49,7 +47,7 @@ editor_options:
 floatsintext: true
 ---
 
-```{r}
+```{r setup}
 
 library(tidyverse)
 library(citr)
@@ -63,6 +61,17 @@ library(apa)
 library(pwr) # power calculations
 library(lsr) # effect size estimate
 library(patchwork)
+
+# removed from yaml format
+  # apaquarto-docx: default
+  # apaquarto-html: default
+  # apaquarto-pdf:
+  #   fig-pos: 'H'
+  #   documentmode: man
+  #   keep-tex: true
+
+
+
 
 options(digits = 2) #set to two decimal 
 
@@ -116,7 +125,7 @@ numIterations = 50
 
 ```
 
-```{r set_ggplot_theme}
+```{r set-ggplot-theme}
 
 # set global ggplot theme properties
 
@@ -149,7 +158,7 @@ The current article provides a test of this prediction by significantly interrup
 
 In the current experiments we explored how CC is affected by the interruption of the search process by a clear direction of attention from an endogenous cue. In Experiment 1 we examine whether a learnt pattern of behaviour is disrupted due to the onset of the endogenous cue, while in Experiment 2 we seek to establish whether the CC effect is weaker under these conditions. Experiment 3 explores the underlying drivers of the CC effect, in terms of the distractor-target associations, during these procedures. 
 
-```{r exploratory_anaysis}
+```{r exploratory-anaysis}
 
 data_raw <- readRDS("combinedData.rds")
 
@@ -423,7 +432,7 @@ CC_transition_summary <-
 
 ```
 
-```{r }
+```{r generate-fig1}
 factorLbls <- c("Repeated: Consistent", "Random: Consistent", "Repeated: Inconsistent", "Random: Inconsistent")
 
 # summarise at the group level and plot
@@ -876,7 +885,7 @@ To provide further support for the absence of the interaction between the factor
 
 ## Discussion
 
-Experiment 2 sought to examine whether the presence of a valid endogenous cue would impair the acquisition of a contextual cuing effect. In the first phase, two sets of configurations were trained, one of which was always presented in the presence of the endogenous cue, and one set which was presented without the endogenous cue. Overall there was considerable evidence that the cue was processed and acted upon, as response times to the target were much faster on cued trials. However, there was no evidence to suggest that this initial guidance of attention impaired the acquisition of the configurations on those trials. Furthermore, when the endogenous cue was never presented in the final phase of the experiment, the size of the contextual cuing effect was equivalent between the two sets of configurations; the Bayesian analyses found support for the equivalence of these CC effects.
+Experiment 2 sought to examine whether the presence of a valid endogenous cue would impair the acquisition of a contextual cuing effect. In the first phase, two sets of configurations were trained, one of which was always presented in the presence of the endogenous cue, and one set which was presented without the endogenous cue. Overall there was considerable evidence that the cue was processed and acted upon, as response times to the target were much faster on cued trials. However, there was no evidence to suggest that the instructed guidance of attention impaired the acquisition of the configurations on those trials. Furthermore, when the endogenous cue was never presented in the final phase of the experiment, the size of the contextual cuing effect was equivalent between the two sets of configurations; the Bayesian analyses found support for the equivalence of these CC effects.
 
 The lack of competition effects seen in Experiment 2 are at odds with some findings in the CC literature [i.e., @endo2004; @kunar2014], where competition has been seen by more dominant or salient features of the displays. Instead, the findings point towards a more automatic nature to contextual cuing, whereby associations form ubiquitously, so long as they receive the focus of attention at some point within the search process [e.g., @beesley2012].
 
