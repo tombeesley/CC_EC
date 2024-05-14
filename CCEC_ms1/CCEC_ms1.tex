@@ -14,11 +14,7 @@
 
 
 \RequirePackage{longtable}
-% \setlength\LTleft{0pt}
 \RequirePackage{threeparttablex}
-
-% % 
-
 
 \makeatletter
 \renewcommand{\paragraph}{\@startsection{paragraph}{4}{\parindent}%
@@ -133,6 +129,8 @@
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
 
+\usepackage[nolongtablepatch]{lineno}
+\linenumbers
 
 
 
@@ -147,10 +145,13 @@
 
 \title{Contextual cuing survives an interruption from an endogenous cue
 for attention}
+
+
 \shorttitle{Contextual cuing and endogenous cuing}
 
 
 \usepackage{etoolbox}
+
 
 
 
@@ -174,43 +175,44 @@ Butler,Inez Sharp,Ieva Jaceviciute,David Luque}
 
 
 
-
-
 \leftheader{Beesley, Earl, Butler, Sharp, Jaceviciute and Luque}
 
 
 
-\abstract{``Three experiments explored the interaction between an
-endogenous cue of attention and the repetition of a visual search
-display during contextual cuing. In Experiment 1, participants readily
-learnt about repeated configurations of visual search, before being
-presented with an endogenous cue for attention towards the target on
-every trial. Participants used this cue to improve search times, but the
-repeated contexts continued to guide attention. Experiment 2
-demonstrated that the presence of the endogenous did not impede the
-acquisition of contextual cuing. Experiment 3 confirmed the hypothesis
-that the contextual cuing effect relies largely on localised distractor
-contexts, following the guidance of attention. Together, the experiments
-point towards an interplay between two drivers of attention: after the
-initial guidance of attention, memory representations of the context are
-flexibly deployed to facilitate the target detection.\\
+\abstract{Three experiments explored how the repetition of a visual
+search display guides search during contextual cuing under conditions in
+which the search process is interrupted by an instructional (endogenous)
+cue for attention. In Experiment 1, participants readily learnt about
+repeated configurations of visual search, before being presented with an
+endogenous cue for attention towards the target on every trial.
+Participants used this cue to improve search times, but the repeated
+contexts continued to guide attention. Experiment 2 demonstrated that
+the presence of the endogenous did not impede the acquisition of
+contextual cuing. Experiment 3 confirmed the hypothesis that the
+contextual cuing effect relies largely on localised distractor contexts,
+following the guidance of attention. Together, the experiments point
+towards an interplay between two drivers of attention: after the initial
+guidance of attention, memory representations of the context continue to
+guide attention towards the target, suggesting that CC representations
+are flexibly deployed when the search procedure is dramatically
+interrupted.\\
 Public significance statement: This study provides a test of how
 attention is governed by different aspects of the environment. We
 examine whether the control of attention by an instructional stimulus
 (an arrow that directs attention) will interfere with the way in which
 attention is governed by other learnt visual patterns in the
-environment. ''}
-% 
-\keywords{visual search; contextual cuing; endogenous cuing}
+environment.}
 
-\authornote{\par{\addORCIDlink{Tom Beesley}{0000-0003-2836-2743}}
-\par{ }
+\keywords{visual search; incidental learning; contextual cuing;
+attention; endogenous cuing}
+
+\authornote{\par{\addORCIDlink{Tom Beesley}{0000-0003-2836-2743}} 
+
 \par{       }
 \par{Correspondence concerning this article should be addressed to Tom
 Beesley, Lancaster University, Department of Psychology, Lancaster
 University, UK, LA1 4YD, UK, Email: t.beesley@lancaster.ac.uk}
 }
-
 
 \makeatletter
 \let\endoldlt\endlongtable
@@ -223,6 +225,48 @@ University, UK, LA1 4YD, UK, Email: t.beesley@lancaster.ac.uk}
 \urlstyle{same}
 
 
+
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
 
 % From https://tex.stackexchange.com/a/645996/211326
 %%% apa7 doesn't want to add appendix section titles in the toc
@@ -243,8 +287,7 @@ University, UK, LA1 4YD, UK, Email: t.beesley@lancaster.ac.uk}
 
 \setlength\LTleft{0pt}
 
-
-
+\resetlinenumber[1]
 
 It is well established that the process of visual search is guided by
 past experience. When we encounter a scene, the extent to which the
@@ -267,16 +310,20 @@ suggested to be implicit in nature, with repeated configurations
 seemingly guiding search unconsciously: typically participants are
 unable to articulate their knowledge of the repeated configurations, and
 show poor ability to recognise learnt configurations in memory tests
-(e.g., Chun \& Jiang, 1998; Colagiuri \& Livesey, 2016), although this
-view of CC has been strongly contested (e.g., Smyth \& Shanks, 2008;
-Vadillo et al., 2016). There are also a number of plausible
-computational models of how memory representations of repeated
-configurations are formed and result in the CC effect (e.g., Beesley et
-al., 2015; Brady \& Chun, 2007). The predominant view is that the memory
-representations are best characterised as associative in nature, whereby
-distractors (or groups of distractors, see Beesley et al., 2016) form
-associations that activate more strongly the contingent target position
-within each repeated configuration.
+(e.g., \citeproc{ref-chun1998}{Chun \& Jiang, 1998};
+\citeproc{ref-colagiuri2016}{Colagiuri \& Livesey, 2016}), although this
+view of CC has been strongly contested (e.g.,
+\citeproc{ref-smyth2008}{Smyth \& Shanks, 2008};
+\citeproc{ref-vadillo2016}{Vadillo et al., 2016}). There are also a
+number of plausible computational models of how memory representations
+of repeated configurations are formed and result in the CC effect (e.g.,
+\citeproc{ref-beesley2015b}{Beesley et al., 2015};
+\citeproc{ref-brady2007}{Brady \& Chun, 2007}). The predominant view is
+that the memory representations are best characterised as associative in
+nature, whereby distractors (or groups of distractors, see
+\citeproc{ref-beesley2016}{Beesley et al., 2016}) form associations that
+activate more strongly the contingent target position within each
+repeated configuration.
 
 The exact nature of how repeated configurations come to facilitate
 visual search is the focus of much debate within the literature. Broadly
@@ -289,65 +336,72 @@ target is localised (fixated) at an earlier time point in search.
 Perhaps the clearest (and arguably simplest) evidence in support of this
 account comes from studies of eye-tracking during CC. For example,
 search through repeated configurations results in fewer fixations prior
-to target localisation (e.g., Beesley et al., 2018; Tseng \& Li, 2004).
-According to the late response facilitation account, the benefit for
-repeated configurations comes about as a result of enhanced target
-processing once it has been localised by attention. One
-conceptualisation of this process is that repeated configurations lead
-to a reduction in the evidence threshold required to ascertain that the
-target is present in its location, such that responses can be initiated
-earlier. Such an account has been put forward by Sewell et al. (2018),
-in order to explain the evidence supporting the late account from
-response time modelling of the CC effect.
+to target localisation (e.g., \citeproc{ref-beesley2018}{Beesley et al.,
+2018}; \citeproc{ref-tseng2004}{Tseng \& Li, 2004}). According to the
+late response facilitation account, the benefit for repeated
+configurations comes about as a result of enhanced target processing
+once it has been localised by attention. One conceptualisation of this
+process is that repeated configurations lead to a reduction in the
+evidence threshold required to ascertain that the target is present in
+its location, such that responses can be initiated earlier. Such an
+account has been put forward by Sewell et al.
+(\citeproc{ref-sewell2018}{2018}), in order to explain the evidence
+supporting the late account from response time modelling of the CC
+effect.
 
 It seems likely that the both early and late processes contribute to the
-overall CC effect (for a review see Sisk et al., 2019). The current
-article focuses on exploration of the early-stage attentional account of
-CC. The term ``early'' here reflects the fact that the CC benefit is
-present prior to the detection of the target and the initiation of the
-response to the target. Analysis of eye-movements has shown that serial
-visual search can be defined as having two distinct phases: an initial
-ineffective search in which the direction of saccades is not consistent
-(arguably random) and a secondary effective phase in which each saccade
-will draw attention closer to the target. CC appears to result from
-having more trials with a shorter ineffective phase.
+overall CC effect (for a review see \citeproc{ref-sisk2019}{Sisk et al.,
+2019}). The current article focuses on exploration of the early-stage
+attentional account of CC. The term ``early'' here reflects the fact
+that the CC benefit is present prior to the detection of the target and
+the initiation of the response to the target. In fact, the ``early''
+phase can be further divided. Analysis of eye-movements has shown that
+serial visual search can be defined as having two distinct phases: an
+initial ineffective search in which the direction of saccades is not
+consistent (arguably random) and a secondary effective phase in which
+each saccade will draw attention closer to the target. CC appears to
+result from having more trials with a shorter ineffective phase.
 
 One interpretation of these data is that CC is initially random, and
 that the initial distractor processing is not beneficial for CC.
-Supporting evidence for this account comes from Olson and Chun (2002),
-where participants were trained on a CC task in which either all the
-distractors repeated, those in the half of the screen containing the
-target (short-range-context), or those in the half of the screen that
-didn't contain the target (long-range-context). CC was observed in the
-short-range-context, but not in the long-range-context condition. Thus
-it would appear that the distractors further from the target are not
-critical to the generation of a CC effect.
+Supporting evidence for this account comes from Olson and Chun
+(\citeproc{ref-olson2002}{2002}), where participants were trained on a
+CC task in which either all the distractors repeated, those in the half
+of the screen containing the target (short-range-context), or those in
+the half of the screen that didn't contain the target
+(long-range-context). CC was observed in the short-range-context, but
+not in the long-range-context condition. Thus it would appear that the
+distractors further from the target are not critical to the generation
+of a CC effect.
 
-Brady and Chun (2007)'s computational account features a mechanism that
-ensures spatial constraints are placed on the learning of associations
-with relation to their proximity to the target. If the spatial
-constraints are tuned to modulate learning and restrict associative
-formations to only those distractors close to the target, this model can
-accurately model the data from Olson and Chun (2002). Since the only
-consequential mechanism in the model for CC is the associative weights
-(and their modulation by spatial constraints), then one prediction that
-follows from this account is that the initial phase of search is
-inconsequential for observing CC.
+Brady and Chun (\citeproc{ref-brady2007}{2007})'s computational account
+features a mechanism that ensures spatial constraints are placed on the
+learning of associations with relation to their proximity to the target.
+If the spatial constraints are tuned to modulate learning and restrict
+associative formations to only those distractors close to the target,
+this model can accurately model the data from Olson and Chun
+(\citeproc{ref-olson2002}{2002}). Since the only consequential mechanism
+in the model for CC is the associative weights (and their modulation by
+spatial constraints), then one prediction that follows from this account
+is that the initial phase of search is inconsequential for observing CC.
 
-The current article provides a test of this prediction by significantly
-interrupting the search process with an endogenous cue for attention. In
-all experiments participants complete a contextual cuing visual search
-task but are also presented with an arrow that signals the side of the
-screen on which the target will appear. Thus, this cue disrupts the
-natural search process, eliminating entirely the early phase of search.
 In contrast to the localised facilitation account, it's possible that
 contextual cuing involves learning of a procedural template that guides
 eye-movements in a consistent pattern for each repeated configuration.
 While the initial process may be inefficient in nature, it may
 nevertheless be an important part of the procedural response in terms of
 the sequence of eye-movements. Recent experiments from Seitz et al.
-(2023) suggests that more generic scanning behaviour forms part of the
-procedural knowledge that contributes to CC.
+(\citeproc{ref-seitz2023}{2023}) suggests that more generic scanning
+behaviour forms part of the procedural knowledge that contributes to CC.
+The current article provides a test of this prediction by significantly
+interrupting the search process with an endogenous cue for attention. In
+all experiments participants complete a contextual cuing visual search
+task but are also presented with an arrow that signals the side of the
+screen on which the target will appear. Thus, this cue disrupts the
+natural search process, eliminating entirely the early phase of search.
+The experiments therefore examine the extent to which this initial part
+of the search process is truly inconsequential for the observation of
+the CC effect.
 
 In the current experiments we explored how CC is affected by the
 interruption of the search process by a clear direction of attention
@@ -358,38 +412,29 @@ weaker under these conditions. Experiment 3 explores the underlying
 drivers of the CC effect, in terms of the distractor-target
 associations, during these procedures.
 
-\section{Transparency and Openness}\label{transparency-and-openness}
-
-The raw data, analysis scripts, experimental materials, and the
-manuscript source files, are available at
-\url{http://github.com/tombeesley/CC_Control}. The analyses reported in
-this manuscript are computationally reproducible from the manuscript
-source files (using R v4.4.0), which are available at the github
-repository. The study design and analyses were not pre-registered.
-
 \section{Experiment 1}\label{experiment-1}
 
 Experiment 1 sought to examine whether the learnt attentional behaviour
 that develops during contextual cuing is still expressed when
 participants are directed by an endogenous (instructional) cue to search
-in a particular region of the visual scene. Participants were first
-trained with a set of four repeating configurations in phase 1 across 5
-epochs of 32 trials each. Then prior to phase 2, participants were told
-that an arrow would appear before every trial indicating the side of the
-screen on which the target would be located. This arrow was valid on
-every trial. In phase 2, the repeating configurations were presented in
-two forms: ``consistent'', where the target appeared in the same
-position as it has appeared for that configuration in phase 1; and
-``inconsistent'', where the target appeared in a position in the
-opposite quadrant of the screen from where it had appeared in phase 1.
-Random configurations were also presented in this phase. If the
-contextual cues within the repeated configurations continue to guide
-attention in the presence of the instructional cue, then we would expect
-that response times would be faster on consistent trials compared to
-random trials. In addition, we would also expect that the contextual
-cues would guide attention \emph{away} from the (new) target quadrant on
-inconsistent trials, and so response times should be slower on these
-trials compared to those on random trials.
+in a particular region of the visual scene, hindering the operation of
+early-stage visual search processes. Participants were first trained
+with a set of four repeating configurations in phase 1 across 5 epochs
+of 32 trials each. Then prior to phase 2, participants were told that an
+arrow would appear before every trial indicating the side of the screen
+on which the target would be located. This arrow was valid on every
+trial. In phase 2, the repeating configurations were presented in two
+forms: ``consistent'', where the target appeared in the same position as
+it has appeared for that configuration in phase 1; and ``inconsistent'',
+where the target appeared in a position in the opposite quadrant of the
+screen from where it had appeared in phase 1. Random configurations were
+also presented in this phase. The inclusion of the inconsistent trials
+in this phase provides a test of whether the distractors processed in
+the early stages of search continue to guide attention in the presence
+of the endognenous cue. If this is the case, we would also expect that
+the contextual cues would guide attention \emph{away} from the (new)
+target quadrant on inconsistent trials, and so response times should be
+slower on these trials compared to those on random trials.
 
 \subsection{Method}\label{method}
 
@@ -400,6 +445,12 @@ recruited (mean age = 20.1, SD = 1.1; 17 identified as female and 14 as
 male) via the Psychology Research Participation System in the Department
 of Psychology at Lancaster University, in return for the opportunity to
 use the recruitment system for their own research in future years.
+Analysis of the current experiments was performed with Bayesian methods,
+seeking support for either the null or alternative hypothesis on
+critical tests. As such we aimed for the maximum sample size that could
+be achieved by the resources of the experimenter (approximately 30).
+These sample sizes were similar to much of our previous lab work with
+contextual cuing tasks.
 
 \subsubsection{Materials}\label{materials}
 
@@ -433,16 +484,16 @@ distractors, equally divided between the four quadrants of the display,
 and one target. Four repeated configurations were trained\footnote{Though
   CC experiments may frequently train 8 or 12 repeated configurations,
   it has been established that participants typically learn only a
-  subset of these (Smyth \& Shanks, 2008). In order to avoid simply
-  adding unnecessary noise to our measure of CC, our lab typically
-  trains just 4 repeated configurations in our CC procedures.}. Four
-target locations were used, with one from each quadrant assigned to each
-of the repeated configurations. These same four target positions were
-used for the random configurations throughout the task. Each of these
-four target positions was chosen at random from one of five locations
-within each quadrant, that were approximately equidistant from the
-center of the screen. Distractors could not appear in these target
-locations.
+  subset of these (\citeproc{ref-smyth2008}{Smyth \& Shanks, 2008}). In
+  order to avoid simply adding unnecessary noise to our measure of CC,
+  our lab typically trains just 4 repeated configurations in our CC
+  procedures.}. Four target locations were used, with one from each
+quadrant assigned to each of the repeated configurations. These same
+four target positions were used for the random configurations throughout
+the task. Each of these four target positions was chosen at random from
+one of five locations within each quadrant, that were approximately
+equidistant from the center of the screen. Distractors could not appear
+in these target locations.
 
 Phase 2 employed a within-subjects design with factors of epoch (6-10)
 and configuration (repeated: consistent; repeated: inconsistent; random:
@@ -522,19 +573,18 @@ participants (not including timeout trials) was 98.10\% (SD = 1.65\%).
 One participant had an unusually low proportion of accurate trials and
 was also removed. The only participant deemed to be an outlier in terms
 of mean response time (hereafter RT) was also excluded on the basis of
-the timeout criterion, noted above.
-
-For the remaining twenty-eight participants we removed trials with a
-timeout and inaccurate trials, before removing outliers from the RT
-data. On average, the proportion of outliers removed was 3.03\% (SD =
-0.79\%). Zero participants had an unusual proportion of trials removed
-as outlier RTs (greater than 2.5 SDs above the mean).
+the timeout criterion, noted above. For the remaining twenty-eight
+participants we removed trials with a timeout and inaccurate trials,
+before removing outliers from the RT data. On average, the proportion of
+outliers removed was 3.03\% (SD = 0.79\%). Zero participants had an
+unusual proportion of trials removed as outlier RTs (greater than 2.5
+SDs above the mean).
 
 \begin{figure}[H]
 
 \centering{
 
-\includegraphics[width=0.9\textwidth,height=0.8\textheight]{CCEC_ms1_files/figure-pdf/fig-RT-exp1-1.pdf}
+\includegraphics[width=0.8\textwidth,height=0.7\textheight]{CCEC_ms1_files/figure-pdf/fig-RT-exp1-1.pdf}
 
 }
 
@@ -557,48 +607,50 @@ with faster response times for (consistent) repeated configurations
 compared to random configurations.
 
 These data were analysed with a Bayesian ANOVA\footnote{The Bayesian
-  analyses here follow the process outlined in Rouder et al. (2017).
-  Briefly, we present the best fitting model evaluated against the null
-  model, and then compare this fit to that of other models. Where the
-  comparison of two models (i.e., A against B) reveals a Bayes Factor of
-  greater than 3, this is taken as support for the components of model A
-  that are not present in model B. Bayes Factors of less than 0.33 are
-  taken as evidence in support of the equivalence of two models.
-  Following Wetzels et al. (2011) we use the terms ``substantial''
+  analyses here follow the process outlined in Rouder et al.
+  (\citeproc{ref-rouder2017}{2017}). Briefly, we present the best
+  fitting model evaluated against the null model, and then compare this
+  fit to that of other models. Where the comparison of two models (i.e.,
+  A against B) reveals a Bayes Factor of greater than 3, this is taken
+  as support for the components of model A that are not present in model
+  B. Bayes Factors of less than 0.33 are taken as evidence in support of
+  the equivalence of two models. Following Wetzels et al.
+  (\citeproc{ref-wetzels2011}{2011}) we use the terms ``substantial''
   (BF\textgreater3; BF\textless1/3), and ``strong'' (BF\textgreater10;
   BF\textless1/10) to reflect the levels of support for the results of
   the model comparisons.}, using the \emph{BayesFactor::anovaBF()}
 function in R. All analyses in this study used the default parameters
 for the priors, which ``places mass in reason-able ranges {[}of effect
-sizes{]} without being overcommitted to any one point'' (Rouder et al.,
-2017, p. 317). First taking the data from phase 1 (epochs 1-5), there
-was strong support for the model containing the factors of epoch and
-configuration (repeated vs.~random), BF\textsubscript{10} = 2.3 ×
-10\textsuperscript{12} ± 2.76\%. The addition of the interaction term
-did not improve the model fit, BF = 0.44 ± 3.18\%, though there was no
-evidence for the absence of the interaction. The best fitting model was
-a better fit than the two models containing only one of the factors,
-smallest BF = 37.11 ± 2.94\%, providing strong support for both the
-effects of configuration and epoch. Partial eta-squared (\(n^2_p\))
-effect sizes were calculated using \emph{effectsize::eta\_squared},
-giving values of: 0.22 for the effect of configuration; 0.39 for the
-effect of epoch; and 0.1 for the interaction effect.
+sizes{]} without being overcommitted to any one point''
+(\citeproc{ref-rouder2017}{Rouder et al., 2017, p. 317}). First taking
+the data from phase 1 (epochs 1-5), there was strong support for the
+model containing the factors of epoch and configuration (repeated
+vs.~random), BF\textsubscript{10} = 2.2 × 10\textsuperscript{12} ±
+0.96\%. The addition of the interaction term did not improve the model
+fit, BF = 0.47 ± 4.05\%, though there was no evidence for the absence of
+the interaction. The best fitting model was a better fit than the two
+models containing only one of the factors, smallest BF = 35.8 ± 1\%,
+providing strong support for both the effects of configuration and
+epoch. Partial eta-squared (\(n^2_p\)) effect sizes were calculated
+using \emph{effectsize::eta\_squared}, giving values of: 0.22 for the
+effect of configuration; 0.39 for the effect of epoch; and 0.1 for the
+interaction effect.
 
 A Bayesian ANOVA on the data from phase 2 (epochs 6-10) found strong
 support for the model containing the factors of configuration (repeated
 vs.~random) and target position (consistent vs.~inconsistent),
-BF\textsubscript{10} = 44.7 ± 1.44\%. The next best fitting model
+BF\textsubscript{10} = 47.02 ± 1.12\%. The next best fitting model
 contained these two factors and the interaction term, and was not a
-substantially worse fit to the data, BF = 0.57 ± 3.81\%. The best
+substantially worse fit to the data, BF = 0.77 ± 30.57\%. The best
 fitting model (with factors of configuration and target position, but no
 interaction) was a substantially better fit to the data than the model
-containing only the factor of configuration BF = 7.31 ± 62.03\%
-providing evidence that RTs were faster on consistent than inconsistent
-trials. There was no evidence for a difference between the best fitting
-model and the model containing only the factor of target position, BF =
-2.28 ± 2.93\%. The relevant effect sizes (\(n^2_p\)) were: 0.14 for the
-effect of configuration; 0.22 for the effect of target position; and
-0.14 for the interaction of these two factors.
+containing only the factor of configuration BF = 20.6 ± 1.5\% providing
+evidence that RTs were faster on consistent than inconsistent trials.
+There was no evidence for a difference between the best fitting model
+and the model containing only the factor of target position, BF = 2.41 ±
+1.29\%. The relevant effect sizes (\(n^2_p\)) were: 0.14 for the effect
+of configuration; 0.22 for the effect of target position; and 0.14 for
+the interaction of these two factors.
 
 To further explore responses to the different trial types in phase 2,
 Bayesian t-tests were run using BayesFactor::ttestBF (using the default
@@ -648,12 +700,13 @@ presence of the endogenous cue also suggests that CC is a robust and
 flexible behaviour. The apparent ability to entirely disrupt and negate
 the early part of the search process, whilst maintaining an intact CC
 effect, is somewhat at odds with the ``general procedural learning''
-that has been suggested to occur in CC (Seitz et al., 2023). According
-to this account, ``\ldots what may look an ineffective phase {[}of
-search{]} actually constitutes an important period during which
-procedural learning of a general scanning scheme becomes functional.''
-(Seitz et al., 2023, p. 9). The present data suggest that this aspect of
-search can be removed at no cost to CC.
+that has been suggested to occur in CC (\citeproc{ref-seitz2023}{Seitz
+et al., 2023}). According to this account, ``\ldots what may look an
+ineffective phase {[}of search{]} actually constitutes an important
+period during which procedural learning of a general scanning scheme
+becomes functional.'' (\citeproc{ref-seitz2023}{Seitz et al., 2023, p.
+9}). The present data suggest that this aspect of search can be removed
+at no cost to CC.
 
 \section{Experiment 2}\label{experiment-2}
 
@@ -758,14 +811,14 @@ outlier RTs and were not included in the final analysis.
 
 \begin{figure}[H]
 
-\caption{\label{fig-RT-exp2}RT data for Experiment 2. Error bars show
-standard error of the mean on normalised data.}
-
 \centering{
 
-\includegraphics[width=0.8\textwidth,height=0.8\textheight]{CCEC_ms1_files/figure-pdf/fig-RT-exp2-1.pdf}
+\includegraphics[width=0.9\textwidth,height=0.8\textheight]{CCEC_ms1_files/figure-pdf/fig-RT-exp2-1.pdf}
 
 }
+
+\caption{\label{fig-RT-exp2}RT data for Experiment 2. Error bars show
+standard error of the mean on normalised data.}
 
 \end{figure}%
 
@@ -776,16 +829,16 @@ different in the two conditions. The phase 1 data were explored with a
 Bayesian ANOVA, which revealed that the best fitting model contained the
 factors of epoch, configuration (repeated vs.~random), and endogenous
 cue (arrow present vs.~arrow absent), with no interaction terms,
-BF\textsubscript{10} = 7.3 × 10\textsuperscript{100} ± 1.92\%. The next
+BF\textsubscript{10} = 7.5 × 10\textsuperscript{100} ± 1.86\%. The next
 best fitting model contained all three factors and the interaction of
-epoch and configuration, BF\textsubscript{10} = 5.2 ×
-10\textsuperscript{100} ± 3.09\%, and this model was not a substantially
-worse fit to the data, BF = 0.72 ± 3.64\%. All other models were
+epoch and configuration, BF\textsubscript{10} = 5.4 ×
+10\textsuperscript{100} ± 3.01\%, and this model was not a substantially
+worse fit to the data, BF = 0.72 ± 3.54\%. All other models were
 substantially worse fits than the best fitting model, largest BF = 0.26
-± 5.4\%. Importantly, the interaction term between the factors of
+± 5.01\%. Importantly, the interaction term between the factors of
 endogenous cue and configuration did not improve the fit of the model,
 providing substantial support for the absence of this interaction, BF =
-0.19 ± 4.83\%. The relevant effect sizes (\(n^2_p\)) were: 0.02 for the
+0.19 ± 4.42\%. The relevant effect sizes (\(n^2_p\)) were: 0.02 for the
 effect of epoch; 0.4 for the effect of configuration; 0.85 for the
 effect of endogenous cue; 0.12 for the interaction effect between
 configuration and epoch; and 0.02 for the interaction between
@@ -798,14 +851,14 @@ discernible difference between the size of the cuing effects. We
 conducted a Bayesian ANOVA with factors of epoch, configuration and
 endogenous cue condition (arrow vs.~no-arrow). The best fitting model
 was that with just the factors of epoch and configuration with no
-interaction between the factors, BF\textsubscript{10} = 1.2 ×
-10\textsuperscript{15} ± 21.6\%. There was substantial support for this
-model over the next best fitting model, BF = 10.97 ± 21.82\%. To examine
+interaction between the factors, BF\textsubscript{10} = 9.6 ×
+10\textsuperscript{14} ± 0.95\%. There was substantial support for this
+model over the next best fitting model, BF = 8.98 ± 1.74\%. To examine
 the interaction of the configuration and endogenous cue factors, we
 compared the model containing those two factors to the model containing
 the two factors plus the interaction of configuration and endogenous
 cue, which revealed substantial support for the absence of an
-interaction, BF = 0.12 ± 4.27\%. The relevant effect sizes (\(n^2_p\))
+interaction, BF = 0.12 ± 5.59\%. The relevant effect sizes (\(n^2_p\))
 were: 0.62 for the effect of configuration; and 0.25 for the effect of
 epoch.
 
@@ -814,10 +867,10 @@ the factors of configuration type and endogenous cue, the data from
 across the experiment (epochs 1-10) were analysed with a Bayesian ANOVA
 with only the factors of configuration and endogenous cue. The best
 fitting model was that with the two factors and no interaction,
-BF\textsubscript{10} = 3.7 × 10\textsuperscript{51} ± 3.27\%. The
+BF\textsubscript{10} = 3.6 × 10\textsuperscript{51} ± 0.91\%. The
 addition of the interaction term did not strengthen the model, with
-substantial evidence for the absence of the interaction, BF = 0.09 ±
-4.52\%. The relevant effect sizes (\(n^2_p\)) were: 0.77 for the effect
+substantial evidence for the absence of the interaction, BF = 0.1 ±
+1.83\%. The relevant effect sizes (\(n^2_p\)) were: 0.77 for the effect
 of the endogenous cue; and 0.61 for the effect of configuration.
 
 \subsection{Discussion}\label{discussion-1}
@@ -856,7 +909,8 @@ possible accounts.
 \section{Experiment 3}\label{experiment-3}
 
 As noted earlier, the analysis of eye-movements during contextual cuing
-tasks (Beesley et al., 2018; Tseng \& Li, 2004) has revealed a
+tasks (\citeproc{ref-beesley2018}{Beesley et al., 2018};
+\citeproc{ref-tseng2004}{Tseng \& Li, 2004}) has revealed a
 characteristic scanning pattern comprising two phases: search initially
 occurs in a seemingly random manner, as the eyes move between
 distractors in the central region of the distractor field, before then
@@ -952,14 +1006,14 @@ as outlier RTs.
 
 \begin{figure}[H]
 
-\caption{\label{fig-RT-exp3}RT data for Experiment 3. Error bars show
-standard error of the mean on normalised data.}
-
 \centering{
 
-\includegraphics[width=0.8\textwidth,height=0.8\textheight]{CCEC_ms1_files/figure-pdf/fig-RT-exp3-1.pdf}
+\includegraphics[width=0.9\textwidth,height=0.8\textheight]{CCEC_ms1_files/figure-pdf/fig-RT-exp3-1.pdf}
 
 }
+
+\caption{\label{fig-RT-exp3}RT data for Experiment 3. Error bars show
+standard error of the mean on normalised data.}
 
 \end{figure}%
 
@@ -968,17 +1022,17 @@ epochs of Experiment 3. As in Experiment 1, contextual cuing was readily
 established in phase 1. These data were subjected to a Bayesian ANOVA
 which revealed that the best fitting model contained the factors of
 configuration (repeated vs.~random) and epoch, and an interaction
-between those factors, BF\textsubscript{10} = 5.2 ×
-10\textsuperscript{24} ± 1.03\%. However, the model without the
+between those factors, BF\textsubscript{10} = 5.3 ×
+10\textsuperscript{24} ± 1.01\%. However, the model without the
 interaction provided a strong fit to the data, BF\textsubscript{10} =
-5.2 × 10\textsuperscript{24} ± 1.69\%, and a comparison between the two
+5.1 × 10\textsuperscript{24} ± 0.59\%, and a comparison between the two
 models did not find any evidence in support of the interaction term, BF
-= 1 ± 1.98\%. There was strong support for the best fitting model over
-the remaining models, smallest BF = 3836.85 ± 1.44\%, providing strong
-support for the factors of epoch and configuration. The relevant effect
-sizes (\(n^2_p\)) were: 0.38 for the effect of the endogenous cue; and
-0.47 for the effect of configuration; and 0.08 for the interaction of
-these two factors.
+= 0.95 ± 1.17\%. There was strong support for the best fitting model
+over the remaining models, smallest BF = 3918.61 ± 1.04\%, providing
+strong support for the factors of epoch and configuration. The relevant
+effect sizes (\(n^2_p\)) were: 0.38 for the effect of the endogenous
+cue; and 0.47 for the effect of configuration; and 0.08 for the
+interaction of these two factors.
 
 The response times decreased significantly with the presentation of the
 valid endogenous cue in phase 2. Response times to the fully repeated
@@ -988,10 +1042,10 @@ repeated distractors appeared to be slower and comparable to the fully
 random configurations. The phase 2 data were subjected to a Bayesian
 ANOVA which found that the best fitting model contained the factors of
 configuration and epoch but no interaction between the factors,
-BF\textsubscript{10} = 1.4 × 10\textsuperscript{14} ± 1.17\%. This model
+BF\textsubscript{10} = 1.4 × 10\textsuperscript{14} ± 0.74\%. This model
 provided a superior fit to the data compared to the next best fitting
-model that included the two factors and the interaction term, BF = 125.5
-± 1.5\%, providing strong support for the contribution of the two
+model that included the two factors and the interaction term, BF = 122.4
+± 1.16\%, providing strong support for the contribution of the two
 factors and the absence of an interaction between the two factors. The
 relevant effect sizes (\(n^2_p\)) were: 0.37 for the effect of
 configuration; and 0.16 for the effect of epoch.
@@ -1031,21 +1085,22 @@ controlled attentional processes. Notably the fully repeated
 configurations exerted more of a benefit on search than those containing
 only the proximal distractors, suggesting that the repeating distractors
 beyond the target quadrant have some (but possibly lesser) influence on
-search (Brady \& Chun, 2007).
+search (\citeproc{ref-brady2007}{Brady \& Chun, 2007}).
 
 These data lend support to the notion that the effect of the repeated
 configuration is a late process within visual search, and that each
 trial commences with a random search process that is not guided by the
-repeated configuration (Beesley et al., 2018; Tseng \& Li, 2004). In
-some ways, these findings represent a paradox of CC: the cuing effect
-occurs almost at the point at which target detection has been made. One
-interpretation would be that this exemplifies the role of spatial
-contiguity in the formation of visual associations (Renaux et al.,
-2017). Alternatively, it provides support for the proposed ``decision
-threshold'' accounts of CC (Kunar et al., 2007; Sewell et al., 2018),
-which posit that the repeated distractors close to the target ensure a
-reduced threshold for target detection, resulting in faster response
-times.
+repeated configuration (\citeproc{ref-beesley2018}{Beesley et al.,
+2018}; \citeproc{ref-tseng2004}{Tseng \& Li, 2004}). In some ways, these
+findings represent a paradox of CC: the cuing effect occurs almost at
+the point at which target detection has been made. One interpretation
+would be that this exemplifies the role of spatial contiguity in the
+formation of visual associations (\citeproc{ref-renaux2017}{Renaux et
+al., 2017}). Alternatively, it provides support for the proposed
+``decision threshold'' accounts of CC (\citeproc{ref-kunar2007}{Kunar et
+al., 2007}; \citeproc{ref-sewell2018}{Sewell et al., 2018}), which posit
+that the repeated distractors close to the target ensure a reduced
+threshold for target detection, resulting in faster response times.
 
 \section{General Discussion}\label{general-discussion}
 
@@ -1080,8 +1135,9 @@ following the guidance of attention by the endogenous cue.
 
 The current data reveal that the influence of repeated contexts has a
 relatively late control on behaviour in visual search. Previous analysis
-of eye-movements during CC (Beesley et al., 2018; Tseng \& Li, 2004) has
-shown that contextual cuing (and visual search more generally) has two
+of eye-movements during CC (\citeproc{ref-beesley2018}{Beesley et al.,
+2018}; \citeproc{ref-tseng2004}{Tseng \& Li, 2004}) has shown that
+contextual cuing (and visual search more generally) has two
 characteristic components. The first of these is an inefficient search
 process where search fails to move towards the target in trials with
 more fixations. This is followed by a phase in which monotonic, positive
@@ -1098,88 +1154,260 @@ true both in terms of the performance of an acquired configuration
 (Experiments 1 and 3) and the acquisition of the representation for that
 configuration (Experiment 2).
 
-Recently, work by Seitz et al. (2023) has suggested that CC is made up
-of both configuration-specific learning, and eye-movements that reflect
-``\ldots procedural learning of a general scanning scheme\ldots{}''
-{[}p.~9{]}. This latter aspect of the acquired CC behaviour was
-suggested to occur within the earlier period of inefficient search. If
-such a behaviour developed in our CC task, it is clear that this
-behaviour is not critical to the performance of the CC effect (in Exp 1
-and Exp 3), or to the development of the learned behaviour (Exp 2).
-Contrary to the suggestion by Seitz et al. (2023), it's at least
-possible that such general procedural learning has some influence over
-the later stages of search. However, such an account would have to
-assume that this learnt behaviour is flexible enough to survive the
-curtailment of a considerable portion of the pattern of eye-movements.
-We would argue it is simpler to account for the present data by assuming
-the expression of a pattern-specific sequence of eye-movements that
-occurs late on in the search process, following the period of
-ineffective (random) search.
+Recently, work by Seitz et al. (\citeproc{ref-seitz2023}{2023}) has
+suggested that CC is made up of both configuration-specific learning,
+and eye-movements that reflect ``\ldots procedural learning of a general
+scanning scheme\ldots{}'' {[}p.~9{]}. This latter aspect of the acquired
+CC behaviour was suggested to occur within the earlier period of
+inefficient search. If such a behaviour developed in our CC task, it is
+clear that this behaviour is not critical to the performance of the CC
+effect (in Exp 1 and Exp 3), or to the development of the learned
+behaviour (Exp 2). Contrary to the suggestion by Seitz et al.
+(\citeproc{ref-seitz2023}{2023}), it's at least possible that such
+general procedural learning has some influence over the later stages of
+search. However, such an account would have to assume that this learnt
+behaviour is flexible enough to survive the curtailment of a
+considerable portion of the pattern of eye-movements. We would argue it
+is simpler to account for the present data by assuming the expression of
+a pattern-specific sequence of eye-movements that occurs late on in the
+search process, following the period of ineffective (random) search.
 
 The current data are also consistent with a late-stage ``response
-threshold'' account of CC (Sewell et al., 2018). According to this
-perspective, the facilitation for repeated configurations occurs because
-the target is more readily detected amongst the surrounding distractors.
-Such an account can be viewed as more closely aligned to a mechanism
-that enhances perceptual discrimination, rather than one of facilitating
-search. In the present tasks, such a mechanism would not be affected by
-the onset of the endogenous cue and the curtailing of the early period
-of ineffective search. Taken together, the results here point towards
-the possibility of three components to the behaviour in CC: an early
-ineffective search, followed by enhanced localisation and increased
-perceptual discrimination of the target, driven by the distractors
-closest to the target.
+threshold'' account of CC (\citeproc{ref-sewell2018}{Sewell et al.,
+2018}). According to this perspective, the facilitation for repeated
+configurations occurs because the target is more readily detected
+amongst the surrounding distractors. Such an account can be viewed as
+more closely aligned to a mechanism that enhances perceptual
+discrimination, rather than one of facilitating search. In the present
+tasks, such a mechanism would not be affected by the onset of the
+endogenous cue and the curtailing of the early period of ineffective
+search. Taken together, the results here point towards the possibility
+of three components to the behaviour in CC: an early ineffective search,
+followed by enhanced localisation and increased perceptual
+discrimination of the target, driven by the distractors closest to the
+target.
 
 The effect of CC on visual search has frequently been characterised as
-an automatic influence on behaviour (e.g., Chun \& Jiang, 1998; Chun \&
-Nakayama, 2000; Geyer et al., 2021). This characterisation of CC comes
-from multiple aspects of the observed effect. Updating of the
+an automatic influence on behaviour (e.g., \citeproc{ref-chun1998}{Chun
+\& Jiang, 1998}; \citeproc{ref-chun2000a}{Chun \& Nakayama, 2000};
+\citeproc{ref-geyer2021}{Geyer et al., 2021}). This characterisation of
+CC comes from multiple aspects of the observed effect. Updating of the
 associations is somewhat slow and seemingly inflexible to changes in the
-acquired associations (Makovski \& Jiang, 2011; Manginelli \& Pollmann,
-2009; e.g., Zellin et al., 2013), and therefore perhaps reflects a
-habitual form of behaviour. In addition, contextual cuing has frequently
-been observed in the absence of above-chance recognition memory for the
-repeating search configurations (e.g., Colagiuri \& Livesey, 2016),
-which suggests a non-conscious, automatically evoked form of behaviour.
+acquired associations (\citeproc{ref-makovski2011}{Makovski \& Jiang,
+2011}; \citeproc{ref-manginelli2009}{Manginelli \& Pollmann, 2009};
+e.g., \citeproc{ref-zellin2013}{Zellin et al., 2013}), and therefore
+perhaps reflects a habitual form of behaviour. In addition, contextual
+cuing has frequently been observed in the absence of above-chance
+recognition memory for the repeating search configurations (e.g.,
+\citeproc{ref-colagiuri2016}{Colagiuri \& Livesey, 2016}), which
+suggests a non-conscious, automatically evoked form of behaviour.
 Despite this persistent characterisation, the automaticity (or
 controllability) of CC has rarely been directly tested in the
 literature. To our knowledge, only the experiments of Luque and
-colleagues (Luque et al., 2017; Luque et al., 2021) have directly
-assessed this aspect of CC, by placing the influence of the
-configuration in competition with top-down goals in the task. Their
-findings supported the conclusion that CC performance can be controlled
-and will not guide search for the target when another aspect of the task
-governs attentional control. In the current study, the repeated
-configurations continued to have an influence on search performance even
-when attention had been guided by the endogenous cue. In this respect,
-it might be suggested that these results are somewhat at odds with the
-conclusions of Luque and colleagues (Luque et al., 2017; Luque et al.,
-2021).
+colleagues (\citeproc{ref-luque2017b}{Luque et al., 2017};
+\citeproc{ref-luque2021}{Luque et al., 2021}) have directly assessed
+this aspect of CC, by placing the influence of the configuration in
+competition with top-down goals in the task. Their findings supported
+the conclusion that CC performance can be controlled and will not guide
+search for the target when another aspect of the task governs
+attentional control. In the current study, the repeated configurations
+continued to have an influence on search performance even when attention
+had been guided by the endogenous cue. In this respect, it might be
+suggested that these results are somewhat at odds with the conclusions
+of Luque and colleagues (\citeproc{ref-luque2017b}{Luque et al., 2017};
+\citeproc{ref-luque2021}{Luque et al., 2021}).
 
 To what extent is this behaviour best characterised as ``automatic'' in
 nature? Arguably the clearest demonstration of an automatic effect of a
 stimulus on behaviour is when the associated behaviour is elicited even
-when it is counter-productive to the current goals (Moors \& De Houwer,
-2006). We could argue that such a test was constructed in the repeated
-inconsistent trials of Experiment 1, in which the repeated configuration
-was associated with a target that was previously located in a position
-on the opposite side of the screen to the direction indicated by the
-endogenous cue. If the repeated configuration had an effect on behaviour
-on these trials, we would have expected to see slower response times
-compared to random trials. This was not the case: response times were
-equivalent in these two conditions. As such it is hard to claim here
-that the configuration is having an \emph{automatic} effect on
-behaviour, according to this strict characterisation of such an effect.
-Nevertheless, the experiments here reveal a flexible interplay between
-top-down drivers of attention and configuration-driven effects of
-attention in CC.
+when it is counter-productive to the current goals
+(\citeproc{ref-moors2006}{Moors \& De Houwer, 2006}). We could argue
+that such a test was constructed in the repeated inconsistent trials of
+Experiment 1, in which the repeated configuration was associated with a
+target that was previously located in a position on the opposite side of
+the screen to the direction indicated by the endogenous cue. If the
+repeated configuration had an effect on behaviour on these trials, we
+would have expected to see slower response times compared to random
+trials. This was not the case: response times were equivalent in these
+two conditions. As such it is hard to claim here that the configuration
+is having an \emph{automatic} effect on behaviour, according to this
+strict characterisation of such an effect. Nevertheless, the experiments
+here reveal a flexible interplay between top-down drivers of attention
+and configuration-driven effects of attention in CC.
 
 \newpage
+
+\section{Open Practices Statement}\label{open-practices-statement}
+
+The raw data, analysis scripts, experimental materials, and the
+manuscript source files, are available at
+\url{http://github.com/tombeesley/CC_EC}. The analyses reported in this
+manuscript are computationally reproducible from the manuscript source
+files (using R v4.4.0), which are available at the github repository.
+The study designs and analyses were not pre-registered.
 
 \newpage
 
 \phantomsection\label{refs}
 \begin{CSLReferences}{1}{0}
+\bibitem[\citeproctext]{ref-beesley2018}
+Beesley, T., Hanafi, G., Vadillo, M. A., Shanks, David. R., \& Livesey,
+E. J. (2018). Overt attention in contextual cuing of visual search is
+driven by the attentional set, but not by the predictiveness of
+distractors. \emph{Journal of Experimental Psychology: Learning, Memory,
+and Cognition}, \emph{44}(5), 707--721.
+\url{https://doi.org/10.1037/xlm0000467}
+
+\bibitem[\citeproctext]{ref-beesley2015b}
+Beesley, T., Vadillo, M. A., Pearson, D., \& Shanks, D. R. (2015).
+Pre-exposure of repeated search configurations facilitates subsequent
+contextual cuing of visual search. \emph{Journal of Experimental
+Psychology: Learning, Memory, and Cognition}, \emph{41}(2), 348--362.
+\url{https://doi.org/10.1037/xlm0000033}
+
+\bibitem[\citeproctext]{ref-beesley2016}
+Beesley, T., Vadillo, M. A., Pearson, D., \& Shanks, D. R. (2016).
+Configural learning in contextual cuing of visual search. \emph{Journal
+of Experimental Psychology: Human Perception and Performance},
+\emph{42}(8), 1173--1185. \url{https://doi.org/10.1037/xhp0000185}
+
+\bibitem[\citeproctext]{ref-brady2007}
+Brady, T. F., \& Chun, M. M. (2007). Spatial constraints on learning in
+visual search: {Modeling} contextual cuing. \emph{Journal of
+Experimental Psychology: Human Perception and Performance},
+\emph{33}(4), 798--815. \url{https://doi.org/10.1037/0096-1523.33.4.798}
+
+\bibitem[\citeproctext]{ref-chun1998}
+Chun, M. M., \& Jiang, Y. (1998). Contextual {Cueing}: {Implicit
+Learning} and {Memory} of {Visual Context Guides Spatial Attention}.
+\emph{Cognitive Psychology}, \emph{36}(1), 28--71.
+\url{https://doi.org/10.1006/cogp.1998.0681}
+
+\bibitem[\citeproctext]{ref-chun2000a}
+Chun, M. M., \& Nakayama, K. (2000). On the {Functional Role} of
+{Implicit Visual Memory} for the {Adaptive Deployment} of {Attention
+Across Scenes}. \emph{Visual Cognition}, \emph{7}(1-3), 65--81.
+\url{https://doi.org/10.1080/135062800394685}
+
+\bibitem[\citeproctext]{ref-colagiuri2016}
+Colagiuri, B., \& Livesey, E. J. (2016). Contextual cuing as a form of
+nonconscious learning: {Theoretical} and empirical analysis in large and
+very large samples. \emph{Psychonomic Bulletin \& Review}, \emph{23}(6),
+1996--2009. \url{https://doi.org/10.3758/s13423-016-1063-0}
+
+\bibitem[\citeproctext]{ref-cousineau2005}
+Cousineau, D. (2005). Confidence intervals in within-subject designs:
+{A} simpler solution to {Loftus} and {Masson}'s method. \emph{Tutorials
+in Quantitative Methods for Psychology}, \emph{1}(1), 42--45.
+\url{https://doi.org/10.20982/tqmp.01.1.p042}
+
+\bibitem[\citeproctext]{ref-geyer2021}
+Geyer, T., Seitz, W., Zinchenko, A., Müller, H. J., \& Conci, M. (2021).
+Why {Are Acquired Search-Guiding Context Memories Resistant} to
+{Updating}? \emph{Frontiers in Psychology}, \emph{12}, 650245.
+\url{https://doi.org/10.3389/fpsyg.2021.650245}
+
+\bibitem[\citeproctext]{ref-kunar2007}
+Kunar, M. A., Flusberg, S., Horowitz, T. S., \& Wolfe, J. M. (2007).
+Does contextual cuing guide the deployment of attention? \emph{Journal
+of Experimental Psychology: Human Perception and Performance},
+\emph{33}(4), 816--828. \url{https://doi.org/10.1037/0096-1523.33.4.816}
+
+\bibitem[\citeproctext]{ref-luque2021}
+Luque, D., Beesley, T., Molinero, S., \& Vadillo, M. A. (2021).
+Contextual cuing of visual search does not guide attention automatically
+in the presence of top-down goals. \emph{Journal of Experimental
+Psychology: Human Perception and Performance}, \emph{47}(8), 1080--1090.
+\url{https://doi.org/10.1037/xhp0000930}
+
+\bibitem[\citeproctext]{ref-luque2017b}
+Luque, D., Vadillo, M. A., Lopez, F. J., Alonso, R., \& Shanks, D. R.
+(2017). Testing the controllability of contextual cuing of visual
+search. \emph{Scientific Reports}, \emph{7}(1), 39645.
+\url{https://doi.org/10.1038/srep39645}
+
+\bibitem[\citeproctext]{ref-makovski2011}
+Makovski, T., \& Jiang, Y. V. (2011). Investigating the {Role} of
+{Response} in {Spatial Context Learning}. \emph{Quarterly Journal of
+Experimental Psychology}, \emph{64}(8), 1563--1579.
+\url{https://doi.org/10.1080/17470218.2011.564291}
+
+\bibitem[\citeproctext]{ref-manginelli2009}
+Manginelli, A. A., \& Pollmann, S. (2009). Misleading contextual cues:
+{How} do they affect visual search? \emph{Psychological Research},
+\emph{73}(2), 212--221. \url{https://doi.org/10.1007/s00426-008-0211-1}
+
+\bibitem[\citeproctext]{ref-moors2006}
+Moors, A., \& De Houwer, J. (2006). Automaticity: {A Theoretical} and
+{Conceptual Analysis}. \emph{Psychological Bulletin}, \emph{132}(2),
+297--326. \url{https://doi.org/10.1037/0033-2909.132.2.297}
+
+\bibitem[\citeproctext]{ref-olson2002}
+Olson, I. R., \& Chun, M. M. (2002). Perceptual constraints on implicit
+learning of spatial context. \emph{Visual Cognition}, \emph{9}(3),
+273--302. \url{https://doi.org/10.1080/13506280042000162}
+
+\bibitem[\citeproctext]{ref-renaux2017}
+Renaux, C., Rivière, V., Craddock, P., \& Miller, R. R. (2017). Role of
+spatial contiguity in sensory preconditioning with humans.
+\emph{Behavioural Processes}, \emph{142}, 141--145.
+\url{https://doi.org/10.1016/j.beproc.2017.07.005}
+
+\bibitem[\citeproctext]{ref-rouder2017}
+Rouder, J. N., Morey, R. D., Verhagen, J., Swagman, A. R., \&
+Wagenmakers, E.-J. (2017). Bayesian analysis of factorial designs.
+\emph{Psychological Methods}, \emph{22}(2), 304--321.
+\url{https://doi.org/10.1037/met0000057}
+
+\bibitem[\citeproctext]{ref-seitz2023}
+Seitz, W., Zinchenko, A., Müller, H. J., \& Geyer, T. (2023). Contextual
+cueing of visual search reflects the acquisition of an optimal,
+one-for-all oculomotor scanning strategy. \emph{Communications
+Psychology}, \emph{1}(1, 1), 1--12.
+\url{https://doi.org/10.1038/s44271-023-00019-8}
+
+\bibitem[\citeproctext]{ref-sewell2018}
+Sewell, D. K., Colagiuri, B., \& Livesey, E. J. (2018). Response time
+modeling reveals multiple contextual cuing mechanisms. \emph{Psychonomic
+Bulletin \& Review}, \emph{25}(5), 1644--1665.
+\url{https://doi.org/10.3758/s13423-017-1364-y}
+
+\bibitem[\citeproctext]{ref-sisk2019}
+Sisk, C. A., Remington, R. W., \& Jiang, Y. V. (2019). Mechanisms of
+contextual cueing: {A} tutorial review. \emph{Attention, Perception, \&
+Psychophysics}, \emph{81}(8), 2571--2589.
+\url{https://doi.org/10.3758/s13414-019-01832-2}
+
+\bibitem[\citeproctext]{ref-smyth2008}
+Smyth, A. C., \& Shanks, D. R. (2008). Awareness in contextual cuing
+with extended and concurrent explicit tests. \emph{Memory \& Cognition},
+\emph{36}(2), 403--415. \url{https://doi.org/10.3758/MC.36.2.403}
+
+\bibitem[\citeproctext]{ref-tseng2004}
+Tseng, Y.-C., \& Li, C.-S. R. (2004). Oculomotor correlates of
+context-guided learning in visual search. \emph{Perception \&
+Psychophysics}, \emph{66}(8), 1363--1378.
+\url{https://doi.org/10.3758/BF03195004}
+
+\bibitem[\citeproctext]{ref-vadillo2016}
+Vadillo, M. A., Konstantinidis, E., \& Shanks, D. R. (2016).
+Underpowered samples, false negatives, and unconscious learning.
+\emph{Psychonomic Bulletin \& Review}, \emph{23}(1), 87--102.
+\url{https://doi.org/10.3758/s13423-015-0892-6}
+
+\bibitem[\citeproctext]{ref-wetzels2011}
+Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., \&
+Wagenmakers, E.-J. (2011). Statistical {Evidence} in {Experimental
+Psychology}: {An Empirical Comparison Using} 855 t {Tests}.
+\emph{Perspectives on Psychological Science}, \emph{6}(3), 291--298.
+\url{https://doi.org/10.1177/1745691611406923}
+
+\bibitem[\citeproctext]{ref-zellin2013}
+Zellin, M., von Muhlenen, A., Muller, H. J., \& Conci, M. (2013).
+Statistical learning in the past modulates contextual cueing in the
+future. \emph{Journal of Vision}, \emph{13}(3), 19--19.
+\url{https://doi.org/10.1167/13.3.19}
+
 \bibitem[\citeproctext]{ref-beesley2018}
 Beesley, T., Hanafi, G., Vadillo, M. A., Shanks, David. R., \& Livesey,
 E. J. (2018). Overt attention in contextual cuing of visual search is

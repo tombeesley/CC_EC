@@ -1,7 +1,3 @@
-if FORMAT == "typst" then
-  return
-end
-
 -- This filter does 3 things.
 -- 1. It runs citeproc. Citeproc is needed so that the apaandcite.lua filter can do its job.
 -- 2. It removes the References Header if there are no citations and sets the zerocitations slot in the metadata
@@ -145,7 +141,11 @@ return {
           end
         end
       end
-      return pandoc.utils.citeproc(doc) 
+      local d = pandoc.utils.citeproc(doc) 
+      if FORMAT == "typst" then
+        d.meta.citeproc = true
+      end
+      return d
     end
     
   }

@@ -1,19 +1,42 @@
-#let article(
+//#assert(sys.version.at(1) >= 11 or sys.version.at(0) > 0, message: "This template requires Typst Version 0.11.0 or higher. The version of Quarto you are using uses Typst version is " + str(sys.version.at(0)) + "." + str(sys.version.at(1)) + "." + str(sys.version.at(2)) + ". You will need to upgrade to Quarto 1.5 or higher to use apaquarto-typst.")
+
+// counts how many appendixes there are
+#let appendixcounter = counter("appendix")
+// make latex logo
+// https://github.com/typst/typst/discussions/1732#discussioncomment-6566999
+#let TeX = style(styles => {
+  set text(font: ("New Computer Modern", "Times", "Times New Roman"))
+  let e = measure("E", styles)
+  let T = "T"
+  let E = text(1em, baseline: e.height * 0.31, "E")
+  let X = "X"
+  box(T + h(-0.15em) + E + h(-0.125em) + X)
+})
+#let LaTeX = style(styles => {
+  set text(font: ("New Computer Modern", "Times", "Times New Roman"))
+  let a-size = 0.66em
+  let l = measure("L", styles)
+  let a = measure(text(a-size, "A"), styles)
+  let L = "L"
+  let A = box(scale(x: 105%, text(a-size, baseline: a.height - l.height, "A")))
+  box(L + h(-a.width * 0.67) + A + h(-a.width * 0.25) + TeX)
+})
+
+#let firstlineindent=0.5in
+
+// documentmode: man
+#let man(
   title: none,
-  running-head: none,
-  authors: none,
-  affiliations: none,
-  authornote: none,
-  abstract: none,
-  keywords: none,
-  margin: (x: 2.5cm, y: 2.5cm),
+  runninghead: none,
+  margin: (x: 1in, y: 1in),
   paper: "us-letter",
-  font: ("Times New Roman"),
+  font: ("Times", "Times New Roman"),
   fontsize: 12pt,
-  leading: 2em,
-  spacing: 2em,
-  first-line-indent: 1.25cm,
+  leading: 18pt,
+  spacing: 18pt,
+  firstlineindent: 0.5in,
   toc: false,
+  lang: "en",
   cols: 1,
   doc,
 ) = {
@@ -23,83 +46,69 @@
     margin: margin,
     header-ascent: 50%,
     header: grid(
-      columns: (1fr, 1fr),
-      align(left)[#running-head],
+      columns: (9fr, 1fr),
+      align(left)[#upper[#runninghead]],
       align(right)[#counter(page).display()]
     )
   )
-  
+
+
+ 
+if sys.version.at(1) >= 11 or sys.version.at(0) > 0 {
+  set table(    
+    stroke: (x, y) => (
+        top: if y <= 1 { 0.5pt } else { 0pt },
+        bottom: .5pt,
+      )
+  )
+}
   set par(
     justify: false, 
     leading: leading,
-    first-line-indent: first-line-indent
+    first-line-indent: firstlineindent
   )
 
   // Also "leading" space between paragraphs
-  show par: set block(spacing: spacing)
+  set block(spacing: spacing, above: spacing, below: spacing)
 
   set text(
     font: font,
-    size: fontsize
+    size: fontsize,
+    lang: lang
   )
 
-  if title != none {
-    align(center)[
-      #v(8em)#block(below: leading*2)[
-        #text(weight: "bold", size: fontsize)[#title]
-      ]
-    ]
-  }
-  
-  if authors != none {
-    align(center)[
-      #block(above: leading, below: leading)[
-        // Formatting depends on N authors 1, 2, or 2+
-        #if authors.len() > 2 {
-          for a in authors [
-            #a.name#super[#a.affiliations]#if a.note == "true" [#footnote(numbering: "*", [Send correspondence to #a.name, #a.email. #authornote])]#if a!=authors.at(authors.len()-1) [#if a==authors.at(authors.len()-2) [, and] else [,]]
-          ]
-        } 
-        #if authors.len() == 2 {
-          for a in authors [
-            #a.name#super[#a.affiliations]#if a.note == "true" [#footnote(numbering: "*", [Send correspondence to #a.name, #a.email. #authornote])]#if a!=authors.at(authors.len()-1) [and]
-          ]
-        }
-        #if authors.len() == 1 {
-          for a in authors [
-            #a.name#super[#a.affiliations]#if a.note == "true" [#footnote(numbering: "*", [Send correspondence to #a.name, #a.email. #authornote])]
-          ]
-        }
-      ]
-      #counter(footnote).update(0)
-    ]
-  }
-  
-  if affiliations != none {
-    align(center)[
-      #block(above: leading, below: leading)[
-        #for a in affiliations [
-          #super[#a.id]#a.name \
-        ]
-      ]
-    ]
-  }
+  show link: set text(blue)
 
-  pagebreak()
-  
-  if abstract != none {
-    block(above: 0em, below: 2em)[
-      #align(center, text(weight: "bold", "Abstract"))
-      #set par(first-line-indent: 0pt, leading: leading)
-      #abstract
-      #if keywords != none {[
-        #text(weight: "regular", style: "italic")[Keywords:] #h(0.25em) #keywords
-      ]}
-    ]
-  }
-  pagebreak()
+  show quote: set pad(x: 0.5in)
+  show quote: set par(leading: leading)
+  show quote: set block(spacing: spacing, above: spacing, below: spacing)
+  // show LaTeX
+  show "TeX": TeX
+  show "LaTeX": LaTeX
 
-  /* Redefine headings up to level 5 */
+  // format figure captions
+  show figure.where(kind: "quarto-float-fig"): it => [
+    #if int(appendixcounter.display().at(0)) > 0 [
+      #heading(level: 2)[#it.supplement #appendixcounter.display("A")#it.counter.display()]
+    ] else [
+      #heading(level: 2)[#it.supplement #it.counter.display()]
+    ]
+    #par[#emph[#it.caption.body]]
+    #align(center)[#it.body]
+  ]
+  
+  // format table captions
+  show figure.where(kind: "quarto-float-tbl"): it => [
+    #if int(appendixcounter.display().at(0)) > 0 [
+      #heading(level: 2)[#it.supplement #appendixcounter.display("A")#it.counter.display()]
+    ] else [
+      #heading(level: 2)[#it.supplement #it.counter.display()]
+    ]
+    #par[#emph[#it.caption.body]]
+    #block[#it.body]
+  ]
+
+ // Redefine headings up to level 5 
   show heading.where(
     level: 1
   ): it => block(width: 100%, below: leading, above: leading)[
@@ -107,7 +116,7 @@
     #set text(size: fontsize)
     #it.body
   ]
-
+  
   show heading.where(
     level: 2
   ): it => block(width: 100%, below: leading, above: leading)[
@@ -115,7 +124,7 @@
     #set text(size: fontsize)
     #it.body
   ]
-
+  
   show heading.where(
     level: 3
   ): it => block(width: 100%, below: leading, above: leading)[
@@ -129,7 +138,7 @@
   ): it => text(
     size: 1em,
     weight: "bold",
-    it.body + [.]
+    it.body
   )
 
   show heading.where(
@@ -138,7 +147,7 @@
     size: 1em,
     weight: "bold",
     style: "italic",
-    it.body + [.]
+    it.body
   )
 
   if cols == 1 {
@@ -146,5 +155,6 @@
   } else {
     columns(cols, gutter: 4%, doc)
   }
-  
+
+
 }

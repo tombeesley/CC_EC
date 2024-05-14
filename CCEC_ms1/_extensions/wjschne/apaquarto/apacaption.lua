@@ -62,6 +62,7 @@ end
 
 local divcaption = function(div)
   if div.identifier:find("^tbl%-") or div.identifier:find("^fig%-") then
+    
     -- Get figure/table prefix and number
     if div.attributes.prefix then
       if div.attributes.fignum then

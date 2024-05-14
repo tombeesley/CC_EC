@@ -32,16 +32,23 @@ affiliations:
     name: Universidad de Málaga
     country: Spain
 abstract: |
-  | "Three experiments explored the interaction between an endogenous cue of attention and the repetition of a visual search display during contextual cuing. In Experiment 1, participants readily learnt about repeated configurations of visual search, before being presented with an endogenous cue for attention towards the target on every trial. Participants used this cue to improve search times, but the repeated contexts continued to guide attention. Experiment 2 demonstrated that the presence of the endogenous did not impede the acquisition of contextual cuing. Experiment 3 confirmed the hypothesis that the contextual cuing effect relies largely on localised distractor contexts, following the guidance of attention. Together, the experiments point towards an interplay between two drivers of attention: after the initial guidance of attention, memory representations of the context are flexibly deployed to facilitate the target detection.  
-  | Public significance statement: This study provides a test of how attention is governed by different aspects of the environment. We examine whether the control of attention by an instructional stimulus (an arrow that directs attention) will interfere with the way in which attention is governed by other learnt visual patterns in the environment. "
-keywords: [visual search; contextual cuing; endogenous cuing]
+  | Three experiments explored how the repetition of a visual search display guides search during contextual cuing under conditions in which the search process is interrupted by an instructional (endogenous) cue for attention. In Experiment 1, participants readily learnt about repeated configurations of visual search, before being presented with an endogenous cue for attention towards the target on every trial. Participants used this cue to improve search times, but the repeated contexts continued to guide attention. Experiment 2 demonstrated that the presence of the endogenous did not impede the acquisition of contextual cuing. Experiment 3 confirmed the hypothesis that the contextual cuing effect relies largely on localised distractor contexts, following the guidance of attention. Together, the experiments point towards an interplay between two drivers of attention: after the initial guidance of attention, memory representations of the context continue to guide attention towards the target, suggesting that CC representations are flexibly deployed when the search procedure is dramatically interrupted.  
+  | Public significance statement: This study provides a test of how attention is governed by different aspects of the environment. We examine whether the control of attention by an instructional stimulus (an arrow that directs attention) will interfere with the way in which attention is governed by other learnt visual patterns in the environment. 
+keywords: [visual search; incidental learning; contextual cuing; attention; endogenous cuing]
 bibliography: bibliography.bib
 format:
   apaquarto-pdf:
-    link-citations: false
+    link-citations: true
+    numbered-lines: true
     fig-pos: 'H'
     documentmode: man
     keep-tex: true
+    citeproc: false
+    filters: 
+      - at: pre-render
+        path: "citeproc.lua"
+      - at: pre-render
+        path: "wordcount.lua"
 execute:
   echo: false
   warning: false
@@ -119,7 +126,7 @@ report_BF_and_error <- function(BF_in, sci_not = TRUE, hyp = "alt"){
 
 # set number of iterations for the Bayesian MC process
 
-numIterations = 10000
+numIterations = 50000
 
 #update bib file
 rbbt::bbt_update_bib(path_rmd = "CCEC_ms1.qmd",
@@ -151,13 +158,13 @@ Much work has focused on the nature of the memory and attention processes respon
 
 The exact nature of how repeated configurations come to facilitate visual search is the focus of much debate within the literature. Broadly there are two quite distinct theoretical accounts of why responses are faster for repeated configurations: the early attentional guidance account, and the late response facilitation account. According to the early account, recognition of the configuration leads to a more efficient search process through the distractor array, such that the target is localised (fixated) at an earlier time point in search. Perhaps the clearest (and arguably simplest) evidence in support of this account comes from studies of eye-tracking during CC. For example, search through repeated configurations results in fewer fixations prior to target localisation [e.g., @beesley2018; @tseng2004]. According to the late response facilitation account, the benefit for repeated configurations comes about as a result of enhanced target processing once it has been localised by attention. One conceptualisation of this process is that repeated configurations lead to a reduction in the evidence threshold required to ascertain that the target is present in its location, such that responses can be initiated earlier. Such an account has been put forward by @sewell2018, in order to explain the evidence supporting the late account from response time modelling of the CC effect.
 
-It seems likely that the both early and late processes contribute to the overall CC effect [for a review see @sisk2019]. The current article focuses on exploration of the early-stage attentional account of CC. The term "early" here reflects the fact that the CC benefit is present prior to the detection of the target and the initiation of the response to the target. Analysis of eye-movements has shown that serial visual search can be defined as having two distinct phases: an initial ineffective search in which the direction of saccades is not consistent (arguably random) and a secondary effective phase in which each saccade will draw attention closer to the target. CC appears to result from having more trials with a shorter ineffective phase.
+It seems likely that the both early and late processes contribute to the overall CC effect [for a review see @sisk2019]. The current article focuses on exploration of the early-stage attentional account of CC. The term "early" here reflects the fact that the CC benefit is present prior to the detection of the target and the initiation of the response to the target. In fact, the "early" phase can be further divided. Analysis of eye-movements has shown that serial visual search can be defined as having two distinct phases: an initial ineffective search in which the direction of saccades is not consistent (arguably random) and a secondary effective phase in which each saccade will draw attention closer to the target. CC appears to result from having more trials with a shorter ineffective phase.
 
 One interpretation of these data is that CC is initially random, and that the initial distractor processing is not beneficial for CC. Supporting evidence for this account comes from @olson2002, where participants were trained on a CC task in which either all the distractors repeated, those in the half of the screen containing the target (short-range-context), or those in the half of the screen that didn't contain the target (long-range-context). CC was observed in the short-range-context, but not in the long-range-context condition. Thus it would appear that the distractors further from the target are not critical to the generation of a CC effect.
 
 @brady2007's computational account features a mechanism that ensures spatial constraints are placed on the learning of associations with relation to their proximity to the target. If the spatial constraints are tuned to modulate learning and restrict associative formations to only those distractors close to the target, this model can accurately model the data from @olson2002. Since the only consequential mechanism in the model for CC is the associative weights (and their modulation by spatial constraints), then one prediction that follows from this account is that the initial phase of search is inconsequential for observing CC.
 
-The current article provides a test of this prediction by significantly interrupting the search process with an endogenous cue for attention. In all experiments participants complete a contextual cuing visual search task but are also presented with an arrow that signals the side of the screen on which the target will appear. Thus, this cue disrupts the natural search process, eliminating entirely the early phase of search. In contrast to the localised facilitation account, it's possible that contextual cuing involves learning of a procedural template that guides eye-movements in a consistent pattern for each repeated configuration. While the initial process may be inefficient in nature, it may nevertheless be an important part of the procedural response in terms of the sequence of eye-movements. Recent experiments from @seitz2023 suggests that more generic scanning behaviour forms part of the procedural knowledge that contributes to CC.
+In contrast to the localised facilitation account, it's possible that contextual cuing involves learning of a procedural template that guides eye-movements in a consistent pattern for each repeated configuration. While the initial process may be inefficient in nature, it may nevertheless be an important part of the procedural response in terms of the sequence of eye-movements. Recent experiments from @seitz2023 suggests that more generic scanning behaviour forms part of the procedural knowledge that contributes to CC. The current article provides a test of this prediction by significantly interrupting the search process with an endogenous cue for attention. In all experiments participants complete a contextual cuing visual search task but are also presented with an arrow that signals the side of the screen on which the target will appear. Thus, this cue disrupts the natural search process, eliminating entirely the early phase of search. The experiments therefore examine the extent to which this initial part of the search process is truly inconsequential for the observation of the CC effect. 
 
 In the current experiments we explored how CC is affected by the interruption of the search process by a clear direction of attention from an endogenous cue. In Experiment 1 we examine whether a learnt pattern of behaviour is disrupted due to the onset of the endogenous cue, while in Experiment 2 we seek to establish whether the CC effect is weaker under these conditions. Experiment 3 explores the underlying drivers of the CC effect, in terms of the distractor-target associations, during these procedures.
 
@@ -210,13 +217,9 @@ data_raw <- readRDS("combinedData.rds")
 
 ```
 
-# Transparency and Openness
-
-The raw data, analysis scripts, experimental materials, and the manuscript source files, are available at <http://github.com/tombeesley/CC_Control>. The analyses reported in this manuscript are computationally reproducible from the manuscript source files (using R v4.4.0), which are available at the github repository. The study design and analyses were not pre-registered.
-
 # Experiment 1
 
-Experiment 1 sought to examine whether the learnt attentional behaviour that develops during contextual cuing is still expressed when participants are directed by an endogenous (instructional) cue to search in a particular region of the visual scene. Participants were first trained with a set of four repeating configurations in phase 1 across 5 epochs of 32 trials each. Then prior to phase 2, participants were told that an arrow would appear before every trial indicating the side of the screen on which the target would be located. This arrow was valid on every trial. In phase 2, the repeating configurations were presented in two forms: "consistent", where the target appeared in the same position as it has appeared for that configuration in phase 1; and "inconsistent", where the target appeared in a position in the opposite quadrant of the screen from where it had appeared in phase 1. Random configurations were also presented in this phase. If the contextual cues within the repeated configurations continue to guide attention in the presence of the instructional cue, then we would expect that response times would be faster on consistent trials compared to random trials. In addition, we would also expect that the contextual cues would guide attention *away* from the (new) target quadrant on inconsistent trials, and so response times should be slower on these trials compared to those on random trials.
+Experiment 1 sought to examine whether the learnt attentional behaviour that develops during contextual cuing is still expressed when participants are directed by an endogenous (instructional) cue to search in a particular region of the visual scene, hindering the operation of early-stage visual search processes. Participants were first trained with a set of four repeating configurations in phase 1 across 5 epochs of 32 trials each. Then prior to phase 2, participants were told that an arrow would appear before every trial indicating the side of the screen on which the target would be located. This arrow was valid on every trial. In phase 2, the repeating configurations were presented in two forms: "consistent", where the target appeared in the same position as it has appeared for that configuration in phase 1; and "inconsistent", where the target appeared in a position in the opposite quadrant of the screen from where it had appeared in phase 1. Random configurations were also presented in this phase. The inclusion of the inconsistent trials in this phase provides a test of whether the distractors processed in the early stages of search continue to guide attention in the presence of the endognenous cue. If this is the case, we would also expect that the contextual cues would guide attention *away* from the (new) target quadrant on inconsistent trials, and so response times should be slower on these trials compared to those on random trials.
 
 ## Method
 
@@ -252,7 +255,7 @@ demographics <-
 
 ```
 
-`r Words(nrow(demographics))` undergraduate students from Lancaster University were recruited (mean age = `r round(mean(demographics$age),1)`, SD = `r round(sd(demographics$age),1)`; `r sum(demographics$gender=="f")` identified as female and `r sum(demographics$gender=="m")` as male) via the Psychology Research Participation System in the Department of Psychology at Lancaster University, in return for the opportunity to use the recruitment system for their own research in future years.
+`r Words(nrow(demographics))` undergraduate students from Lancaster University were recruited (mean age = `r round(mean(demographics$age),1)`, SD = `r round(sd(demographics$age),1)`; `r sum(demographics$gender=="f")` identified as female and `r sum(demographics$gender=="m")` as male) via the Psychology Research Participation System in the Department of Psychology at Lancaster University, in return for the opportunity to use the recruitment system for their own research in future years. Analysis of the current experiments was performed with Bayesian methods, seeking support for either the null or alternative hypothesis on critical tests. As such we aimed for the maximum sample size that could be achieved by the resources of the experimenter (approximately 30). These sample sizes were similar to much of our previous lab work with contextual cuing tasks.
 
 ### Materials
 
@@ -339,8 +342,6 @@ participants_removed <-
 
 ```
 
-Our criterion for removing outlier data, at both the participant level and the trial level, was 2.5 standard deviations above or below the mean of the sample. On average, trials ended with a timeout on `r spec_dec(100*mean(resp_summary_exp1$meanTO),2)`% of trials (SD = `r spec_dec(100*sd(resp_summary_exp1$meanTO),2)`). `r Words(nrow(outlier_to))` participants had an usually high proportion of timeouts and were removed from the analysis. The mean accuracy of participants (not including timeout trials) was `r spec_dec(100*mean(resp_summary_exp1$meanAcc),2)`% (SD = `r spec_dec(100*sd(resp_summary_exp1$meanAcc),2)`%). `r Words(nrow(outlier_acc))` participant had an unusually low proportion of accurate trials and was also removed. The only participant deemed to be an outlier in terms of mean response time (hereafter RT) was also excluded on the basis of the timeout criterion, noted above.
-
 ```{r rm_outliers_exp1}
 
 # remove the participant outliers from the data
@@ -376,7 +377,7 @@ data_e1_f <-
 
 ```
 
-For the remaining `r words(nrow(rt_outlier_summary))` participants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was `r spec_dec(100*mean(rt_outlier_summary$prop_rem),2)`% (SD = `r spec_dec(100*sd(rt_outlier_summary$prop_rem),2)`%). `r Words(nrow(outlier_prop_removed))` participants had an unusual proportion of trials removed as outlier RTs (greater than 2.5 SDs above the mean).
+Our criterion for removing outlier data, at both the participant level and the trial level, was 2.5 standard deviations above or below the mean of the sample. On average, trials ended with a timeout on `r spec_dec(100*mean(resp_summary_exp1$meanTO),2)`% of trials (SD = `r spec_dec(100*sd(resp_summary_exp1$meanTO),2)`). `r Words(nrow(outlier_to))` participants had an usually high proportion of timeouts and were removed from the analysis. The mean accuracy of participants (not including timeout trials) was `r spec_dec(100*mean(resp_summary_exp1$meanAcc),2)`% (SD = `r spec_dec(100*sd(resp_summary_exp1$meanAcc),2)`%). `r Words(nrow(outlier_acc))` participant had an unusually low proportion of accurate trials and was also removed. The only participant deemed to be an outlier in terms of mean response time (hereafter RT) was also excluded on the basis of the timeout criterion, noted above. For the remaining `r words(nrow(rt_outlier_summary))` participants we removed trials with a timeout and inaccurate trials, before removing outliers from the RT data. On average, the proportion of outliers removed was `r spec_dec(100*mean(rt_outlier_summary$prop_rem),2)`% (SD = `r spec_dec(100*sd(rt_outlier_summary$prop_rem),2)`%). `r Words(nrow(outlier_prop_removed))` participants had an unusual proportion of trials removed as outlier RTs (greater than 2.5 SDs above the mean).
 
 ```{r rt_summary_exp1}
 # compute grand mean RT 
@@ -513,8 +514,8 @@ phase2_avg_col <-
 ```{r show-fig1}
 #| label: fig-RT-exp1
 #| fig-cap-location: bottom
-#| out-width: 90%
-#| out-height: 80%
+#| out-width: 80%
+#| out-height: 70%
 #| fig-cap: RT data for Experiment 1. The phase 2 averages across the four trial types are shown inset. Within-subject error bars were computed by a process of normalising the RT data for the sample (Cousineau, 2005).
 
 rf_fig_exp1 + inset_element(phase2_avg_col, 0.55, 0.5, 1, 1)
@@ -751,7 +752,8 @@ For the remaining `r words(nrow(rt_outlier_summary))` participants we removed tr
 ```{r }
 #| label: fig-RT-exp2
 #| fig-cap: RT data for Experiment 2. Error bars show standard error of the mean on normalised data.
-#| out-width: 80%
+#| fig-cap-location: bottom
+#| out-width: 90%
 #| out-height: 80%
 
 
@@ -1116,7 +1118,8 @@ phase_2_avg_RT <-
 ```{r }
 #| label: fig-RT-exp3
 #| fig-cap: RT data for Experiment 3. Error bars show standard error of the mean on normalised data.
-#| out-width: 80%
+#| fig-cap-location: bottom
+#| out-width: 90%
 #| out-height: 80%
 
 
@@ -1229,6 +1232,10 @@ save(e1_phase1_BF,
      file = "anova_BF_saved_results.RData")
 
 ```
+
+# Open Practices Statement
+
+The raw data, analysis scripts, experimental materials, and the manuscript source files, are available at <http://github.com/tombeesley/CC_EC>. The analyses reported in this manuscript are computationally reproducible from the manuscript source files (using R v4.4.0), which are available at the github repository. The study designs and analyses were not pre-registered.
 
 \newpage
 
