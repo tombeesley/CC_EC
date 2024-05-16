@@ -1242,14 +1242,25 @@ Not applicable
 Not applicable
 
 ### Ethics approval 
-Ethical approval was granted by the 
-Consent to participate (include appropriate statements)
-Consent for publication (include appropriate statements)
-Availability of data and materials (data transparency)
-Code availability (software application or custom code)
-Authors' contributions (optional: please review the submission guidelines from the journal whether statements are mandatory)
+Ethical approval was granted by the Department of Psychology Ethics Committee, Lancaster University, conforming to the British Psychological Society Code of Ethics and Conduct.
 
-The raw data, analysis scripts, experimental materials, and the manuscript source files, are available at <http://github.com/tombeesley/CC_EC>. The analyses reported in this manuscript are computationally reproducible from the manuscript source files (using R v4.4.0), which are available at the github repository. The study designs and analyses were not pre-registered.
+### Consent to participate 
+All participants gave informed consent to participate in the study. All data was stored anonymously at the point of collection.
+
+### Consent for publication
+All participants gave informed consent for their (anonymised) data to be used in publication.
+
+### Availability of data and materials
+The raw data and experimental materials are freely available at the project repository <http://github.com/tombeesley/CC_EC>
+
+### Code availability 
+The data analysis scripts and the manuscript source files are available at <http://github.com/tombeesley/CC_EC>. The analyses reported in this manuscript are computationally reproducible from the manuscript source files (using R v4.4.0). 
+
+### Authors' contributions 
+T.B. Designed the experiments; programmed the experiments; conducted the statistical analyses; wrote the manuscript.
+D.L. Designed the experiments; contributed to the writing of the manuscript. 
+L.E., H.B., I.S., I.J., contributed to the design of the experiments; collected the data; approved the final manuscript version.
+
 
 \newpage
 
