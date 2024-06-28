@@ -545,6 +545,15 @@ e1_phase1_ES <- effectsize::eta_squared(aov_car(meanRT ~ Error(subj/TT*epoch), d
                                         partial = TRUE)
 
 
+exp_1_CC <- 
+  phase_1 %>% 
+  group_by(subj, TT) %>% 
+  summarise(meanRT = mean(meanRT))
+
+effectsize::cohens_d(Pair(meanRT[TT == "Repeated: consistent"],
+                     meanRT[TT == "Random: consistent"]) ~ 1,
+                     data = exp_1_CC)
+
 ```
 
 These data were analysed with a Bayesian ANOVA[^2], using the *BayesFactor::anovaBF()* function in R. All analyses in this study used the default parameters for the priors, which "places mass in reason-able ranges \[of effect sizes\] without being overcommitted to any one point" [@rouder2017, p. 317]. First taking the data from phase 1 (epochs 1-5), there was strong support for the model containing the factors of epoch and configuration (repeated vs. random), `r report_BF_and_error(e1_phase1_BF[3])`. The addition of the interaction term did not improve the model fit, `r report_BF_and_error(e1_phase1_BF[4]/e1_phase1_BF[3], sci_not = FALSE, hyp = "mc")`, though there was no evidence for the absence of the interaction. The best fitting model was a better fit than the two models containing only one of the factors, smallest `r report_BF_and_error(e1_phase1_BF[3]/e1_phase1_BF[1], sci_not = FALSE, hyp = "mc")`, providing strong support for both the effects of configuration and epoch. Partial eta-squared ($n^2_p$) effect sizes were calculated using *effectsize::eta_squared*, giving values of: `r e1_phase1_ES[1,2]` for the effect of configuration; `r e1_phase1_ES[2,2]` for the effect of epoch; and `r e1_phase1_ES[3,2]` for the interaction effect.
@@ -1147,9 +1156,18 @@ e3_phase1_ES <- effectsize::eta_squared(aov_car(meanRT ~ Error(subj/TT*epoch),
                                                 data = phase_1), 
                                         partial = TRUE)
 
+exp_3_CC <- 
+  phase_1 %>% 
+  group_by(subj, TT) %>% 
+  summarise(meanRT = mean(meanRT))
+
+effectsize::cohens_d(Pair(meanRT[TT == "Repeated"],
+                     meanRT[TT == "Random"]) ~ 1,
+                     data = exp_3_CC)
+
 ```
 
-@fig-RT-exp3 (main panel) shows the RT data across the 10 epochs of Experiment 3. As in Experiment 1, contextual cuing was readily established in phase 1. These data were subjected to a Bayesian ANOVA which revealed that the best fitting model contained the factors of configuration (repeated vs. random) and epoch, and an interaction between those factors, `r report_BF_and_error(e3_phase1_BF[4])`. However, the model without the interaction provided a strong fit to the data, `r report_BF_and_error(e3_phase1_BF[3])`, and a comparison between the two models did not find any evidence in support of the interaction term, `r report_BF_and_error(e3_phase1_BF[3]/e3_phase1_BF[4], sci_not = FALSE, hyp = "mc")`. There was strong support for the best fitting model over the remaining models, smallest `r report_BF_and_error(e3_phase1_BF[4]/e3_phase1_BF[1], sci_not = FALSE, hyp = "mc")`, providing strong support for the factors of epoch and configuration. The relevant effect sizes ($n^2_p$) were: `r e3_phase1_ES[1,2]` for the effect of the endogenous cue; and `r e3_phase1_ES[2,2]` for the effect of configuration; and `r e3_phase1_ES[3,2]` for the interaction of these two factors.
+@fig-RT-exp3 (main panel) shows the RT data across the 10 epochs of Experiment 3. As in Experiment 1, contextual cuing was readily established in phase 1. These data were subjected to a Bayesian ANOVA which revealed that the best fitting model contained the factors of configuration (repeated vs. random) and epoch, and an interaction between those factors, `r report_BF_and_error(e3_phase1_BF[4])`. However, the model without the interaction provided a strong fit to the data, `r report_BF_and_error(e3_phase1_BF[3])`, and a comparison between the two models did not find any evidence in support of the interaction term, `r report_BF_and_error(e3_phase1_BF[3]/e3_phase1_BF[4], sci_not = FALSE, hyp = "mc")`. There was strong support for the best fitting model over the remaining models, smallest `r report_BF_and_error(e3_phase1_BF[4]/e3_phase1_BF[1], sci_not = FALSE, hyp = "mc")`, providing strong support for the factors of epoch and configuration. The relevant effect sizes ($n^2_p$) were: `r e3_phase1_ES[1,2]` for the effect of the epoch; and `r e3_phase1_ES[2,2]` for the effect of configuration; and `r e3_phase1_ES[3,2]` for the interaction of these two factors.
 
 ```{r}
 # Statistics on Stage 2
