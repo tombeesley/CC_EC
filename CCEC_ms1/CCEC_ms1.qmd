@@ -844,6 +844,16 @@ e2_phase1_ES <- effectsize::eta_squared(aov_car(meanRT ~ Error(subj/patArrowP1*T
                                                 data = phase_1), 
                                         partial = TRUE)
 
+exp_2_CC <- 
+  phase_1 %>% 
+  group_by(subj, TT) %>% 
+  summarise(meanRT = mean(meanRT))
+
+effectsize::cohens_d(Pair(meanRT[TT == "repeated"],
+                     meanRT[TT == "random"]) ~ 1,
+                     data = exp_2_CC)
+
+
 ```
 
 @fig-RT-exp2 shows the RT data across the 10 epochs of the experiment. Contextual cuing emerged rapidly in both the arrow and no-arrow conditions, with little suggestion that the CC effect was different in the two conditions. The phase 1 data were explored with a Bayesian ANOVA, which revealed that the best fitting model contained the factors of epoch, configuration (repeated vs. random), and endogenous cue (arrow present vs. arrow absent), with no interaction terms, `r report_BF_and_error(e2_phase1_BF[8])`. The next best fitting model contained all three factors and the interaction of epoch and configuration, `r report_BF_and_error(e2_phase1_BF[14])`, and this model was not a substantially worse fit to the data, `r report_BF_and_error(e2_phase1_BF[14]/e2_phase1_BF[8], sci_not = FALSE, hyp = "mc")`. All other models were substantially worse fits than the best fitting model, largest `r report_BF_and_error(e2_phase1_BF[11]/e2_phase1_BF[14], sci_not = FALSE, hyp = "mc")`. Importantly, the interaction term between the factors of endogenous cue and configuration did not improve the fit of the model, providing substantial support for the absence of this interaction, `r report_BF_and_error(e2_phase1_BF[11]/e2_phase1_BF[8], sci_not = FALSE, hyp = "mc")`. The relevant effect sizes ($n^2_p$) were: `r e2_phase1_ES[1,2]` for the effect of epoch; `r e2_phase1_ES[7,2]` for the effect of configuration; `r e2_phase1_ES[6,2]` for the effect of endogenous cue; `r e2_phase1_ES[5,2]` for the interaction effect between configuration and epoch; and `r e2_phase1_ES[4,2]` for the interaction between configuration and endogenous cue.
@@ -1220,6 +1230,58 @@ Experiment 3 explored the localisation of the distractors driving contextual cui
 These data lend support to the notion that the effect of the repeated configuration is a late process within visual search, and that each trial commences with a random search process that is not guided by the repeated configuration [@beesley2018; @tseng2004]. In some ways, these findings represent a paradox of CC: the cuing effect occurs almost at the point at which target detection has been made. One interpretation would be that this exemplifies the role of spatial contiguity in the formation of visual associations [@renaux2017]. Alternatively, it provides support for the proposed "decision threshold" accounts of CC [@kunar2007; @sewell2018], which posit that the repeated distractors close to the target ensure a reduced threshold for target detection, resulting in faster response times.
 
 # General Discussion
+
+```{r}
+# exploratory analysis of effect size across three experiments
+
+comb_data <- 
+  rbind(data_e1_f,data_e2_f, data_e3_f)
+
+comb_data <-
+  comb_data %>% 
+  filter(epoch %in% c(1,5)) %>% 
+  ungroup()
+
+comb_data <-
+  comb_data %>% 
+  mutate(TT = case_match(TT,
+                         c("Repeated: consistent", "repeated", "Repeated") ~ "repeated",
+                         c("Random: consistent", "random", "Random") ~ "random"))
+
+comb_data <- 
+  comb_data %>% 
+  filter(patArrowP1 %in% c("no arrow", NA))
+
+summary_comb_data <- 
+  comb_data %>% 
+  group_by(exp, subj, TT) %>% 
+  summarise(meanRT = mean(RT)) %>% 
+  ungroup()
+
+t.test(Pair(meanRT[TT == "repeated"],
+            meanRT[TT == "random"]) ~ 1,
+       data = summary_comb_data)
+
+
+effectsize::cohens_d(Pair(meanRT[TT == "repeated"],
+                          meanRT[TT == "random"]) ~ 1,
+                     data = summary_comb_data)
+
+summary_comb_data %>% 
+  ggplot(aes(y = meanRT, x = TT, group = subj)) +
+  geom_line()
+
+blah <- 
+summary_comb_data %>% 
+  pivot_wider(names_from = TT, values_from = meanRT) %>% 
+  mutate(CC_effect = random - repeated)
+
+mean(blah$CC_effect[blah$exp == "CCC03"])/sd(blah$CC_effect[blah$exp == "CCC03"])
+
+
+```
+
+
 
 Three experiments explored the impact of a central endogenous cue of attention on the contextual cuing of visual search. In Experiment 1, having established a contextual cuing effect, each trial was preceded by a central endogenous cue of attention in the form of an arrow, directing attention towards the side of the screen in which the target was positioned (this arrow cue was always valid, as was the case in each of the three experiments). Despite participants clearly using this cue, visual search was still facilitated by the presence of the repeating pattern of visual search. This experiment demonstrated that, once acquired, the activation of the memory representation and its impact on performance of visual search remains intact in the presence of a top-down instruction to guide attention. Experiment 2 examined the storage of these contextual representations, and whether these were impaired by an endogenous cue guiding search. We found equivalent levels of contextual cuing for two sets of configurations, one of which was paired with the cue and one which was not. Together, these two experiments suggest a seamless interplay between these two factors governing attention in visual search: the endogenous cue initially guides attention and the repeated configuration continues to refine and guide attention towards a fixation on the target. In Experiment 3 we therefore explored whether the localised distractors around the target were sufficient to generate CC following the guidance by the endogenous cue. Indeed, there was a significant CC effect in the case of the proximal distractors, albeit slightly weaker than that generated by the entire repeated configuration. Importantly, repeated configurations that did not contain the proximal distractors failed to generate a CC effect, suggesting that the proximal distractors play a crucial role in search following the guidance of attention by the endogenous cue.
 
