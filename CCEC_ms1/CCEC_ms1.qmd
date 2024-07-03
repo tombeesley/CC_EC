@@ -126,11 +126,11 @@ report_BF_and_error <- function(BF_in, sci_not = TRUE, hyp = "alt"){
 
 # set number of iterations for the Bayesian MC process
 
-numIterations = 50000
+numIterations = 500
 
 #update bib file
-rbbt::bbt_update_bib(path_rmd = "CCEC_ms1.qmd",
-                     ignore = c("fig-schematic", "fig-RT-exp1", "fig-RT-exp2", "fig-RT-exp3"))
+# rbbt::bbt_update_bib(path_rmd = "CCEC_ms1.qmd",
+#                      ignore = c("fig-schematic", "fig-RT-exp1", "fig-RT-exp2", "fig-RT-exp3"))
 
 
 ```
@@ -1239,7 +1239,7 @@ comb_data <-
 
 comb_data <-
   comb_data %>% 
-  filter(epoch %in% c(1,5)) %>% 
+  filter(epoch %in% c(1:5)) %>% 
   ungroup()
 
 comb_data <-
