@@ -881,6 +881,15 @@ e2_phase2_ES <- effectsize::eta_squared(aov_car(meanRT ~ Error(subj/TT*epoch),
                                                 data = phase_2), 
                                         partial = TRUE)
 
+exp_2_CC_p2 <- 
+  phase_2 %>% 
+  group_by(subj, TT) %>% 
+  summarise(meanRT = mean(meanRT))
+
+effectsize::cohens_d(Pair(meanRT[TT == "repeated"],
+                     meanRT[TT == "random"]) ~ 1,
+                     data = exp_2_CC_p2)
+
 ```
 
 When the endogenous cue was removed in the second half of the experiment, RTs were equivalent across the two conditions. An effect of configuration was seen for both cuing conditions, with little discernible difference between the size of the cuing effects. We conducted a Bayesian ANOVA with factors of epoch, configuration and endogenous cue condition (arrow vs. no-arrow). The best fitting model was that with just the factors of epoch and configuration with no interaction between the factors, `r report_BF_and_error(e2_phase2_BF[7])`. There was substantial support for this model over the next best fitting model, `r report_BF_and_error(e2_phase2_BF[7]/e2_phase2_BF[8], sci_not = FALSE, hyp = "mc")`. To examine the interaction of the configuration and endogenous cue factors, we compared the model containing those two factors to the model containing the two factors plus the interaction of configuration and endogenous cue, which revealed substantial support for the absence of an interaction, `r report_BF_and_error(e2_phase2_BF[10]/e2_phase2_BF[6], sci_not = FALSE, hyp = "mc")`. The relevant effect sizes ($n^2_p$) were: `r e2_phase2_ES[1,2]` for the effect of configuration; and `r e2_phase2_ES[2,2]` for the effect of epoch.
@@ -1239,7 +1248,7 @@ comb_data <-
 
 comb_data <-
   comb_data %>% 
-  filter(epoch %in% c(1:5)) %>% 
+  filter(epoch %in% c(3:5)) %>% 
   ungroup()
 
 comb_data <-
@@ -1247,10 +1256,6 @@ comb_data <-
   mutate(TT = case_match(TT,
                          c("Repeated: consistent", "repeated", "Repeated") ~ "repeated",
                          c("Random: consistent", "random", "Random") ~ "random"))
-
-comb_data <- 
-  comb_data %>% 
-  filter(patArrowP1 %in% c("no arrow", NA))
 
 summary_comb_data <- 
   comb_data %>% 
