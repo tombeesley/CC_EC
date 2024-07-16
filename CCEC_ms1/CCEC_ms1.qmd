@@ -32,7 +32,7 @@ affiliations:
     name: Universidad de Málaga
     country: Spain
 abstract: |
-  | Three experiments explored how the repetition of a visual search display guides search during contextual cuing under conditions in which the search process is interrupted by an instructional (endogenous) cue for attention. In Experiment 1, participants readily learnt about repeated configurations of visual search, before being presented with an endogenous cue for attention towards the target on every trial. Participants used this cue to improve search times, but the repeated contexts continued to guide attention. Experiment 2 demonstrated that the presence of the endogenous did not impede the acquisition of contextual cuing. Experiment 3 confirmed the hypothesis that the contextual cuing effect relies largely on localised distractor contexts, following the guidance of attention. Together, the experiments point towards an interplay between two drivers of attention: after the initial guidance of attention, memory representations of the context continue to guide attention towards the target, suggesting that CC representations are flexibly deployed when the search procedure is dramatically interrupted.  
+  | Three experiments explored how the repetition of a visual search display guides search during contextual cuing under conditions in which the search process is interrupted by an instructional (endogenous) cue for attention. In Experiment 1, participants readily learnt about repeated configurations of visual search, before being presented with an endogenous cue for attention towards the target on every trial. Participants used this cue to improve search times, but the repeated contexts continued to guide attention. Experiment 2 demonstrated that the presence of the endogenous cue did not impede the acquisition of contextual cuing. Experiment 3 confirmed the hypothesis that the contextual cuing effect relies largely on localised distractor contexts, following the guidance of attention. Together, the experiments point towards an interplay between two drivers of attention: after the initial guidance of attention, memory representations of the context continue to guide attention towards the target, suggesting that CC representations are flexibly deployed when the search procedure is dramatically interrupted.  
   | Public significance statement: This study provides a test of how attention is governed by different aspects of the environment. We examine whether the control of attention by an instructional stimulus (an arrow that directs attention) will interfere with the way in which attention is governed by other learnt visual patterns in the environment. 
 keywords: [visual search; incidental learning; contextual cuing; attention; endogenous cuing]
 bibliography: bibliography.bib
@@ -45,8 +45,6 @@ format:
     keep-tex: true
     citeproc: false
     filters: 
-      - at: pre-render
-        path: "citeproc.lua"
       - at: pre-render
         path: "wordcount.lua"
 execute:
@@ -62,26 +60,13 @@ nocite: |
 ```{r setup}
 
 library(tidyverse)
-library(citr)
-library(papaja)
 library(english)
 library(extrafont)
 library(afex) 
 library(BayesFactor)
 library(effectsize)
 library(apa)
-library(pwr) # power calculations
-library(lsr) # effect size estimate
 library(patchwork)
-
-# removed from yaml format
-  # apaquarto-docx: default
-  # apaquarto-html: default
-  # apaquarto-pdf:
-  #   fig-pos: 'H'
-  #   documentmode: man
-  #   keep-tex: true
-
 
 options(digits = 2) #set to two decimal 
 
@@ -128,9 +113,9 @@ report_BF_and_error <- function(BF_in, sci_not = TRUE, hyp = "alt"){
 
 numIterations = 500
 
-#update bib file
-rbbt::bbt_update_bib(path_rmd = "CCEC_ms1.qmd",
-                     ignore = c("fig-schematic", "fig-RT-exp1", "fig-RT-exp2", "fig-RT-exp3"))
+# #update bib file
+# rbbt::bbt_update_bib(path_rmd = "CCEC_ms1.qmd",
+#                      ignore = c("fig-schematic", "fig-RT-exp1", "fig-RT-exp2", "fig-RT-exp3"))
 
 
 ```
@@ -918,6 +903,27 @@ e2_all2_ES <- effectsize::eta_squared(aov_car(meanRT ~ Error(subj/patArrowP1*TT)
 ```
 
 To provide further support for the absence of the interaction between the factors of configuration type and endogenous cue, the data from across the experiment (epochs 1-10) were analysed with a Bayesian ANOVA with only the factors of configuration and endogenous cue. The best fitting model was that with the two factors and no interaction, `r report_BF_and_error(all_exp2_BF[3])`. The addition of the interaction term did not strengthen the model, with substantial evidence for the absence of the interaction, `r report_BF_and_error(all_exp2_BF[4]/all_exp2_BF[3], sci_not = FALSE, hyp = "mc")`. The relevant effect sizes ($n^2_p$) were: `r e2_all2_ES[1,2]` for the effect of the endogenous cue; and `r e2_all2_ES[2,2]` for the effect of configuration.
+
+```{r epoch_6_query}
+
+# quick analysis to answer reviewer point about comparison on epoch 6
+
+phase_2_e6 <- 
+  rt_summary_data_e2 %>% 
+  mutate(epoch = as.factor(epoch)) %>% 
+  filter(epoch == 6)
+
+exp2_e6_BF <- 
+  anovaBF(meanRT ~ patArrowP1*TT + subj,
+          data= data.frame(phase_2_e6),
+          whichRandom = "subj",
+          iterations = 50000)
+
+
+
+
+```
+
 
 ## Discussion
 
