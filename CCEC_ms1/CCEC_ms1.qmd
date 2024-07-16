@@ -129,8 +129,8 @@ report_BF_and_error <- function(BF_in, sci_not = TRUE, hyp = "alt"){
 numIterations = 500
 
 #update bib file
-# rbbt::bbt_update_bib(path_rmd = "CCEC_ms1.qmd",
-#                      ignore = c("fig-schematic", "fig-RT-exp1", "fig-RT-exp2", "fig-RT-exp3"))
+rbbt::bbt_update_bib(path_rmd = "CCEC_ms1.qmd",
+                     ignore = c("fig-schematic", "fig-RT-exp1", "fig-RT-exp2", "fig-RT-exp3"))
 
 
 ```
@@ -158,9 +158,9 @@ Much work has focused on the nature of the memory and attention processes respon
 
 The exact nature of how repeated configurations come to facilitate visual search is the focus of much debate within the literature. Broadly there are two quite distinct theoretical accounts of why responses are faster for repeated configurations: the early attentional guidance account, and the late response facilitation account. According to the early account, recognition of the configuration leads to a more efficient search process through the distractor array, such that the target is localised (fixated) at an earlier time point in search. Perhaps the clearest (and arguably simplest) evidence in support of this account comes from studies of eye-tracking during CC. For example, search through repeated configurations results in fewer fixations prior to target localisation [e.g., @beesley2018; @tseng2004]. According to the late response facilitation account, the benefit for repeated configurations comes about as a result of enhanced target processing once it has been localised by attention. One conceptualisation of this process is that repeated configurations lead to a reduction in the evidence threshold required to ascertain that the target is present in its location, such that responses can be initiated earlier. Such an account has been put forward by @sewell2018, in order to explain the evidence supporting the late account from response time modelling of the CC effect.
 
-It seems likely that the both early and late processes contribute to the overall CC effect [for a review see @sisk2019]. The current article focuses on exploration of the early-stage attentional account of CC. The term "early" here reflects the fact that the CC benefit is present prior to the detection of the target and the initiation of the response to the target. In fact, the "early" phase can be further divided. Analysis of eye-movements has shown that serial visual search can be defined as having two distinct phases: an initial ineffective search in which the direction of saccades is not consistent (arguably random) and a secondary effective phase in which each saccade will draw attention closer to the target. CC appears to result from having more trials with a shorter ineffective phase.
+It seems likely that the both early and late processes contribute to the overall CC effect [for a review see @sisk2019]. The current article focuses on exploration of the early-stage attentional account of CC. The term "early" here reflects the fact that the CC benefit is present prior to the detection of the target and the initiation of the response to the target. In fact, the "early" phase can be further divided. Analysis of eye-movements has shown that serial visual search can be defined as having two distinct phases: an initial ineffective search in which the direction of saccades are inconsistent and a secondary effective phase in which each saccade will draw attention closer to the target. CC appears to result from having more trials with a shorter ineffective phase.
 
-One interpretation of these data is that CC is initially random, and that the initial distractor processing is not beneficial for CC. Supporting evidence for this account comes from @olson2002, where participants were trained on a CC task in which either all the distractors repeated, those in the half of the screen containing the target (short-range-context), or those in the half of the screen that didn't contain the target (long-range-context). CC was observed in the short-range-context, but not in the long-range-context condition. Thus it would appear that the distractors further from the target are not critical to the generation of a CC effect.
+One interpretation of these data is that CC is initially not driven at all by the configuration, and that the initial distractor processing is not beneficial for the representations that form for repeated configurations. Supporting evidence for this account comes from @olson2002, where participants were trained on a CC task in which either all the distractors repeated, those in the half of the screen containing the target (short-range-context), or those in the half of the screen that didn't contain the target (long-range-context). CC was observed in the short-range-context, but not in the long-range-context condition. Thus it would appear that the distractors further from the target are not critical to the generation of a CC effect.
 
 @brady2007's computational account features a mechanism that ensures spatial constraints are placed on the learning of associations with relation to their proximity to the target. If the spatial constraints are tuned to modulate learning and restrict associative formations to only those distractors close to the target, this model can accurately model the data from @olson2002. Since the only consequential mechanism in the model for CC is the associative weights (and their modulation by spatial constraints), then one prediction that follows from this account is that the initial phase of search is inconsequential for observing CC.
 
@@ -545,14 +545,14 @@ e1_phase1_ES <- effectsize::eta_squared(aov_car(meanRT ~ Error(subj/TT*epoch), d
                                         partial = TRUE)
 
 
-exp_1_CC <- 
-  phase_1 %>% 
-  group_by(subj, TT) %>% 
-  summarise(meanRT = mean(meanRT))
+# exp_1_CC <- 
+#   phase_1 %>% 
+#   group_by(subj, TT) %>% 
+#   summarise(meanRT = mean(meanRT))
 
-effectsize::cohens_d(Pair(meanRT[TT == "Repeated: consistent"],
-                     meanRT[TT == "Random: consistent"]) ~ 1,
-                     data = exp_1_CC)
+# effectsize::cohens_d(Pair(meanRT[TT == "Repeated: consistent"],
+#                      meanRT[TT == "Random: consistent"]) ~ 1,
+#                      data = exp_1_CC)
 
 ```
 
@@ -625,9 +625,11 @@ To compare the size of the CC effect across phases 1 and 2, we calculated a "CC 
 
 ## Discussion
 
-In Experiment 1 we established a contextual cuing effect in the first phase, before introducing an endogenous cue for attention that directed the participants consistently towards the side of the screen on which the target was presented. Unsuprisingly, this had a dramatic effect on reducing RTs in all participants, but there remained a significant contextual cuing effect in this second phase. Thus, disrupting a substantial part of the early search process did not appear to affect the performance of the contextual cuing that had been established: notably there was evidence to suggest that the contextual cuing effect in phase 2 was of a similar magnitude to that which was observed in phase 1. On some repeated trials in phase 2, we positioned the target in a diametrically opposed location on the screen. On these trials there was no impact of the repeated configuration on performance.
+In Experiment 1 we established a contextual cuing effect in the first phase, before introducing an endogenous cue for attention that directed the participants consistently towards the side of the screen on which the target was presented. Unsurprisingly, this had a dramatic effect on reducing RTs in all participants, but there remained a significant contextual cuing effect in this second phase. Thus, disrupting a substantial part of the early search process did not appear to affect the performance of the contextual cuing that had been established: notably there was evidence to suggest that the contextual cuing effect in phase 2 was of a similar magnitude to that which was observed in phase 1. On some repeated trials in phase 2, we positioned the target in a diametrically opposed location on the screen. On these trials there was no impact of the repeated configuration on performance.
 
-These findings together support a view of contextual cuing in which the initial process of search is inefficient and seemingly random, not being guided in any way by the repeated context. Only when attention lands within a region of space approaching the target does the repeated configuration take over to guide search efficiently towards the target. The maintenance of a robust contextual cuing effect in phase 2 in the presence of the endogenous cue also suggests that CC is a robust and flexible behaviour. The apparent ability to entirely disrupt and negate the early part of the search process, whilst maintaining an intact CC effect, is somewhat at odds with the "general procedural learning" that has been suggested to occur in CC [@seitz2023]. According to this account, "...what may look an ineffective phase \[of search\] actually constitutes an important period during which procedural learning of a general scanning scheme becomes functional." [@seitz2023, p. 9]. The present data suggest that this aspect of search can be removed at no cost to CC.
+These findings together support a view of contextual cuing in which the initial process of search is inefficient, not being guided in any way by the repeated context. Only when attention lands within a region of space approaching the target does the repeated configuration take over to guide search efficiently towards the target. It should be acknowledged that the variable search behaviour that participants would exhibit during the early part of the search process would naturally lead them to search the area around the target on many trials. As such, on trials without the endogenous cue, the termination of the inefficient phase of search will occur earlier on some trials compared to others. The cuing of attention by the valid arrow cue ensures this termination happens on every cued trial, eliminating the inefficient phase of search. 
+
+The maintenance of a robust contextual cuing effect in phase 2, in the presence of the endogenous cue, suggests that CC is a robust and flexible behaviour. The apparent ability to entirely disrupt and negate the early part of the search process, whilst maintaining an intact CC effect, is somewhat at odds with the "general procedural learning" that has been suggested to occur in CC [@seitz2023]. According to this account, "...what may look an ineffective phase \[of search\] actually constitutes an important period during which procedural learning of a general scanning scheme becomes functional." [@seitz2023, p. 9]. The present data suggest that this aspect of search can be removed at no cost to CC.
 
 # Experiment 2
 
@@ -844,14 +846,14 @@ e2_phase1_ES <- effectsize::eta_squared(aov_car(meanRT ~ Error(subj/patArrowP1*T
                                                 data = phase_1), 
                                         partial = TRUE)
 
-exp_2_CC <- 
-  phase_1 %>% 
-  group_by(subj, TT) %>% 
-  summarise(meanRT = mean(meanRT))
-
-effectsize::cohens_d(Pair(meanRT[TT == "repeated"],
-                     meanRT[TT == "random"]) ~ 1,
-                     data = exp_2_CC)
+# exp_2_CC <- 
+#   phase_1 %>% 
+#   group_by(subj, TT) %>% 
+#   summarise(meanRT = mean(meanRT))
+# 
+# effectsize::cohens_d(Pair(meanRT[TT == "repeated"],
+#                      meanRT[TT == "random"]) ~ 1,
+#                      data = exp_2_CC)
 
 
 ```
@@ -925,7 +927,7 @@ The data from Experiment 2 are consistent with the findings of Experiment 1: the
 
 # Experiment 3
 
-As noted earlier, the analysis of eye-movements during contextual cuing tasks [@beesley2018; @tseng2004] has revealed a characteristic scanning pattern comprising two phases: search initially occurs in a seemingly random manner, as the eyes move between distractors in the central region of the distractor field, before then moving in a more directed manner towards the target position. Contextual cuing appears to result from a cessation of the first (random) search phase at an earlier time point in the entire search process, such that processing of repeated distractors will, on average, result in fewer fixations. With respect to the current study, in Experiments 1 and 2 we have initially directed attention towards the side of the screen that contains the target on cued trials. This will bring about an early cessation of the first phase of the search process. From here, however, it seems that search is still facilitated by the repetition of the context.
+As noted earlier, the analysis of eye-movements during contextual cuing tasks [@beesley2018; @tseng2004] has revealed a characteristic scanning pattern comprising two phases: search initially occurs in an  inefficient manner, as the eyes move between distractors in the central region of the distractor field, before then moving in a more directed manner towards the target position. Contextual cuing appears to result from a cessation of the first (inefficient) search phase at an earlier time point in the entire search process, such that processing of repeated distractors will, on average, result in fewer fixations. With respect to the current study, in Experiments 1 and 2 we have initially directed attention towards the side of the screen that contains the target on cued trials. This will bring about an early cessation of the first phase of the search process. From here, however, it seems that search is still facilitated by the repetition of the context.
 
 To test this characterisation of the interaction between the endogenous cue and the repeated context, we exposed participants to the same procedure as used in phase 1 of Experiment 1, which establishes a contextual cuing effect prior to the use of the endogenous cue. In a second phase we then presented the endogenous cue on every trial (as in Experiment 1), but we manipulated the presence of the repeated distractors within the configurations. For each repeated configuration we created two variations: in the "proximal" configurations, only the distractors in the quadrant containing the target match those from the full repeated configuration, while the distractors in the other three quadrants were randomly arranged on each trial; in the "distal" configurations, the distractors closest to the target were randomised, while the distractors in the other three quadrants were the same as those in the full repeated configuration. During this phase we also presented fully repeated configurations and fully randomised configurations. Comparison of the response times across these four trial types will allow us to determine the contribution of proximal and distal distractors to the CC effect when attention is cued endogenously.
 
@@ -1111,7 +1113,7 @@ rf_fig_exp3 <-
 # summarise at the group level for phase 2
 phase_2_TT_e3 <- 
   rt_summary_data_e3 %>%
-  filter(epoch %in% c(6,10)) %>% 
+  filter(epoch %in% c(6:10)) %>% 
   group_by(TT) %>%
   summarise(group_RT = mean(meanRT),
             group_SE = sd(normRT)/sqrt(n()))
@@ -1175,14 +1177,14 @@ e3_phase1_ES <- effectsize::eta_squared(aov_car(meanRT ~ Error(subj/TT*epoch),
                                                 data = phase_1), 
                                         partial = TRUE)
 
-exp_3_CC <- 
-  phase_1 %>% 
-  group_by(subj, TT) %>% 
-  summarise(meanRT = mean(meanRT))
-
-effectsize::cohens_d(Pair(meanRT[TT == "Repeated"],
-                     meanRT[TT == "Random"]) ~ 1,
-                     data = exp_3_CC)
+# exp_3_CC <- 
+#   phase_1 %>% 
+#   group_by(subj, TT) %>% 
+#   summarise(meanRT = mean(meanRT))
+# 
+# effectsize::cohens_d(Pair(meanRT[TT == "Repeated"],
+#                      meanRT[TT == "Random"]) ~ 1,
+#                      data = exp_3_CC)
 
 ```
 
@@ -1236,7 +1238,7 @@ The inset graph in Figure @fig-RT-exp3 shows the mean RTs to the four types of c
 
 Experiment 3 explored the localisation of the distractors driving contextual cuing when attention is guided by an endogenous cue. As expected, there was substantial evidence that contextual cuing was present when the distractors close to the target were maintained, but not when these distractors were randomly arranged. These data appear to confirm a clear order to the interplay between the two drivers of attention: initially attention is guided by the endogenous cue towards one half of the screen, and then search is refined by the presence of the valid configural cues (the repeated distractors). Like in Experiment 1, the phase 2 data demonstrate the resilience of the CC effect to changes in the search process. Despite visual search never commencing in a cued manner during the initial acquisition period of phase 1, a CC effect was readily observed in phase 2. Thus it seems that the stored representations of configurations surrounding target positions are flexibly deployed in visual search, despite changing demands on controlled attentional processes. Notably the fully repeated configurations exerted more of a benefit on search than those containing only the proximal distractors, suggesting that the repeating distractors beyond the target quadrant have some (but possibly lesser) influence on search [@brady2007].
 
-These data lend support to the notion that the effect of the repeated configuration is a late process within visual search, and that each trial commences with a random search process that is not guided by the repeated configuration [@beesley2018; @tseng2004]. In some ways, these findings represent a paradox of CC: the cuing effect occurs almost at the point at which target detection has been made. One interpretation would be that this exemplifies the role of spatial contiguity in the formation of visual associations [@renaux2017]. Alternatively, it provides support for the proposed "decision threshold" accounts of CC [@kunar2007; @sewell2018], which posit that the repeated distractors close to the target ensure a reduced threshold for target detection, resulting in faster response times.
+These data lend support to the notion that the effect of the repeated configuration is a late process within visual search, and that each trial commences with an inefficient search process that is not guided by the repeated configuration [@beesley2018; @tseng2004]. In some ways, these findings represent a paradox of CC: the cuing effect occurs almost at the point at which target detection has been made. One interpretation would be that this exemplifies the role of spatial contiguity in the formation of visual associations [@renaux2017]. Alternatively, it provides support for the proposed "decision threshold" accounts of CC [@kunar2007; @sewell2018], which posit that the repeated distractors close to the target ensure a reduced threshold for target detection, resulting in faster response times.
 
 # General Discussion
 
@@ -1263,25 +1265,25 @@ summary_comb_data <-
   summarise(meanRT = mean(RT)) %>% 
   ungroup()
 
-t.test(Pair(meanRT[TT == "repeated"],
-            meanRT[TT == "random"]) ~ 1,
-       data = summary_comb_data)
+# t.test(Pair(meanRT[TT == "repeated"],
+#             meanRT[TT == "random"]) ~ 1,
+#        data = summary_comb_data)
 
+# 
+# effectsize::cohens_d(Pair(meanRT[TT == "repeated"],
+#                           meanRT[TT == "random"]) ~ 1,
+#                      data = summary_comb_data)
+# 
+# summary_comb_data %>% 
+#   ggplot(aes(y = meanRT, x = TT, group = subj)) +
+#   geom_line()
 
-effectsize::cohens_d(Pair(meanRT[TT == "repeated"],
-                          meanRT[TT == "random"]) ~ 1,
-                     data = summary_comb_data)
-
-summary_comb_data %>% 
-  ggplot(aes(y = meanRT, x = TT, group = subj)) +
-  geom_line()
-
-blah <- 
-summary_comb_data %>% 
-  pivot_wider(names_from = TT, values_from = meanRT) %>% 
-  mutate(CC_effect = random - repeated)
-
-mean(blah$CC_effect[blah$exp == "CCC03"])/sd(blah$CC_effect[blah$exp == "CCC03"])
+# blah <- 
+# summary_comb_data %>% 
+#   pivot_wider(names_from = TT, values_from = meanRT) %>% 
+#   mutate(CC_effect = random - repeated)
+# 
+# mean(blah$CC_effect[blah$exp == "CCC03"])/sd(blah$CC_effect[blah$exp == "CCC03"])
 
 
 ```
@@ -1290,11 +1292,11 @@ mean(blah$CC_effect[blah$exp == "CCC03"])/sd(blah$CC_effect[blah$exp == "CCC03"]
 
 Three experiments explored the impact of a central endogenous cue of attention on the contextual cuing of visual search. In Experiment 1, having established a contextual cuing effect, each trial was preceded by a central endogenous cue of attention in the form of an arrow, directing attention towards the side of the screen in which the target was positioned (this arrow cue was always valid, as was the case in each of the three experiments). Despite participants clearly using this cue, visual search was still facilitated by the presence of the repeating pattern of visual search. This experiment demonstrated that, once acquired, the activation of the memory representation and its impact on performance of visual search remains intact in the presence of a top-down instruction to guide attention. Experiment 2 examined the storage of these contextual representations, and whether these were impaired by an endogenous cue guiding search. We found equivalent levels of contextual cuing for two sets of configurations, one of which was paired with the cue and one which was not. Together, these two experiments suggest a seamless interplay between these two factors governing attention in visual search: the endogenous cue initially guides attention and the repeated configuration continues to refine and guide attention towards a fixation on the target. In Experiment 3 we therefore explored whether the localised distractors around the target were sufficient to generate CC following the guidance by the endogenous cue. Indeed, there was a significant CC effect in the case of the proximal distractors, albeit slightly weaker than that generated by the entire repeated configuration. Importantly, repeated configurations that did not contain the proximal distractors failed to generate a CC effect, suggesting that the proximal distractors play a crucial role in search following the guidance of attention by the endogenous cue.
 
-The current data reveal that the influence of repeated contexts has a relatively late control on behaviour in visual search. Previous analysis of eye-movements during CC [@beesley2018; @tseng2004] has shown that contextual cuing (and visual search more generally) has two characteristic components. The first of these is an inefficient search process where search fails to move towards the target in trials with more fixations. This is followed by a phase in which monotonic, positive increments are made toward the target position in the final 3 to 4 fixations. CC reduces the frequency of trials with the initial (random) search period (there are more of such trials for random configurations and fewer for repeated configurations). Thus, the effect of the endogenous central cue in the current study is to eliminate, or considerably reduce, the engagement with this first phase of the search process. The results of this study strongly imply that the positive associative information in the repeating configurations is extracted in the final stages of search and is localised around the target. This is true both in terms of the performance of an acquired configuration (Experiments 1 and 3) and the acquisition of the representation for that configuration (Experiment 2). 
+The current data reveal that the influence of repeated contexts has a relatively late control on behaviour in visual search. Previous analysis of eye-movements during CC [@beesley2018; @tseng2004] has shown that contextual cuing (and visual search more generally) has two characteristic components. The first of these is an inefficient search process where search fails to move towards the target in trials with more fixations. This is followed by a phase in which monotonic, positive increments are made toward the target position in the final 3 to 4 fixations. CC reduces the frequency of trials with the initial search period (there are more of such trials for random configurations and fewer for repeated configurations). Search behaviour under CC conditions is necessarily variable, however, and each time a configuration is encountered, the pattern of eye-movements will inevitably be driven by a range of factors that lead to variation in the scan path taken. What is clear is that it is the final few fixations and saccades that are crucial to the search behaviour that facilitates CC, and this crucial period will follow a variable length of ineffective search. Thus, the effect of the endogenous central cue in the current study is to eliminate, or considerably reduce, the engagement with this first phase of the search process. The results of this study strongly imply that the positive associative information in the repeating configurations is extracted in the final stages of search and is localised around the target. This is true both in terms of the performance of an acquired configuration (Experiments 1 and 3) and the acquisition of the representation for that configuration (Experiment 2). 
 
-Recently, work by @seitz2023 has suggested that CC is made up of both configuration-specific learning, and eye-movements that reflect "...procedural learning of a general scanning scheme..." [p. 9]. This latter aspect of the acquired CC behaviour was suggested to occur within the earlier period of inefficient search. If such a behaviour developed in our CC task, it is clear that this behaviour is not critical to the performance of the CC effect (in Exp 1 and Exp 3), or to the development of the learned behaviour (Exp 2). Contrary to the suggestion by @seitz2023, it's at least possible that such general procedural learning has some influence over the later stages of search. However, such an account would have to assume that this learnt behaviour is flexible enough to survive the curtailment of a considerable portion of the pattern of eye-movements. We would argue it is simpler to account for the present data by assuming the expression of a pattern-specific sequence of eye-movements that occurs late on in the search process, following the period of ineffective (random) search. 
+Recently, work by @seitz2023 has suggested that CC is made up of both configuration-specific learning, and eye-movements that reflect "...procedural learning of a general scanning scheme..." [p. 9]. This latter aspect of the acquired CC behaviour was suggested to occur within the earlier period of inefficient search. If such a behaviour developed in our CC task, it is clear that this behaviour is not critical to the performance of the CC effect (in Exp 1 and Exp 3), or to the development of the learned behaviour (Exp 2). Contrary to the suggestion by @seitz2023, it's at least possible that such general procedural learning has some influence over the later stages of search. However, such an account would have to assume that this learnt behaviour is flexible enough to survive the curtailment of a considerable portion of the pattern of eye-movements. We would argue it is simpler to account for the present data by assuming the expression of a pattern-specific sequence of eye-movements that occurs late on in the search process, following the period of ineffective search. 
 
-The current data are also consistent with a late-stage "response threshold" account of CC [@sewell2018]. According to this perspective, the facilitation for repeated configurations occurs because the target is more readily detected amongst the surrounding distractors. Such an account can be viewed as more closely aligned to a mechanism that enhances perceptual discrimination, rather than one of facilitating search. In the present tasks, such a mechanism would not be affected by the onset of the endogenous cue and the curtailing of the early period of ineffective search. Taken together, the results here point towards the possibility of three components to the behaviour in CC: an early ineffective search, followed by enhanced localisation and increased perceptual discrimination of the target, driven by the distractors closest to the target. 
+The current data are also consistent with a late-stage "response threshold" account of CC [@sewell2018]. According to this perspective, the facilitation for repeated configurations occurs because the target is more readily detected amongst the surrounding distractors. Analysis of ERPs has revealed enhanced contra-lateral delay activity (CDA) for repeated over random configurations. This is thought to reflect "postselective (focal-attentional) processing of items held in working memory" [@chen2022]. In the present tasks, such a mechanism would not be affected by the onset of the endogenous cue and the curtailing of the period of ineffective search. Taken together, the results here point towards the possibility of three components to the behaviour in CC: an early ineffective search, followed by enhanced localisation and increased perceptual discrimination of the target, driven by the distractors closest to the target.  
 
 The effect of CC on visual search has frequently been characterised as an automatic influence on behaviour [e.g., @chun1998; @chun2000a; @geyer2021]. This characterisation of CC comes from multiple aspects of the observed effect. Updating of the associations is somewhat slow and seemingly inflexible to changes in the acquired associations [e.g., @zellin2013; @makovski2011; @manginelli2009], and therefore perhaps reflects a habitual form of behaviour. In addition, contextual cuing has frequently been observed in the absence of above-chance recognition memory for the repeating search configurations [e.g., @colagiuri2016], which suggests a non-conscious, automatically evoked form of behaviour. Despite this persistent characterisation, the automaticity (or controllability) of CC has rarely been directly tested in the literature. To our knowledge, only the experiments of Luque and colleagues [@luque2017b; @luque2021] have directly assessed this aspect of CC, by placing the influence of the configuration in competition with top-down goals in the task. Their findings supported the conclusion that CC performance can be controlled and will not guide search for the target when another aspect of the task governs attentional control. In the current study, the repeated configurations continued to have an influence on search performance even when attention had been guided by the endogenous cue. In this respect, it might be suggested that these results are somewhat at odds with the conclusions of Luque and colleagues [@luque2017b; @luque2021].
 
