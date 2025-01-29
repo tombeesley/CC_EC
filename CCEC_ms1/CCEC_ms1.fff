@@ -1,17 +1,35 @@
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
-[h]
+[H]
+
+\centering{
+
+\includegraphics{Schematic.png}
+
+}
+
+\caption{\label{fig-schematic}Schematic of the manipulation of target
+position in consistent and inconsistent trials of phase 2. The dashed
+lines show the division of the stimuli into quadrants, but were not
+present in the task procedure.}
+
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+[H]
+
+\centering{
+
+\includegraphics[width=0.8\textwidth,height=0.7\textheight]{CCEC_ms1_files/figure-pdf/fig-RT-exp1-1.pdf}
+
+}
 
 \caption{\label{fig-RT-exp1}RT data for Experiment 1. The phase 2
 averages across the four trial types are shown inset. Within-subject
 error bars were computed by a process of normalising the RT data for the
-sample (\textbf{cousineau2005?}).}
-
-\centering{
-
-\includegraphics[width=0.8\textwidth,height=0.8\textheight]{CCEC_ms1_files/figure-pdf/fig-RT-exp1-1.pdf}
-
-}
+sample (Cousineau, 2005).}
 
 \end{figure*}
 \efloatseparator
@@ -19,16 +37,16 @@ sample (\textbf{cousineau2005?}).}
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
 [H]
+
+\centering{
+
+\includegraphics[width=0.9\textwidth,height=0.8\textheight]{CCEC_ms1_files/figure-pdf/fig-RT-exp2-1.pdf}
+
+}
 
 \caption{\label{fig-RT-exp2}RT data for Experiment 2. Error bars show
 standard error of the mean on normalised data.}
 
-\centering{
-
-\includegraphics[width=0.8\textwidth,height=0.8\textheight]{CCEC_ms1_files/figure-pdf/fig-RT-exp2-1.pdf}
-
-}
-
 \end{figure*}
 \efloatseparator
  
@@ -36,13 +54,13 @@ standard error of the mean on normalised data.}
 \ifnextchar[{\eatarg}{}
 [H]
 
-\caption{\label{fig-RT-exp3}RT data for Experiment 3. Error bars show
-standard error of the mean on normalised data.}
-
 \centering{
 
-\includegraphics[width=0.8\textwidth,height=0.8\textheight]{CCEC_ms1_files/figure-pdf/fig-RT-exp3-1.pdf}
+\includegraphics[width=0.9\textwidth,height=0.8\textheight]{CCEC_ms1_files/figure-pdf/fig-RT-exp3-1.pdf}
 
 }
+
+\caption{\label{fig-RT-exp3}RT data for Experiment 3. Error bars show
+standard error of the mean on normalised data.}
 
 \end{figure*}
